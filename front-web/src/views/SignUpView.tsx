@@ -6,19 +6,14 @@ const SignUpView = () => (
 		<h1>Sign up</h1>
 		<form>
 			<label>
-    	    {/* <p>Email</p>
-    	    <input type="text" name="identifier" /> */}
 			<Input placeholder='Email' />
-    	  </label>
-    	  <label>
-    	      {/* <p>Password</p>
-    	      <input type="password" /> */}
-			  <PasswordInput />
-    	  </label>
-    	  <div>
-    	    {/* <button type="submit">Submit</button> */}
-			<Button colorScheme='blue'>Sign up</Button>
-    	  </div>
+    	  	</label>
+    	  	<label>
+				  <PasswordInput />
+    	  	</label>
+    	  	<div>
+				<Button type="submit" colorScheme='blue'>Sign up</Button>
+    	  	</div>
     	</form>
 	</div>
 );

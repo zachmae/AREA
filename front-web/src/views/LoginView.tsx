@@ -6,19 +6,14 @@ const LoginView = () => (
 		<h1>Login</h1>
 		<form>
 			<label>
-    	    {/* <p>Email</p>
-    	    <input type="text" name="identifier" /> */}
 			<Input placeholder='Email' />
-    	  </label>
-    	  <label>
-    	      {/* <p>Password</p>
-    	      <input type="password" /> */}
+    	  	</label>
+    	  	<label>
 			  <PasswordInput />
-    	  </label>
-    	  <div>
-    	    {/* <button type="submit">Submit</button> */}
-			<Button colorScheme='blue'>Login</Button>
-    	  </div>
+    	  	</label>
+    	  	<div>
+				<Button type="submit" colorScheme='blue'>Login</Button>
+    	  	</div>
     	</form>
 	</div>
 );

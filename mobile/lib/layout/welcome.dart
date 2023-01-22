@@ -5,6 +5,7 @@
 
 import 'package:area/layout/login.dart';
 import 'package:area/model/flex_size.dart';
+import 'package:area/layout/register.dart';
 import 'package:flutter/material.dart';
 
 
@@ -40,7 +41,7 @@ class _WelcomePageState extends State<WelcomePage> {
             heroTag: (isRegister ? 'signInBtn': 'signUpBtn'),
             shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
             onPressed: () => Navigator.push(context, MaterialPageRoute(
-                builder: (context) => (isRegister ? LoginPage() : const WelcomePage()))),
+                builder: (context) => (isRegister ? const LoginPage() : const RegisterPage()))),
             child: Text((isRegister ? 'Sign In': 'Sign Up'),
                 style: const TextStyle(
                   color: Colors.white,

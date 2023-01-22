@@ -26,23 +26,32 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
 
   Future login(BuildContext context) async {
-    var url = Uri.http("http://perry.com", '/login');
+    var url = Uri.http("http://127.0.0.1:7000/api/v1/sign", "/in");
     var response = await http.post(url, body: {
-      "email" : emailController.text,
+      "username" : emailController.text,
       "password" : passwordController.text
-    });
+      });
     var data = json.decode(response.body);
 
-    if (data == 'success') {
+
+    if (response.statusCode == 200 && data == 'ok') {
       Navigator.push(context, MaterialPageRoute(
           builder: (context) => const WelcomePage()));
-    }
-
+      }
     }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const WelcomePage()))),
+          backgroundColor: Colors.white,
+          title: const Text('SIGN IN', style: TextStyle(color: Colors.black)),
+          centerTitle: true,
+        ),
         body: Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -66,7 +75,20 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 19,
-                    ))))
+                    )))),
+        const SizedBox(height: 50),
+        Container(
+          width: perWidth(context, 90),
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: Colors.black),
+            ),
+          ),
+        ),
+        const SizedBox(
+            height: 100,
+            child: Text('Oauth',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
       ],
     ));
   }

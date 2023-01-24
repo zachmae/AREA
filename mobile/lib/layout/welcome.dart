@@ -20,16 +20,24 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(children: [
-          SizedBox(height: perHeight(context, 10)),
-          SizedBox(
-            height: perHeight(context, 35),
-              child: Image.asset('assets/transparent_logo.png')),
-          SizedBox(height: perHeight(context, 12)),
-          signButton(context, true),
-          SizedBox(height: perHeight(context, 5)),
-          signButton(context, false),
-        ],),
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/background.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Column(children: [
+            SizedBox(height: perHeight(context, 10)),
+            SizedBox(
+              height: perHeight(context, 35),
+                child: Image.asset('assets/transparent_logo.png')),
+            SizedBox(height: perHeight(context, 12)),
+            signButton(context, true),
+            SizedBox(height: perHeight(context, 5)),
+            signButton(context, false),
+          ],),
+        ),
     );
   }
 

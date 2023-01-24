@@ -7,34 +7,26 @@
 #
 ##
 
+# Start API gateway
+echo "Start API gateway"
+cd api-gateway/
+node app.js &
+cd ..
+
 # Start Services
 
 ## Start Services
+echo "Start API Services"
 cd services/
 for delivery in */ ; do
     [ -L "${delivery%/}" ] && continue
 
     echo ${delivery}
     cd ${delivery}
-    if [ -f "startService.sh" ]; then
+    if [ -f "server.js" ]; then
         echo "Start ${delivery}"
-        ./startService.sh &
+        node server.js &
     fi
     cd ..
 done
 cd ..
-
-
-## Get IP public
-#npm run ip
-## Get PORT
-
-# Start API gateway
-cd api-gateway/
-./startApi.sh &
-cd ..
-
-echo "Start API gateway"
-
-## Get IP of services
-## Get PORT of services

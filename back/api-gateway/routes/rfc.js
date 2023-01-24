@@ -5,7 +5,6 @@
  * @author perry.chouteau@epitech.eu
  */
 
-
 const rfcContinue =
     `<h1>Welcome to the API Gateway (100)</h1>
     <p>The 100 (Continue) status code indicates that

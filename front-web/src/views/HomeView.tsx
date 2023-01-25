@@ -12,6 +12,9 @@ const HomeView = () => {
 	const handlePlayground = () => {
 		navigate('/playground');
 	};
+	const handleDownload = () => {
+		navigate('/client.apk');
+	};
 
 	return (
 		<Box bgImage="pictures/background.png" backgroundSize="cover" h="calc(100vh)">
@@ -26,9 +29,14 @@ const HomeView = () => {
 					Sign up
 				</Button>
 			</Center>
-			<Button marginTop={40} marginLeft={100} colorScheme="blue" size="lg" onClick={handlePlayground}>
-				Playground
-			</Button>
+			<Center>
+				<Button bottom={'calc(-25vh)'} colorScheme="blue" size="lg" onClick={handleDownload}>
+					Download Page
+				</Button>
+				<Button bottom={'calc(-25vh)'} marginLeft={100} colorScheme="blue" size="lg" onClick={handlePlayground}>
+					Playground
+				</Button>
+			</Center>
 		</Box>
 	);
 };

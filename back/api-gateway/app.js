@@ -21,6 +21,7 @@ const PORT = 7000;
 
 //middleware
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use((req, res, next) => {
     const clientip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;

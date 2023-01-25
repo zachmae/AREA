@@ -31,7 +31,9 @@ const signUp = ((req, res) => {
         password: req.body.password,
     };
 
-    console.log(`signUp`);
+    console.log(`signUp` + req.body.username + req.body.password);
+
+    console.log(`signUp` + String(model.username) + model.password);
     client.signUp(model, function(err, response) {
         if (!err) {
             console.log('Sign:', response.message);
@@ -49,7 +51,9 @@ const signIn = ((req, res) => {
         password: req.body.password,
     };
 
-    console.log(`signIn`);
+    console.log(`signIn` + req.body.username + req.body.password);
+
+    console.log(`signIn` + model);
     client.signIn(model, function(err, response) {
         if (!err) {
             console.log('Sign:', response.message);
@@ -66,7 +70,7 @@ const signOut = ((req, res) => {
         username: req.body.username,
     };
 
-    console.log(`signOut`);
+    console.log(`signOut` + model);
     client.signOut(model, function(err, response) {
         if (!err) {
             console.log('Sign:', response.message);
@@ -79,7 +83,11 @@ const signOut = ((req, res) => {
 });
 
 const signOAuth2 = ((req, res) => {
-    console.log(`signOAuth2`);
+    const model = {
+        username: req.body.username,
+    };
+
+    console.log(`signOAuth2` + model);
     //not implemented
     res.status(501).send({status: False});
 });

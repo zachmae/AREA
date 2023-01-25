@@ -52,7 +52,7 @@ function signUp(call, callback) {
 
 function signIn(call, callback) {
     console.log(`SignIn) ${call.request.username} ${call.request.password}`);
-    callback(null, { message: '{message: \"It\'s been a long time ' + call.request.username + ' !\"}', status: 200 });
+    callback(null, { message: 'It\'s been a long time ' + call.request.username + ' !', status: 200 });
 }
 
 function signOut(call, callback) {

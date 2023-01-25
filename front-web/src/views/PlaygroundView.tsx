@@ -2,7 +2,7 @@ import { Text, Box, Center, Button, Input } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import JSON from 'json5';
-import SignInRequestService from '../services/TestApiRequest';
+import { SignInRequestService } from '../services/SignServices';
 
 const TestService = async (): Promise<string> => {
 	const response = await fetch('https://api.coindesk.com/v1/bpi/currentprice.json');

@@ -1,8 +1,30 @@
 version: "3.9"
 services:
-  front-web:
+
+#  server:
+#    build: ./server
+#    ports:
+#      - "8080:8080"
+#    volumes:
+#      - ./back:/app
+
+#  client_mobile:
+#    build: ./front-mobile
+#    ports:
+#      - "8082:8082"
+#    volumes:
+#      - ./front-mobile:/app
+#      - ./shared:/app/shared
+#    depends_on:
+#      - server
+
+  client_web:
     build: ./front-web
     ports:
       - "8081:8081"
     volumes:
       - ./front-web:/app
+#      - ./shared:/app/shared
+#    depends_on:
+#      - server
+#      - client_mobile

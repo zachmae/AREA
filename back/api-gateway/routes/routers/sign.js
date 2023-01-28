@@ -8,9 +8,9 @@ const {
     signOAuth2
 } = require('../controllers/sign');
 
-router.get('/in', signIn);
-router.get('/up', signUp);
-router.get('/out', signOut);
-router.get('/oauth2', signOAuth2);
+router.post('/in', signIn);
+router.post('/up', signUp);
+router.post('/out', signOut);
+router.post('/oauth2', signOAuth2);
 
 module.exports = router;

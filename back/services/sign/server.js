@@ -15,12 +15,10 @@ const protoLoader = require('@grpc/proto-loader');
 const colorize = require('json-colorizer');
 const colors = require('chalk');
 
-console.log(__dirname);
-
-const IP = "192.168.1.25";
+const IP = "127.0.0.1";
 const PORT = 7001;
-const SIGN_PROTO_PATH = './proto/sign.proto';
 
+const SIGN_PROTO_PATH = './proto/sign.proto';
 var packageDefinition = protoLoader.loadSync(
     SIGN_PROTO_PATH,
     {
@@ -42,6 +40,7 @@ var signProto = grpc.loadPackageDefinition(packageDefinition).sign;
  * @param {string} res
  * @returns {string} 404
  * @example http://localhost:3001/wrong_adress
+ *
  *
  */
 
@@ -70,8 +69,8 @@ server.addService(signProto.SignService.service,
     });
 
 server.bindAsync(`${IP}:${PORT}`,
-    grpc.ServerCredentials.createInsecure(),
-    () => {
-        server.start();
-        console.log('Server running on port ' + colors.redBright(`${IP}:${PORT}`) + `.`);
-    });
+                    grpc.ServerCredentials.createInsecure(),
+                    () => {
+                        server.start();
+                        console.log(`Server listening on port ${colors.redBright(`${IP}:${PORT}`)} .`);
+                    });

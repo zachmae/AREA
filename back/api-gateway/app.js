@@ -11,8 +11,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-const IP = require('./utils/ip').getIp('config/ip.conf');
-const PORT = 7000;
+const IP = 'localhost' //require('./utils/ip').getIp('config/ip.conf');
+const PORT = 8080;
 const {rfcNotFound} = require('./routes/controllers/rfc');
 
 //middleware
@@ -31,7 +31,10 @@ app.get('/', (req, res) => {
 });
 
 const routerSign = require('./routes/routers/sign.js');
+const routerAbout  = require('./routes/routers/about.js');
+
 app.use('/api/v1/sign', routerSign);
+app.use('/about.json', routerAbout);
 
 //default
 app.get('*', (req, res) => {

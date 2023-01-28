@@ -9,6 +9,15 @@ const HomeView = () => {
 	const handleLogin = () => {
 		navigate('/login');
 	};
+<<<<<<< HEAD
+=======
+	const handlePlayground = () => {
+		navigate('/playground');
+	};
+	const handleDownload = () => {
+		window.location.href = 'client.apk';
+	};
+>>>>>>> refs/remotes/origin/poc
 
 	return (
 		<Box bgImage="pictures/background.png" backgroundSize="cover" h="calc(100vh)">
@@ -23,6 +32,17 @@ const HomeView = () => {
 					Sign up
 				</Button>
 			</Center>
+<<<<<<< HEAD
+=======
+			<Center>
+				<Button bottom={'calc(-25vh)'} colorScheme="blue" size="lg" onClick={handleDownload}>
+					Download the Android app
+				</Button>
+				<Button bottom={'calc(-25vh)'} marginLeft={100} colorScheme="blue" size="lg" onClick={handlePlayground}>
+					Playground
+				</Button>
+			</Center>
+>>>>>>> refs/remotes/origin/poc
 		</Box>
 	);
 };

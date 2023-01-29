@@ -13,17 +13,9 @@ const colors = require('chalk');
 const {rfcNotFound} = require('./routes/rfc');
 
 const app = express();
-<<<<<<< HEAD
 const IP = 'localhost' //require('./utils/ip').getIp('config/ip.conf');
 const PORT = 8080;
 const {rfcNotFound} = require('./routes/controllers/rfc');
-=======
-
-const IP = /*"localhost";*/ "10.68.246.139";
-
-const PORT = 7000;
-
->>>>>>> origin
 
 //middleware
 app.use(bodyParser.json());
@@ -41,16 +33,10 @@ app.all('/', (req, res) => {
 });
 
 const routerSign = require('./routes/routers/sign.js');
-<<<<<<< HEAD
 const routerAbout  = require('./routes/routers/about.js');
 
 app.use('/api/v1/sign', routerSign);
 app.use('/about.json', routerAbout);
-=======
-//const routerAccount = require('./routes/routers/account.js');
-app.use('/api/v1/sign', routerSign);
-//app.use('/api/v1/account', routerAccount);
->>>>>>> origin
 
 //default
 app.all('*', (req, res) => {

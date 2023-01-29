@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
-  "short_name": "React App",
-  "name": "Create React App Sample",
-=======
   "short_name": "AREA",
   "name": "Action REAct Tek3 project",
->>>>>>> refs/remotes/origin/poc
   "icons": [
     {
       "src": "favicon.ico",

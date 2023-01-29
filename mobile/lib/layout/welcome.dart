@@ -3,15 +3,9 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-<<<<<<< HEAD
-import 'package:area/layout/login.dart';
-import 'package:area/model/flex_size.dart';
-import 'package:area/layout/register.dart';
-=======
 import 'package:area/layout/sign/login.dart';
 import 'package:area/model/flex_size.dart';
 import 'package:area/layout/sign/register.dart';
->>>>>>> refs/remotes/origin/poc
 import 'package:flutter/material.dart';
 
 
@@ -42,8 +36,6 @@ class _WelcomePageState extends State<WelcomePage> {
             signButton(context, true),
             SizedBox(height: perHeight(context, 5)),
             signButton(context, false),
-<<<<<<< HEAD
-=======
             SizedBox(height: perHeight(context, 5)),
             SizedBox(
                 width: perWidth(context, 50),
@@ -60,7 +52,6 @@ class _WelcomePageState extends State<WelcomePage> {
                         ))
                 )
             )
->>>>>>> refs/remotes/origin/poc
           ],),
         ),
     );

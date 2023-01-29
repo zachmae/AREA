@@ -10,12 +10,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const colors = require('chalk');
-const {rfcNotFound} = require('./routes/rfc');
 
 const app = express();
-const IP = 'localhost' //require('./utils/ip').getIp('config/ip.conf');
+const IP = '127.0.0.1' //require('./utils/ip').getIp('config/ip.conf');
 const PORT = 8080;
-const {rfcNotFound} = require('./routes/controllers/rfc');
 
 //middleware
 app.use(bodyParser.json());
@@ -40,7 +38,7 @@ app.use('/about.json', routerAbout);
 
 //default
 app.all('*', (req, res) => {
-    res.status(500).send({status: False});
+    res.status(500).send({status: false});
 });
 
 app.listen( PORT, IP, () => console.log(`API Gateway listening on port ${colors.underline.red(`${IP}:${PORT}`)} !`));

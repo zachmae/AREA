@@ -1,0 +1,6 @@
+version: "3.9"
+services:
+  sign:
+    build: .
+    ports:
+      - "7001:7001"

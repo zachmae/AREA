@@ -1,0 +1,39 @@
+//grpc proto
+syntax = "proto3";
+
+package sign;
+
+service SignService {
+    rpc SignUp(SignUpRequest) returns (SignUpResponse) {}
+    rpc SignIn(SignInRequest) returns (SignInResponse) {}
+    rpc SignOut(SignOutRequest) returns (SignOutResponse) {}
+}
+
+//sign up
+message SignUpRequest {
+    string username = 1;
+    string password = 2;
+}
+message SignUpResponse {
+    string message = 1;
+    int32 status  = 2;
+}
+
+//sign in
+message SignInRequest {
+    string username = 1;
+    string password = 2;
+}
+message SignInResponse {
+    string message = 1;
+    int32 status = 2;
+}
+
+//sign out
+message SignOutRequest {
+    string username = 1;
+}
+message SignOutResponse {
+    string message = 1;
+    int32 status = 2;
+}

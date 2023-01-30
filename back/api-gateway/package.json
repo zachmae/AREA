@@ -1,0 +1,31 @@
+{
+  "name": "api-gateway",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "ip": "ifconfig -a | grep -o \"inet [0-9.]*\" | tail -1 | grep -o \"[0-9.]*\" > .conf/ip.conf",
+    "local": "echo \"127.0.0.1\" > .conf/ip.conf",
+    "test": "npm audit && npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Epi-Area/Area.git"
+  },
+  "author": "Perry Chouteau <perry.chouteau@epitech.eu>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Epi-Area/Area/issues"
+  },
+  "homepage": "https://github.com/Epi-Area/Area#readme",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.8.4",
+    "@grpc/proto-loader": "^0.7.4",
+    "express": "^4.18.2",
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "js-yaml": "^4.1.0",
+    "chalk": "^4.1.2"
+  }
+}

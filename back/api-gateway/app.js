@@ -32,9 +32,13 @@ app.all('/', (req, res) => {
 
 const routerSign = require('./routes/routers/sign.js');
 const routerAbout  = require('./routes/routers/about.js');
+const routerGithub = require('./routes/routers/github.js');
+const routerGoogle = require('./routes/routers/google.js');
 
 app.use('/api/v1/sign', routerSign);
 app.use('/about.json', routerAbout);
+app.use('/api/v1/github', routerGithub);
+app.use('/api/v1/google', routerGoogle);
 
 //default
 app.all('*', (req, res) => {

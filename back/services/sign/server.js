@@ -16,7 +16,7 @@ const colorize = require('json-colorizer');
 const colors = require('chalk');
 
 const IP = "127.0.0.1";
-const PORT = 7001;
+const PORT = 7000;
 
 const SIGN_PROTO_PATH = './proto/sign.proto';
 var packageDefinition = protoLoader.loadSync(
@@ -52,7 +52,7 @@ function signUp(call, callback) {
 
 function signIn(call, callback) {
     console.log(`SignIn) ${call.request.username} ${call.request.password}`);
-    callback(null, { message: '{message: \"It\'s been a long time ' + call.request.username + ' !\"}', status: 200 });
+    callback(null, { message: 'It\'s been a long time ' + call.request.username + ' !', status: 200 });
 }
 
 function signOut(call, callback) {

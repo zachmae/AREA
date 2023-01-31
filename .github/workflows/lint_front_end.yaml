@@ -1,0 +1,37 @@
+## NAME OF THE WORKFLOW
+name: Lint Front End
+
+## CONDITIONS FOR THE WORKFLOW TO RUN:
+on:
+  push:
+    branches-ignore:
+      - 'ga-ignore*'
+  pull_request:
+    branches-ignore:
+      - 'ga-ignore*'
+
+  workflow_dispatch:
+
+## DEFAULTS FOR THE WORKFLOW:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.12.1]
+    defaults:
+      run:
+        working-directory: front-web
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install node dependencies
+        run: npm ci
+        env:
+          CI: true
+      - name: Run linting
+        run: npm run lint
+        continue-on-error: true

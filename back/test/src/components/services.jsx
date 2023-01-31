@@ -53,12 +53,14 @@ export default class Services extends React.Component {
   renderRequest(req, id) {
     if (req.method === 'POST') {
       return <RequestPost key={id} background={this.state.background[id]} result={this.state.result[id]}
+      name={req.name}
       url={req.url}
       method={req.method}
       headers={req.headers}
       body={req.body}/>
     } else {
       return <RequestGet key={id} background={this.state.background[id]} result={this.state.result[id]}
+      name={req.name}
       url={req.url}
       method={req.method}/>
     }

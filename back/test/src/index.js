@@ -9,8 +9,7 @@ root.render(
   <BrowserRouter>
     <Routes>
         <Route exact path="/" element={<App />} />
-        <Route exact path="/test" element={<App />}/>
-        <Route path="*" element={<Navigate to="/test" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   </BrowserRouter>
 );

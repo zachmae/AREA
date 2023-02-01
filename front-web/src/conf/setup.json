@@ -1,6 +1,10 @@
 {
     "back_end" : {
         "ip": "10.68.246.139",
-        "port": 8080
+        "port": 7000
+    },
+    "API": {
+        "GoogleKey": "913688526189-8leji0tqf8vvqdg1ud8v815i6scufcal.apps.googleusercontent.com",
+        "GoogleSecret": "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"
     }
 }

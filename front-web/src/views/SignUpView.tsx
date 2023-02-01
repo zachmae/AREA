@@ -43,19 +43,19 @@ const LoginView = () => {
 						</div>
 						<div className="login-up-label">
 							<label>
-							<InputGroup size="md">
-								<Input
-									pr="4.5rem"
-									type={show ? 'text' : 'password'}
-									placeholder="Enter password"
-									onChange={(e) => setTextInputpassword(e.target.value)}
-								/>
-								<InputRightElement width="4.5rem">
-									<Button h="1.75rem" size="sm" onClick={handleClick}>
-										{show ? 'Hide' : 'Show'}
-									</Button>
-								</InputRightElement>
-							</InputGroup>
+								<InputGroup size="md">
+									<Input
+										pr="4.5rem"
+										type={show ? 'text' : 'password'}
+										placeholder="Enter password"
+										onChange={(e) => setTextInputpassword(e.target.value)}
+									/>
+									<InputRightElement width="4.5rem">
+										<Button h="1.75rem" size="sm" onClick={handleClick}>
+											{show ? 'Hide' : 'Show'}
+										</Button>
+									</InputRightElement>
+								</InputGroup>
 							</label>
 						</div>
 					</div>

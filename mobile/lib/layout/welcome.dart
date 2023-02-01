@@ -47,6 +47,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
                     onPressed: () => Navigator.push(context, MaterialPageRoute(
                         builder: (context) => const GoogleLoginPage())),
+                        builder: (context) => const WelcomePage())),
                     child: const Text('page in dev',
                         style: TextStyle(
                           color: Colors.white,

@@ -1,0 +1,43 @@
+version: '3.1'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: /run/secret/secret_username
+      POSTGRES_PASSWORD: /run/secret/secret_password
+      POSTGRES_DB: mydb
+    secrets:
+      - secret_username
+      - secret_password
+    ports:
+      - '5432:5432'
+  prisma:
+    image: prismagraphql/prisma:1.34
+    restart: always
+    ports:
+      - '4466:4466'
+    environment:
+      POSTGRES_USER: /run/secret/secret_username
+      POSTGRES_PASSWORD: /run/secret/secret_password
+      PRISMA_CONFIG: |
+        port: 4466
+        databases:
+          default:
+            connector: postgres
+            host: db
+            port: 5432
+            user: username
+            password: password
+            connectionLimit: 5
+            migrations: true
+    secrets:
+      - secret_username
+      - secret_password
+    depends_on:
+      - db
+    mem_limit: 512M
+    ulimits:
+      nofile:
+        soft: 1024
+        hard: 2048

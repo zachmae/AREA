@@ -14,10 +14,13 @@ RUN npm install
 RUN npm install react-scripts@5.0.1 -g
 
 # add app
-COPY . ./
+COPY . .
 
 # expose port 8081
 EXPOSE 8081
+
+# need to find  a way to copy the client.apk to the public folder without fail possibility
+#RUN cp ./shared/android.apk ./public/client.apk
 
 # start app
 CMD ["npm", "start"]

@@ -4,6 +4,8 @@ import { useState } from 'react';
 import React from 'react';
 import JSON from 'json5';
 import { SignInRequestService } from '../services/SignServices';
+import { GoogleLogin } from '@react-oauth/google';
+import { refreshTokenSetup } from '../components/refreshGoogleToken';
 
 import './Login-upView.css';
 
@@ -43,19 +45,19 @@ const LoginView = () => {
 						</div>
 						<div className="login-up-label">
 							<label>
-							<InputGroup size="md">
-								<Input
-									pr="4.5rem"
-									type={show ? 'text' : 'password'}
-									placeholder="Enter password"
-									onChange={(e) => setTextInputpassword(e.target.value)}
-								/>
-								<InputRightElement width="4.5rem">
-									<Button h="1.75rem" size="sm" onClick={handleClick}>
-										{show ? 'Hide' : 'Show'}
-									</Button>
-								</InputRightElement>
-							</InputGroup>
+								<InputGroup size="md">
+									<Input
+										pr="4.5rem"
+										type={show ? 'text' : 'password'}
+										placeholder="Enter password"
+										onChange={(e) => setTextInputpassword(e.target.value)}
+									/>
+									<InputRightElement width="4.5rem">
+										<Button h="1.75rem" size="sm" onClick={handleClick}>
+											{show ? 'Hide' : 'Show'}
+										</Button>
+									</InputRightElement>
+								</InputGroup>
 							</label>
 						</div>
 					</div>
@@ -67,6 +69,18 @@ const LoginView = () => {
 				</form>
 				<Center>
 					<Text>{response}</Text>
+				</Center>
+				<Center>
+					<GoogleLogin
+						onSuccess={(credentialResponse) => {
+							console.log(credentialResponse);
+							refreshTokenSetup(credentialResponse);
+						}}
+						onError={() => {
+							console.log('Login Failed');
+						}}
+						useOneTap
+					/>
 				</Center>
 			</div>
 		</Box>

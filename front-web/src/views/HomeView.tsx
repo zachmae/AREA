@@ -13,7 +13,7 @@ const HomeView = () => {
 		navigate('/playground');
 	};
 	const handleDownload = () => {
-		navigate('/client.apk');
+		window.location.href = 'client.apk';
 	};
 
 	return (
@@ -31,7 +31,7 @@ const HomeView = () => {
 			</Center>
 			<Center>
 				<Button bottom={'calc(-25vh)'} colorScheme="blue" size="lg" onClick={handleDownload}>
-					Download Page
+					Download the Android app
 				</Button>
 				<Button bottom={'calc(-25vh)'} marginLeft={100} colorScheme="blue" size="lg" onClick={handlePlayground}>
 					Playground

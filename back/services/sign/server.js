@@ -16,7 +16,7 @@ const colorize = require('json-colorizer');
 const colors = require('chalk');
 
 const IP = "127.0.0.1";
-const PORT = 7001;
+const PORT = 7000;
 
 const SIGN_PROTO_PATH = './proto/sign.proto';
 var packageDefinition = protoLoader.loadSync(

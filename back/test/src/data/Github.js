@@ -1,20 +1,35 @@
 const dataGithub = [
   {
-    name: 'Code',
-    url: 'http://localhost:8080/api/v1/github/auth?redirect_uri=http://localhost:8080/api/v1/github/code',
+    name: 'OAuthApp Code (same as githubapp)',
+    url: 'http://localhost:8080/api/v1/github/oauthapp/auth?redirect_uri=http://localhost:8080/api/v1/github/oauthapp/code',
     method: 'GET',
   },
   {
-    name: 'Token',
-    url: 'http://localhost:8080/api/v1/github/auth2?code=d0bb611cc4e8e581afb3&redirect_uri=http://localhost:8080/api/v1/github/token',
+    name: 'OauthApp Token (same as githubapp)',
+    url: 'http://localhost:8080/api/v1/github/oauthapp/auth2?code=521f0e7c572f27a59742&redirect_uri=http://localhost:8080/api/v1/github/oauthapp/token',
     method: 'GET',
   },
+  {
+    name: 'GithubApp Code (same as oauthapp)',
+    url: 'http://localhost:8080/api/v1/github/githubapp/auth?redirect_uri=http://localhost:8080/api/v1/github/githubapp/code',
+    method: 'GET',
+  },
+  {
+    name: 'GithubApp Token (same as oauthapp)',
+    url: 'http://localhost:8080/api/v1/github/githubapp/auth2?code=6dff554ec3b86847f3cb&redirect_uri=http://localhost:8080/api/v1/github/githubapp/token',
+    method: 'GET',
+  },
+  {
+    name: 'GithubApp RefreshToken (githubapp as oauthapp)',
+    url: 'http://localhost:8080/api/v1/github/githubapp/refresh?refresh_token=ghr_tTUib3OKVQXkbgFlOOy0Nfx6Ypflg3wZxOyTtnmvDT4V7xJuasegcgSavER1ebt6irsLcl2mk7j5&redirect_uri=http://localhost:8080/api/v1/github/info',
+    method: 'GET',
+  },
+  {
+    name: 'Token Webhook star create',
+    url : 'http://localhost:8080/api/v1/github/hook/star/create?token=ghu_TIOHHEVefAwRonSMALCFfWMYK0un1R1dj2rn',
+    method: 'GET',
+  },
+
 ];
-//{
-//  url: 'http://localhost:8080/api/v1/github/auth',
-//  method: "POST",
-//  headers: {'Content-Type': 'application/json'},
-//  body: {'username': 'username', 'password': 'password'}
-//},
 
 module.exports = dataGithub;

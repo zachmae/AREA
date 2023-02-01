@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  front-web:
+    build: ./front-web
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./front-web:/app

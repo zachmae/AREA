@@ -11,4 +11,3 @@
 
 fuser -k 7000/tcp
 fuser -k 7001/tcp
-fuser -k 7002/tcp

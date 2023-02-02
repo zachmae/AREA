@@ -5,6 +5,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:area/layout/welcome.dart';
+import 'package:area/layout/dashboard.dart';
+import 'package:area/layout/sign/register.dart';
+import 'package:area/layout/sign/load.dart';
+import 'package:area/layout/sign/login.dart';
 
 Map<int, Color> colorMap = {
   50: const Color.fromRGBO(9, 132, 227, .1),
@@ -35,7 +39,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: MaterialColor(0xff7900F9, colorMap),
       ),
-      home: const WelcomePage(),
+      initialRoute: '/Welcome',
+      routes: <String, WidgetBuilder>{
+        '/Welcome': (BuildContext context) => const WelcomePage(),
+        '/Dashboard': (BuildContext context) => const DashBoard(),
+        '/Register': (BuildContext context) => const RegisterPage(),
+        '/Login': (BuildContext context) => const LoginPage(),
+        '/': (BuildContext context) => const WelcomePage(), // splashscreen
+      }
     );
   }
 }

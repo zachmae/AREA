@@ -10,22 +10,30 @@ import 'package:http/http.dart' as http;
 import 'package:area/constants/api_path.dart';
 import 'package:flutter/material.dart';
 import 'package:area/layout/google_token.dart';
+import 'package:area/constants/token.dart';
 
 Future login({required VoidCallback onPressed, required String email, required String password}) async
 {
+  //return onPressed();
   var url = Uri.http(apiPath, signInPath);
   var body = jsonEncode({
     "username" : email,
     "password" : password
   });
 
-  var response = await http.post(url, body: body, headers: {
-    "Content-Type": "application/json"
-  });
-  var data = jsonDecode(response.body);
+  try {
+    var response = await http.post(url, body: body, headers: {
+      "Content-Type": "application/json"
+    });
+    var data = jsonDecode(response.body);
 
-  if (data['message'] == 'It\'s been a long time  !') {
-    onPressed();
+    if (data['message'] == 'It\'s been a long time  !') {
+      return onPressed();
+    } else {
+      const Text('Wrong email or password');
+    }
+  } catch (error) {
+    print(error);
   }
 }
 
@@ -74,16 +82,17 @@ Future googleSignIn(BuildContext context) async
   } catch (error) {
     print(error);
   }*/
-  final result = await GoogleClass.login().then((result) {
+  await GoogleClass.login().then((result) {
     result?.authentication.then((googleKey) {
+      googleToken = googleKey.accessToken;
     print('accesToken = ${googleKey.accessToken}');
-    print('idToken = ${googleKey.idToken}');
-  }).catchError((err){
-    print('inner error');
+  }).catchError((error) {
+    print('token error :  $error');
     });
-  }).catchError((err){
-    print('error occured');
+  }).catchError((error) {
+    print('login error : $error');
   });
+  print('token = $googleToken');
   /*if (user == null) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(

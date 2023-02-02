@@ -11,6 +11,7 @@ import 'package:area/model/field.dart';
 import 'package:area/layout/welcome.dart';
 import 'package:area/model/sign_appBar.dart';
 import 'package:area/requests/sign.dart';
+import 'package:area/layout/dashboard.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -23,12 +24,13 @@ class _LoginPageState extends State<LoginPage> {
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final _emailKey = GlobalKey<FormState>();
+  final _passwordKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: SignAppBar(title: 'SIGN IN', onBackPressed: () => Navigator.push(context, MaterialPageRoute(
-            builder: (context) => const WelcomePage()))),
+        appBar: SignAppBar(title: 'SIGN IN', onBackPressed: () => Navigator.pop(context)),
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -42,20 +44,23 @@ class _LoginPageState extends State<LoginPage> {
           SizedBox(width: perWidth(context, 90), child: const Text('Email address', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: FieldWidget(hintText: 'Enter your email', controller: emailController),
+            child: MailField(formKey: _emailKey, controller: emailController),
           ),
           SizedBox(width: perWidth(context, 90), child: const Text('Password', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: FieldWidget(hintText: 'Enter your password', controller: passwordController, obscureText: true)
+            child: PasswordField(formKey: _passwordKey, controller: passwordController)
           ),
           SizedBox(
               width: perWidth(context, 90),
               height: 65,
               child: FloatingActionButton(
                   shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-                  onPressed: () => login(onPressed: () => Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => const WelcomePage())), email: emailController.text, password: passwordController.text),
+                  onPressed: () {
+                  if (_emailKey.currentState!.validate() && _passwordKey.currentState!.validate()) {
+                    login(onPressed: () => Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => const DashBoard())), email: emailController.text, password: passwordController.text);
+                  }},
                   child: const Text('Login',
                       style: TextStyle(
                         color: Colors.white,
@@ -73,9 +78,10 @@ class _LoginPageState extends State<LoginPage> {
           const SizedBox(
               height: 100,
               child: Text('Oauth',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
-      ],
-    ),
-        ));
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+          )]
+        )
+      )
+    );
   }
 }

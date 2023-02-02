@@ -231,6 +231,8 @@ const githubWebhookStarCreate = ((req, res) => {
     console.log("STAR CREATE > TOKEN" + req.query.token);
     const client    = new Octokit({
         auth: req.query.token,
+        userAgent: 'AreaApiGateway/1.0.0',
+        timeZone: 'Europe/Paris',
     });
 //    res.status(200).send({status: true});
     return;

@@ -1,4 +1,7 @@
 .area-link
+.save_area-link
+.prisma_docker
 .bin/
 .hookdeck/
-.save_area-link
+.api-hooker/
+.databases/

@@ -1,0 +1,70 @@
+version: '3'
+
+services:
+  gateway:
+    container_name: docker-gateway
+    build: ./api-gateway
+    ports:
+      - target: 8080
+        host_ip: 127.0.0.1
+        published: 8080
+        mode: host
+    networks:
+      - gateway-tier
+      - sign-tier
+    restart: unless-stopped
+
+  db:
+    image: postgres
+    container_name: docker-postgres
+    ports:
+      - target: 7000
+        host_ip: 127.0.0.1
+        published: 7000
+        mode: host
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      PGDATA: /data/postgres
+    volumes:
+      - ./postgres:/data/postgres
+    networks:
+      - database-tier
+    restart: unless-stopped
+
+#  service-sign:
+#    container_name: docker-sign
+#    image: ./services/sign/
+#    ports:
+#      - target: 7001
+#        host_ip: 127.0.0.1
+#        published: 7001
+#        mode: host
+#    networks:
+#      - sign-tier
+#      - gateway-tier
+#      - database-tier
+#    restart: unless-stopped
+
+
+#  test:
+#    image: ./test/
+#    ports:
+#      - target: 8000
+#        host_ip: 127.0.0.1
+#        published: 8000
+#        mode: host
+#    networks:
+#      - gateway-tier
+
+networks:
+  gateway-tier:
+    driver: bridge
+  database-tier:
+    driver: bridge
+  sign-tier:
+    driver: bridge
+
+volumes:
+  postgres:

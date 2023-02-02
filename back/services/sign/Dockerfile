@@ -1,10 +1,10 @@
-# Create app directory
-FROM node:8.9.4-alpine
-WORKDIR /usr/src/app
-# Install app dependencies
-COPY package.json ./
+FROM node:19-alpine
+
+WORKDIR /app
+COPY package.json /app
 RUN npm install
-# Bundle app source
-COPY . .
-EXPOSE 8080
+COPY . /app
+
+EXPOSE 7001
+
 CMD [ "node", "server.js" ]

@@ -10,7 +10,7 @@ const protoLoader = require('@grpc/proto-loader');
 const colors = require('chalk');
 
 const GRPC_IP = '127.0.0.1';
-const GRPC_PORT = 7000;
+const GRPC_PORT = 7001;
 const PROTO_PATH_SIGN = __dirname + '/../proto/sign.proto';
 
 var packageDefinition = protoLoader.loadSync(PROTO_PATH_SIGN, {
@@ -24,16 +24,6 @@ var protoSign = grpc.loadPackageDefinition(packageDefinition).sign;
 
 var client = new protoSign.SignService(`${GRPC_IP}:${GRPC_PORT}`,
                                        grpc.credentials.createInsecure());
-
-//const { Pool } = require('pg');
-//const pool = new Pool({
-//  user: 'username',
-//  host: 'host',
-//  database: 'database',
-//  password: 'password',
-//  port: 5432,
-//});
-
 
 const signUp = ((req, res) => {
     const model = {

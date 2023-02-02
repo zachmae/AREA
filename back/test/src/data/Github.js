@@ -16,12 +16,12 @@ const dataGithub = [
   },
   {
     name: 'GithubApp Token (same as oauthapp)',
-    url: 'http://localhost:8080/api/v1/github/githubapp/auth2?code=6dff554ec3b86847f3cb&redirect_uri=http://localhost:8080/api/v1/github/githubapp/token',
+    url: 'http://localhost:8080/api/v1/github/githubapp/auth2?code=854b709c934db7af8490&redirect_uri=http://localhost:8080/api/v1/github/githubapp/token',
     method: 'GET',
   },
   {
     name: 'GithubApp RefreshToken (githubapp as oauthapp)',
-    url: 'http://localhost:8080/api/v1/github/githubapp/refresh?refresh_token=ghr_tTUib3OKVQXkbgFlOOy0Nfx6Ypflg3wZxOyTtnmvDT4V7xJuasegcgSavER1ebt6irsLcl2mk7j5&redirect_uri=http://localhost:8080/api/v1/github/info',
+    url: 'http://localhost:8080/api/v1/github/githubapp/refresh?refresh_token=ghr_ZGXHkMyVRY3f37UKpaoQ4on0Nx8NDs1si9icthW4d3p7cSTlOlY7vfq9ArQhv4BUiTBiTO2NV4BY&redirect_uri=http://localhost:8080/api/v1/github/info',
     method: 'GET',
   },
   {

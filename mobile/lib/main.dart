@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
         '/Dashboard': (BuildContext context) => const DashBoard(),
         '/Register': (BuildContext context) => const RegisterPage(),
         '/Login': (BuildContext context) => const LoginPage(),
+        '/Loading': (BuildContext context) => const LoadPage(),
         '/': (BuildContext context) => const WelcomePage(), // splashscreen
       }
     );

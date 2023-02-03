@@ -11,14 +11,22 @@ import 'package:area/constants/api_path.dart';
 import 'package:flutter/material.dart';
 import 'package:area/layout/google_token.dart';
 import 'package:area/constants/token.dart';
+import 'package:crypto/crypto.dart';
 
-Future login({required VoidCallback onPressed, required String email, required String password}) async
+Future<String> login({required String email, required String password}) async
 {
-  //return onPressed();
+  final List<int> key = utf8.encode('keys');
+  final List<int> bytes = utf8.encode(password);
+
+  var hmacSha256 = Hmac(sha256, key);
+  Digest digest = hmacSha256.convert(bytes);
+
+  String cryptPassword = base64.encode(digest.bytes);
+
   var url = Uri.http(apiPath, signInPath);
   var body = jsonEncode({
-    "username" : email,
-    "password" : password
+    "username": email,
+    "password": cryptPassword
   });
 
   try {
@@ -28,29 +36,44 @@ Future login({required VoidCallback onPressed, required String email, required S
     var data = jsonDecode(response.body);
 
     if (data['message'] == 'It\'s been a long time  !') {
-      return onPressed();
+      return 'OK';
     } else {
-      const Text('Wrong email or password');
+      return data['message'];
     }
   } catch (error) {
-    print(error);
+    return error.toString();
   }
 }
 
-Future register({required VoidCallback onPressed, required String email, required String password}) async
+Future<String> register({required String email, required String password}) async
 {
+  final List<int> key = utf8.encode('keys');
+  final List<int> bytes = utf8.encode(password);
+
+  var hmacSha256 = Hmac(sha256, key);
+  Digest digest = hmacSha256.convert(bytes);
+
+  String cryptPassword = base64.encode(digest.bytes);
+
   var url = Uri.http(apiPath, signUpPath);
   var body = jsonEncode({
-    "username" : email,
-    "password" : password
+    "username": email,
+    "password": cryptPassword
   });
-  var response = await http.post(url, body: body, headers: {
-    "Content-Type": "application/json"
-  });
-  var data = jsonDecode(response.body);
 
-  if (data['message'] == 'We are glad you\'re here ') {
-    onPressed();
+  try {
+    var response = await http.post(url, body: body, headers: {
+      "Content-Type": "application/json"
+    });
+    var data = jsonDecode(response.body);
+
+    if (data['message'] == 'We are glad you\'re here ') {
+      return 'OK';
+    } else {
+      return data['message'];
+    }
+  } catch (error) {
+    return error.toString();
   }
 }
 

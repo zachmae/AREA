@@ -64,7 +64,6 @@ class SecondPasswordField extends StatelessWidget {
   const SecondPasswordField({super.key, required this.formKey, required this.controller, required this.fstPassword});
 
   String ?validatePassword(String value) {
-    print(fstPassword);
     if (value.isEmpty) {
       return "A password is required";
     } else if (value.length < 8) {
@@ -83,7 +82,7 @@ class SecondPasswordField extends StatelessWidget {
         child : Column(children: [
           TextFormField(
               controller: controller,
-              //obscureText: true,
+              obscureText: true,
               decoration: InputDecoration(
                   hintText: 'Enter your password',
                   labelText: 'Password',

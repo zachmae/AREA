@@ -8,10 +8,10 @@
 import 'package:area/model/flex_size.dart';
 import 'package:flutter/material.dart';
 import 'package:area/model/field.dart';
-import 'package:area/layout/welcome.dart';
 import 'package:area/model/sign_appBar.dart';
 import 'package:area/requests/sign.dart';
-import 'package:area/layout/dashboard.dart';
+import 'package:area/layout/sign/load.dart';
+
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -28,10 +28,31 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailKey = GlobalKey<FormState>();
   final _passwordKey = GlobalKey<FormState>();
   final _password2Key = GlobalKey<FormState>();
+  bool isLoading = false;
+
+  Future<VoidCallback?> registerPressed() async {
+    if (_emailKey.currentState!.validate() && _passwordKey.currentState!.validate() && _password2Key.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      var res = await register(email: emailController.text, password: passwordController.text);
+      if (res == 'OK') {
+        Navigator.pushNamed(context, '/Welcome');
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
+      }
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return isLoading
+        ? const LoadPage()
+        : Scaffold(
         appBar: SignAppBar(title: 'SIGN UP', onBackPressed: () => Navigator.pop(context)),
         body: Container(
             decoration: const BoxDecoration(
@@ -62,11 +83,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 65,
                       child: FloatingActionButton(
                           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-                          onPressed: () {
-                            if (_emailKey.currentState!.validate() && _passwordKey.currentState!.validate() && _password2Key.currentState!.validate()) {
-                              login(onPressed: () => Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => const DashBoard())), email: emailController.text, password: passwordController.text);
-                            }},
+                          onPressed: registerPressed,
                           child: const Text('Register',
                               style: TextStyle(
                                 color: Colors.white,

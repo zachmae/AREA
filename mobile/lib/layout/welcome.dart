@@ -3,10 +3,8 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-import 'package:area/layout/sign/login.dart';
 import 'package:area/model/flex_size.dart';
-import 'package:area/layout/sign/register.dart';
-import 'package:area/layout/google_token.dart';
+import 'package:area/layout/sign/load.dart';
 import 'package:flutter/material.dart';
 
 
@@ -46,7 +44,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     heroTag: ('devBtn'),
                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
                     onPressed: () => Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => const GoogleLoginPage())),
+                        builder: (context) => const LoadPage())),
                     child: const Text('page in dev',
                         style: TextStyle(
                           color: Colors.white,
@@ -66,8 +64,7 @@ class _WelcomePageState extends State<WelcomePage> {
         child: FloatingActionButton(
             heroTag: (isRegister ? 'signInBtn': 'signUpBtn'),
             shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-            onPressed: () => Navigator.push(context, MaterialPageRoute(
-                builder: (context) => (isRegister ? const LoginPage() : const RegisterPage()))),
+            onPressed: () => Navigator.pushNamed(context, (isRegister ? '/Login': '/Register')),
             child: Text((isRegister ? 'Sign In': 'Sign Up'),
                 style: const TextStyle(
                   color: Colors.white,

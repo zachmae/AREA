@@ -323,8 +323,8 @@ const rfcNotFound =
     presumably through some configurable means,
     that the condition is likely to be permanent.</p>
     <p>You seems lost, you should try with this:
-        <a href="http://localhost:7357">
-            http://localhost:7357
+        <a href="http://localhost:8080">
+            http://localhost:8080
         </a>
     </p>`
 

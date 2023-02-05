@@ -3,7 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import React from 'react';
 import JSON from 'json5';
+import HmacSHA256 from 'crypto-js/hmac-sha256';
+import Base64 from 'crypto-js/enc-base64';
+
 import { SignInRequestService } from '../services/SignServices';
+import { GoogleLogin } from '@react-oauth/google';
+import { refreshTokenSetup } from '../components/refreshGoogleToken';
 
 import './Login-upView.css';
 
@@ -12,17 +17,20 @@ const LoginView = () => {
 	const [textinputpassword, setTextInputpassword] = useState('PLACEHOLDER');
 	const [response, setResponse] = useState('');
 	const handleSignIn = () => {
-		console.log('test');
-		setResponse('Logging in...');
-		SignInRequestService({ username: textinputuser, password: textinputpassword })
-			.then((response) => {
-				setResponse(JSON.parse(response).message);
-				navigate('/area-list');
-			})
-			.catch((error) => {
-				console.error(error);
-				setResponse('Error');
-			});
+		if (textinputuser.includes('@')) {
+			const hash = HmacSHA256(textinputpassword, "area-secret");
+			const hashInBase64 = Base64.stringify(hash).toString();
+			setResponse('Logging in...');
+			SignInRequestService({ username: textinputuser, password: hashInBase64 })
+				.then((response) => {
+					setResponse(JSON.parse(response).message);
+					navigate('/area-list');
+				})
+				.catch((error) => {
+					console.error(error);
+					setResponse('Error');
+				});
+		}
 		console.log(response);
 	};
 	const navigate = useNavigate();
@@ -38,24 +46,24 @@ const LoginView = () => {
 					<div className="login-up-labels">
 						<div className="login-up-label">
 							<label>
-								<Input placeholder="Email" onChange={(e) => setTextInputuser(e.target.value)} />
+								<Input type="email" placeholder="Email" onChange={(e) => setTextInputuser(e.target.value)} />
 							</label>
 						</div>
 						<div className="login-up-label">
 							<label>
-							<InputGroup size="md">
-								<Input
-									pr="4.5rem"
-									type={show ? 'text' : 'password'}
-									placeholder="Enter password"
-									onChange={(e) => setTextInputpassword(e.target.value)}
-								/>
-								<InputRightElement width="4.5rem">
-									<Button h="1.75rem" size="sm" onClick={handleClick}>
-										{show ? 'Hide' : 'Show'}
-									</Button>
-								</InputRightElement>
-							</InputGroup>
+								<InputGroup size="md">
+									<Input
+										pr="4.5rem"
+										type={show ? 'text' : 'password'}
+										placeholder="Enter password"
+										onChange={(e) => setTextInputpassword(e.target.value)}
+									/>
+									<InputRightElement width="4.5rem">
+										<Button h="1.75rem" size="sm" onClick={handleClick}>
+											{show ? 'Hide' : 'Show'}
+										</Button>
+									</InputRightElement>
+								</InputGroup>
 							</label>
 						</div>
 					</div>
@@ -67,6 +75,18 @@ const LoginView = () => {
 				</form>
 				<Center>
 					<Text>{response}</Text>
+				</Center>
+				<Center>
+					<GoogleLogin
+						onSuccess={(credentialResponse) => {
+							console.log(credentialResponse);
+							refreshTokenSetup(credentialResponse);
+						}}
+						onError={() => {
+							console.log('Login Failed');
+						}}
+						useOneTap
+					/>
 				</Center>
 			</div>
 		</Box>

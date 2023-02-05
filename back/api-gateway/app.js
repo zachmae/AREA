@@ -6,20 +6,18 @@
 
 "use strict";
 
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const colors = require("chalk");
-const { rfcNotFound } = require("./routes/rfc");
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const colors = require('chalk');
 
 const app = express();
-
-const IP = "localhost"; // "10.68.246.139";
-
-const PORT = 7000;
+const IP = '127.0.0.1' //require('./utils/ip').getIp('config/ip.conf');
+const PORT = 8080;
 
 //middleware
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use((req, res, next) => {
   const clientip =
@@ -33,14 +31,19 @@ app.all("/", (req, res) => {
   res.status(200).send({ message: `ok` });
 });
 
-const routerSign = require("./routes/routers/sign.js");
-//const routerAccount = require('./routes/routers/account.js');
-app.use("/api/v1/sign", routerSign);
-//app.use('/api/v1/account', routerAccount);
+const routerSign = require('./routes/routers/sign.js');
+const routerAbout  = require('./routes/routers/about.js');
+const routerGithub = require('./routes/routers/github.js');
+const routerGoogle = require('./routes/routers/google.js');
+
+app.use('/api/v1/sign', routerSign);
+app.use('/about.json', routerAbout);
+app.use('/api/v1/github', routerGithub);
+app.use('/api/v1/google', routerGoogle);
 
 //default
-app.all("*", (req, res) => {
-  res.status(500).send({ status: False });
+app.all('*', (req, res) => {
+    res.status(500).send({status: false});
 });
 
 app.listen(PORT, IP, () =>

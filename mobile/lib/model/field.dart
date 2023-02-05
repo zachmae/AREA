@@ -10,15 +10,16 @@ import 'package:flutter/material.dart';
 class FieldWidget extends StatelessWidget {
   final String hintText;
   final Function ?onChanged;
-  TextEditingController controller;
+  final bool obscureText;
+  final TextEditingController controller;
 
-  FieldWidget({super.key, required this.hintText, required this.controller, this.onChanged});
+  const FieldWidget({super.key, required this.hintText, required this.controller, this.onChanged, this.obscureText = false});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      obscureText: true,
+      obscureText: obscureText,
       decoration: InputDecoration(
         hintText: hintText,
         enabledBorder: OutlineInputBorder(

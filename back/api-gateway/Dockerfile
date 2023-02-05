@@ -1,9 +1,12 @@
-FROM node:19-alpine
+FROM node:19-alpine3.16
 
 WORKDIR /app
-COPY package.json /app
+
+COPY package.json ./
+
 RUN npm install
-COPY . /app
+
+COPY . .
 
 EXPOSE 8080
 

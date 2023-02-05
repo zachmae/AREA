@@ -1,46 +1,44 @@
 /**
- * @author perry.chouteau@epitech.eu
+ * @author perry.chouteau@epitech.eu @Perry-chouteau
  * @copyright MIT
  * @version 1.0
  * @description express to grpc
+ *
+ * @info https://www.youtube.com/watch?v=clzTwZgMlqE
  **/
 
 /* REQUIRED */
 
 'use strict' // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
 
-const grpc = require('@grpc/grpc-js'); // node_modules/@grpc/grpc-js/build/src/server.d.ts
-const protoLoader = require('@grpc/proto-loader');
-
 const colorize = require('json-colorizer');
 const colors = require('chalk');
+const grpc = require('@grpc/grpc-js'), // node_modules/@grpc/grpc-js/build/src/server.d.ts
+        protoLoader = require('@grpc/proto-loader');
 
-const IP = "127.0.0.1";
-const PORT = 7001;
+const IP = "sign",
+        PORT = 7001,
+        SIGN_PROTO_PATH = './proto/sign.proto';
 
-const SIGN_PROTO_PATH = './proto/sign.proto';
-var packageDefinition = protoLoader.loadSync(
-    SIGN_PROTO_PATH,
-    {
-        keepCase: true,
-        longs: String,
-        enums: String,
-        defaults: true,
-        oneofs: true
-    });
+var packageDefinition = protoLoader.loadSync(SIGN_PROTO_PATH, {
+                                                keepCase: true,
+                                                longs: String,
+                                                enums: String,
+                                                defaults: true,
+                                                oneofs: true
+                                            });
 
 var signProto = grpc.loadPackageDefinition(packageDefinition).sign;
 
-
-//signProto.sign(req, res);
+//const {  Pool } = require('pg');
 
 /**
+ *
  * @description wrong adress
  * @param {string} req
  * @param {string} res
  * @returns {string} 404
  * @example http://localhost:3001/wrong_adress
- *
  *
  */
 

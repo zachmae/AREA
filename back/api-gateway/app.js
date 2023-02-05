@@ -10,9 +10,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const colors = require('chalk');
+//const http = require('http');
 
 const app = express();
-const IP = '127.0.0.1' //require('./utils/ip').getIp('config/ip.conf');
+//const server = http.createServer(app);
+const IP = '0.0.0.0' //require('./utils/ip').getIp('config/ip.conf');
 const PORT = 8080;
 
 //middleware
@@ -45,4 +47,5 @@ app.all('*', (req, res) => {
     res.status(500).send({status: false});
 });
 
+//server.listen(PORT, IP, () => console.log(`API Gateway listening on port ${colors.underline.red(`${IP}:${PORT}`)} !`));
 app.listen( PORT, IP, () => console.log(`API Gateway listening on port ${colors.underline.red(`${IP}:${PORT}`)} !`));

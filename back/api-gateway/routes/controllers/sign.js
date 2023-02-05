@@ -9,7 +9,7 @@ const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const colors = require('chalk');
 
-const GRPC_IP = '127.0.0.1';
+const GRPC_IP = 'sign';
 const GRPC_PORT = 7001;
 const PROTO_PATH_SIGN = __dirname + '/../proto/sign.proto';
 

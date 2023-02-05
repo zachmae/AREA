@@ -1,70 +1,56 @@
+#
+# @brief Sign controller
+# @description sign controller
+# @author @Perry-chouteau perry.chouteau@epitech.eu
+# @old commit https://github.com/Epi-Area/Area/commit/00f48e7ec5fea2945050ea2d883115cc443e140d
+#
+
 version: '3'
 
 services:
   gateway:
     container_name: docker-gateway
-    build: ./api-gateway
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
     ports:
-      - target: 8080
-        host_ip: 127.0.0.1
-        published: 8080
-        mode: host
+      - "8080:8080"
     networks:
-      - gateway-tier
       - sign-tier
     restart: unless-stopped
 
-  db:
-    image: postgres
-    container_name: docker-postgres
+  sign:
+    container_name: docker-sign
+    build:
+      context: ./services/sign
+      dockerfile: Dockerfile
     ports:
-      - target: 7000
-        host_ip: 127.0.0.1
-        published: 7000
-        mode: host
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-      PGDATA: /data/postgres
-    volumes:
-      - ./postgres:/data/postgres
+      - "7001:7001"
     networks:
-      - database-tier
+      - sign-tier
+#      - database-tier
     restart: unless-stopped
 
-#  service-sign:
-#    container_name: docker-sign
-#    image: ./services/sign/
+# https://hub.docker.com/_/postgres
+#  db:
+#    container_name: docker-postgres
+#    image: postgres
 #    ports:
-#      - target: 7001
-#        host_ip: 127.0.0.1
-#        published: 7001
-#        mode: host
-#    networks:
-#      - sign-tier
-#      - gateway-tier
-#      - database-tier
+#      - "8000:5432"
+#    environment:
+#      POSTGRES_USER: user
+#      POSTGRES_PASSWORD: password
+#      POSTGRES_DB: db
+#      PGDATA: /var/lib/postgresql/data/pgdata
+#    volumes:
+#      - ./db/data:/var/lib/postgresql/data
 #    restart: unless-stopped
 
-
-#  test:
-#    image: ./test/
-#    ports:
-#      - target: 8000
-#        host_ip: 127.0.0.1
-#        published: 8000
-#        mode: host
-#    networks:
-#      - gateway-tier
-
 networks:
-  gateway-tier:
-    driver: bridge
-  database-tier:
-    driver: bridge
   sign-tier:
-    driver: bridge
+#    driver: bridge
+#  database-tier:
+#    driver: bridge
 
-volumes:
-  postgres:
+#volumes:
+#  postgres:

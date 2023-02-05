@@ -5,3 +5,6 @@
 .hookdeck/
 .api-hooker/
 .databases/
+
+db/
+postgres/

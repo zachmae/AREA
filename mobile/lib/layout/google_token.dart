@@ -4,6 +4,10 @@
 ** Proprietary and confidential
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
+<<<<<<< HEAD
+=======
+/*
+>>>>>>> main
 
 // Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -27,7 +31,11 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
   ],
 );
 
+<<<<<<< HEAD
 void main() {
+=======
+/*void main() {
+>>>>>>> main
   runApp(
     const MaterialApp(
       title: 'Google Sign In',
@@ -170,6 +178,18 @@ class SignInDemoState extends State<SignInDemo> {
           child: _buildBody(),
         ));
   }
+<<<<<<< HEAD
+=======
+}*/
+
+import 'package:area/model/flex_size.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:area/requests/sign.dart';
+
+class GoogleClass {
+  static final _googleClass = GoogleSignIn();
+>>>>>>> main
 }
 
 /*
@@ -184,6 +204,17 @@ class GoogleClass {
   static Future<GoogleSignInAccount?> login() => _googleClass.signIn();
 }
 
+<<<<<<< HEAD
+=======
+class GoogleLoginPage extends StatefulWidget {
+  const GoogleLoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<GoogleLoginPage> createState() => _GoogleLoginPageState();
+}
+
+class _GoogleLoginPageState extends State<GoogleLoginPage> {
+>>>>>>> main
 Future googleSignIn() async {
   await GoogleClass.login();
 }
@@ -212,6 +243,10 @@ class _LoginPageState extends State<LoginPage> {
               child: FloatingActionButton(
                   heroTag: ('google'),
                   shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
+<<<<<<< HEAD
+=======
+                  onPressed: () => googleSignIn(context),
+>>>>>>> main
                   onPressed: () =>   Navigator.push(context, MaterialPageRoute(
                       builder: (context) => ())),
                   child: const Text('Go to google',

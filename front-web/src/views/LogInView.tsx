@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import React from 'react';
 import JSON from 'json5';
-import { SignUpRequestService } from '../services/SignServices';
+import { SignInRequestService } from '../services/SignServices';
+import { GoogleLogin } from '@react-oauth/google';
+import { refreshTokenSetup } from '../components/refreshGoogleToken';
 
 import './Login-upView.css';
 
@@ -11,10 +13,10 @@ const LoginView = () => {
 	const [textinputuser, setTextInputuser] = useState('PLACEHOLDER');
 	const [textinputpassword, setTextInputpassword] = useState('PLACEHOLDER');
 	const [response, setResponse] = useState('');
-	const handleSignUp = () => {
+	const handleSignIn = () => {
 		console.log('test');
 		setResponse('Logging in...');
-		SignUpRequestService({ username: textinputuser, password: textinputpassword })
+		SignInRequestService({ username: textinputuser, password: textinputpassword })
 			.then((response) => {
 				setResponse(JSON.parse(response).message);
 				navigate('/area-list');
@@ -33,7 +35,7 @@ const LoginView = () => {
 	return (
 		<Box bgImage="pictures/banner.png" backgroundSize="contain" backgroundRepeat="no-repeat" h="calc(100vh)">
 			<div className="login-up">
-				<h1 id="login-up-title">Sign up</h1>
+				<h1 id="login-up-title">LOG IN</h1>
 				<form className="form-login-up">
 					<div className="login-up-labels">
 						<div className="login-up-label">
@@ -60,13 +62,25 @@ const LoginView = () => {
 						</div>
 					</div>
 					<div className="submit-button">
-						<Button type="submit" colorScheme="blue" onClick={handleSignUp}>
-							Sign up
+						<Button type="submit" colorScheme="blue" onClick={handleSignIn}>
+							Login
 						</Button>
 					</div>
 				</form>
 				<Center>
 					<Text>{response}</Text>
+				</Center>
+				<Center>
+					<GoogleLogin
+						onSuccess={(credentialResponse) => {
+							console.log(credentialResponse);
+							refreshTokenSetup(credentialResponse);
+						}}
+						onError={() => {
+							console.log('Login Failed');
+						}}
+						useOneTap
+					/>
 				</Center>
 			</div>
 		</Box>

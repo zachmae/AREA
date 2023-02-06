@@ -1,5 +1,8 @@
 .area-link
+.bin/
+.hookdeck/
 .save_area-link
+<<<<<<< HEAD
 .prisma_docker
 .bin/
 .hookdeck/
@@ -8,3 +11,5 @@
 
 db/
 postgres/
+=======
+>>>>>>> main

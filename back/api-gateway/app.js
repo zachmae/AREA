@@ -10,11 +10,17 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const colors = require('chalk');
+<<<<<<< HEAD
 //const http = require('http');
 
 const app = express();
 //const server = http.createServer(app);
 const IP = '0.0.0.0' //require('./utils/ip').getIp('config/ip.conf');
+=======
+
+const app = express();
+const IP = '127.0.0.1' //require('./utils/ip').getIp('config/ip.conf');
+>>>>>>> main
 const PORT = 8080;
 
 //middleware

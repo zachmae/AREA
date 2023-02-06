@@ -6,6 +6,7 @@
 import 'package:area/layout/sign/login.dart';
 import 'package:area/model/flex_size.dart';
 import 'package:area/layout/sign/register.dart';
+import 'package:area/layout/google_token.dart';
 import 'package:flutter/material.dart';
 
 
@@ -21,6 +22,7 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
+          width: MediaQuery.of(context).size.width, // size of the screen
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/background.jpg'),

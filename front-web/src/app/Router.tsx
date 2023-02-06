@@ -11,10 +11,7 @@ const Router = () => (
 			<Route path="/" element={<HomeView />} />
 			<Route path="/login" element={<LoginView />} />
 			<Route path="/signup" element={<SignUpView />} />
-<<<<<<< HEAD
-=======
 			<Route path="/area-list" element={<AreaListView />} />
->>>>>>> main
 			<Route path="/playground" element={<PlaygroundView />} />
 			<Route path="*" element={<Navigate to="/" replace />} />
 		</Routes>

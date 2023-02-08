@@ -6,4 +6,4 @@ WORKDIR /app/mobile
 
 RUN flutter build apk --release
 
-RUN cp build/app/outputs/apk/release/app-release-unsigned.apk /app/shared
+#RUN cp build/app/outputs/apk/release/app-release.apk /app/shared

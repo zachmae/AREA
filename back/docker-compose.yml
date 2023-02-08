@@ -32,19 +32,20 @@ services:
     restart: unless-stopped
 
 # https://hub.docker.com/_/postgres
-#  db:
-#    container_name: docker-postgres
-#    image: postgres
-#    ports:
-#      - "8000:5432"
-#    environment:
-#      POSTGRES_USER: user
-#      POSTGRES_PASSWORD: password
-#      POSTGRES_DB: db
-#      PGDATA: /var/lib/postgresql/data/pgdata
-#    volumes:
-#      - ./db/data:/var/lib/postgresql/data
-#    restart: unless-stopped
+  db:
+    container_name: docker-postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    ports:
+      - "7000:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - sign-tier
+    restart: unless-stopped
 
 networks:
   sign-tier:
@@ -52,5 +53,6 @@ networks:
 #  database-tier:
 #    driver: bridge
 
-#volumes:
-#  postgres:
+
+volumes:
+  pgdata:

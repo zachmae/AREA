@@ -30,8 +30,6 @@ var packageDefinition = protoLoader.loadSync(SIGN_PROTO_PATH, {
 
 var signProto = grpc.loadPackageDefinition(packageDefinition).sign;
 
-//const {  Pool } = require('pg');
-
 /**
  *
  * @description wrong adress

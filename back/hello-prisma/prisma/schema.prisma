@@ -37,10 +37,10 @@ model Action {
   updatedAt     DateTime    @updatedAt
   //
   name          String      @db.VarChar(255)
-  description   String?      @db.VarChar(255)
+  description   String?     @db.VarChar(255)
   serviceId     Int
-  service       Service    @relation(fields: [serviceId], references: [id])
-  type          ActionE[]    @default([WEBHOOK])
+  service       Service     @relation(fields: [serviceId], references: [id])
+  type          ActionE     @default(WEBHOOK)
   urlCallback   String?
   active        Boolean     @default(true)
 }
@@ -61,7 +61,7 @@ model Reaction {
   description   String?      @db.VarChar(255)
   serviceId     Int
 
-  type          ReactionE[]    @default([API, MAIL])
+  type          ReactionE    @default(MAIL)
   service       Service    @relation(fields: [serviceId], references: [id])
 }
 
@@ -103,8 +103,8 @@ model Auth {
   service     Service     @relation(fields: [serviceId], references: [id])
 
   authentified Boolean     @default(false)
-  token       String?      @db.VarChar(255)
-  refreshToken String?      @db.VarChar(255)
+  token       String?      @unique @db.VarChar(255)
+  refreshToken String?     @unique @db.VarChar(255)
 }
 
 ///
@@ -121,7 +121,7 @@ model Area {
   //
   title         String?
   actionId      Int
-  reaction      Int
+  reactionId      Int
 
   authorId      Int
   author        User        @relation(fields: [authorId], references: [id])

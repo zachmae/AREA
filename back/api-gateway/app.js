@@ -32,15 +32,19 @@ app.all('/', (req, res) => {
     res.status(200).send({message:`ok`});
 });
 
-const routerSign = require('./routes/routers/sign.js');
+const routerMain = express.Router();
 const routerAbout  = require('./routes/routers/about.js');
+const routerSign = require('./routes/routers/sign.js');
 const routerGithub = require('./routes/routers/github.js');
 const routerGoogle = require('./routes/routers/google.js');
 
-app.use('/api/v1/sign', routerSign);
 app.use('/about.json', routerAbout);
-app.use('/api/v1/github', routerGithub);
-app.use('/api/v1/google', routerGoogle);
+
+routerMain.use('/sign', routerSign);
+routerMain.use('/github', routerGithub);
+routerMain.use('/google', routerGoogle);
+
+app.use('/api/v1', routerMain);
 
 //default
 app.all('*', (req, res) => {

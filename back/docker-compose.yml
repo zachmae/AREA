@@ -8,6 +8,7 @@
 version: '3'
 
 services:
+# Gateway
   gateway:
     container_name: docker-gateway
     build:
@@ -17,8 +18,12 @@ services:
       - "8080:8080"
     networks:
       - sign-tier
+      - gateway-tier
     restart: unless-stopped
 
+
+# Services
+# Sign service
   sign:
     container_name: docker-sign
     build:
@@ -26,31 +31,49 @@ services:
       dockerfile: Dockerfile
     ports:
       - "7001:7001"
+    depends_on:
+      - postgres
     networks:
       - sign-tier
-#      - database-tier
+#      - postgres-tier
     restart: unless-stopped
 
+# Postgres is my db wich is use with prisma
 # https://hub.docker.com/_/postgres
-  db:
-    container_name: docker-postgres
+  postgres:
+    hostname: postgres
+    container_name: postgres
     image: postgres
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: db
     ports:
-      - "7000:5432"
+      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
       - sign-tier
+#      - postgres-tier
+    restart: unless-stopped
+
+# Test talk to Gateway
+  test:
+    container_name: docker-test
+    build:
+      context: ./test
+      dockerfile: Dockerfile
+    ports:
+      - "7357:7357"
+    networks:
+      - gateway-tier
     restart: unless-stopped
 
 networks:
+  gateway-tier:
   sign-tier:
+#  postgres-tier:
 #    driver: bridge
-#  database-tier:
 #    driver: bridge
 
 

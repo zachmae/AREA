@@ -10,3 +10,5 @@
 
 db/
 postgres/
+
+test/

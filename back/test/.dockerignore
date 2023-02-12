@@ -1,6 +1,9 @@
 node_modules
 npm-debug.log
 build
-.git
-*.md
 .gitignore
+.git
+.dockerignore
+Dockerfile
+Dockerfile.prod
+*.md

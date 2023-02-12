@@ -30,29 +30,28 @@ var packageDefinition = protoLoader.loadSync(SIGN_PROTO_PATH, {
 
 var signProto = grpc.loadPackageDefinition(packageDefinition).sign;
 
-/**
- *
- * @description wrong adress
- * @param {string} req
- * @param {string} res
- * @returns {string} 404
- * @example http://localhost:3001/wrong_adress
- *
- */
+const { prismaSignUp  } = require('./prisma-client');
 
 /* Function setup */
 function signUp(call, callback) {
-    console.log(`SignUp) ${call.request.username} ${call.request.password}`);
-    callback(null, { message: 'We are glad you\'re here ' + call.request.username, status: 200 });
+    prismaSignUp(call.request.username, call.request.password).then(response => {
+        if (response) {
+            console.log(`SignUp Succeed) ${call.request.username} ${call.request.password}`);
+            callback(null, { message: 'We are glad to see you here ' + call.request.username, status: 200 });
+        } else {
+            console.log(`SignUp Failed) ${call.request.username} ${call.request.password}`);
+            callback(null, { message: 'Something went wrong for ' + call.request.username, status: 400 });
+        }
+    });
 }
 
 function signIn(call, callback) {
-    console.log(`SignIn) ${call.request.username} ${call.request.password}`);
+    console.log(`SignIn Succeed) ${call.request.username} ${call.request.password}`);
     callback(null, { message: 'It\'s been a long time ' + call.request.username + ' !', status: 200 });
 }
 
 function signOut(call, callback) {
-    console.log(`SignOut) ${call.request.username}`);
+    console.log(`SignOut Succeed) ${call.request.username}`);
     callback(null, { message: 'You sign out successfully, See you soon ' + call.request.username + ' !', status: 200 });
 }
 /* Server setup */
@@ -70,3 +69,5 @@ server.bindAsync(`${IP}:${PORT}`,
                         server.start();
                         console.log(`Server listening on port ${colors.redBright(`${IP}:${PORT}`)} .`);
                     });
+
+console.log("end of sign");

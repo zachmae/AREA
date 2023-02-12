@@ -1,18 +1,26 @@
-# Fetching the latest node image on alpine linux
-FROM node:alpine AS development
 
-# Declaring env
-ENV NODE_ENV development
+# pull official base image
+FROM node:18.12.1-alpine
 
-# Setting up the work directory
-WORKDIR /react-app
+# set working directory
+WORKDIR /app
 
-# Installing dependencies
-COPY ./package.json /react-app
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install app dependencies
+COPY package.json ./
+COPY package-lock.json ./
 RUN npm install
 
-# Copying all the files in our project
+# add app
 COPY . .
 
-# Starting our application
-CMD npm start
+# expose port 8081
+EXPOSE 7357
+
+# need to find  a way to copy the client.apk to the public folder without fail possibility
+#RUN cp ./shared/android.apk ./public/client.apk
+
+# start app
+CMD ["npm", "start"]

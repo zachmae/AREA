@@ -10,7 +10,7 @@
   "author": "Perry Chouteau",
   "license": "MIT",
   "devDependencies": {
-    "prisma": "^4.10.0"
+    "prisma": "^4.10.1"
   },
   "dependencies": {
     "@prisma/client": "^4.10.0"

@@ -1,6 +1,6 @@
 const Octokit = require('@octokit/rest');
 const { json } = require('body-parser');
-const { sendMail } = require('./sendmail');
+const { sendMail } = require('./utils');
 const fs = require('fs');
 
 /**

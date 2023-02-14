@@ -5,6 +5,7 @@ package sign;
 
 service SignService {
     rpc SignUp(SignUpRequest) returns (SignUpResponse) {}
+    rpc SignUpVerif(SignUpVerifRequest) returns (SignUpVerifResponse) {}
     rpc SignIn(SignInRequest) returns (SignInResponse) {}
     rpc SignOut(SignOutRequest) returns (SignOutResponse) {}
 }
@@ -15,6 +16,16 @@ message SignUpRequest {
     string password = 2;
 }
 message SignUpResponse {
+    string message = 1;
+    int32 status  = 2;
+}
+
+//sign up verif
+message SignUpVerifRequest {
+    string username = 1;
+    string code = 2;
+}
+message SignUpVerifResponse {
     string message = 1;
     int32 status  = 2;
 }

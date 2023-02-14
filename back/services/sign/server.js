@@ -30,14 +30,29 @@ var packageDefinition = protoLoader.loadSync(SIGN_PROTO_PATH, {
 
 var signProto = grpc.loadPackageDefinition(packageDefinition).sign;
 
-const { prismaSignUp  } = require('./prisma-client');
+const { PrismaClientSign } = require('./prisma-client');
+const PCS = new PrismaClientSign();
+
+const { sendMail } = require('./utils');
+const { v4: uuidv4 } = require('uuid');
 
 /* Function setup */
 function signUp(call, callback) {
-    prismaSignUp(call.request.username, call.request.password).then(response => {
+    var code = uuidv4();
+    //PCS.signUsernameFunction into result
+    PCS.isUsername(call.request.username).then(response => {
         if (response) {
-            console.log(`SignUp Succeed) ${call.request.username} ${call.request.password}`);
-            callback(null, { message: 'We are glad to see you here ' + call.request.username, status: 200 });
+            PCS.addUser(call.request.username, call.request.password, code).then(response => {
+                if (response) {
+                    console.log(`SignUp Succeed) ${call.request.username} ${call.request.password}`);
+                    sendMail('epi.area.code@outlook.com', 'azerty1&', call.request.username, `Come there: http:localhost:8080/api/v1/sign/up-verif/${call.request.username}/${code} `);
+                    callback(null, { message: 'We are glad to see you here ' + call.request.username + '. check your mail', status: 400 });
+                    return;
+                } else {
+                    console.log(`SignUp Failed) ${call.request.username} ${call.request.password}`);
+                    callback(null, { message: 'Something went wrong for ' + call.request.username, status: 400 });
+                }
+            });
         } else {
             console.log(`SignUp Failed) ${call.request.username} ${call.request.password}`);
             callback(null, { message: 'Something went wrong for ' + call.request.username, status: 400 });
@@ -45,9 +60,35 @@ function signUp(call, callback) {
     });
 }
 
+function signUpVerif(call, callback) {
+    PCS.signUpVerif(call.request.username, call.request.code).then(response => {
+        if (response) {
+            console.log(`You can SignIn ${call.request.username} ${call.request.code}`);
+            callback(null, { message: 'You can SignIn as ' + call.request.username, status: 200 });
+        } else {
+            console.log(`SignUpVerif Failed) ${call.request.username} ${call.request.code}`);
+            callback(null, { message: 'Something went wrong for ' + call.request.username, status: 400 });
+        }
+    });
+}
+
 function signIn(call, callback) {
-    console.log(`SignIn Succeed) ${call.request.username} ${call.request.password}`);
-    callback(null, { message: 'It\'s been a long time ' + call.request.username + ' !', status: 200 });
+    PCS.isAccount(call.request.username, call.request.password).then(response => {
+        if (response) {
+            PCS.getUser(call.request.username, call.request.password).then(response => {
+                if (response) {
+                    console.log(`SignIn Succeed) ${call.request.username} ${call.request.password}`);
+                    callback(null, { message: 'It\'s been a long time ' + call.request.username + ' !', status: 200 });
+                } else {
+                    console.log(`SignIn Failed) ${call.request.username} ${call.request.password}`);
+                    callback(null, { message: 'Something went wrong for ' + call.request.username, status: 400 });
+                }
+            });
+        } else {
+            console.log(`SignIn Failed) ${call.request.username} ${call.request.password}`);
+            callback(null, { message: 'Something went wrong for ' + call.request.username, status: 400 });
+        }
+    });
 }
 
 function signOut(call, callback) {
@@ -60,7 +101,8 @@ server.addService(signProto.SignService.service,
     {
         signUp: signUp,
         signIn: signIn,
-        signOut: signOut
+        signOut: signOut,
+        signUpVerif: signUpVerif
     });
 
 server.bindAsync(`${IP}:${PORT}`,
@@ -69,5 +111,3 @@ server.bindAsync(`${IP}:${PORT}`,
                         server.start();
                         console.log(`Server listening on port ${colors.redBright(`${IP}:${PORT}`)} .`);
                     });
-
-console.log("end of sign");

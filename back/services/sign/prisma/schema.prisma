@@ -88,8 +88,13 @@ model User {
   name          String?
   token         String?
   tokenTime     DateTime?
+  code          String
+  active        Boolean     @default(false)
 //  areas          Area[]
 //  auths         Auth[]
+  @@unique(fields: [id, createdAt, updatedAt, email, password, name, token, tokenTime, code, active], name: "UserModel")
+  @@unique(fields: [email, code], name: "UserEmailCode")
+  @@unique(fields: [email, password], name: "UserEmailPassword")
 }
 
 // @description Authentification to a service

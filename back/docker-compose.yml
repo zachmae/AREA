@@ -58,16 +58,16 @@ services:
     restart: unless-stopped
 
 # Test talk to Gateway
-  test:
-    container_name: docker-test
-    build:
-      context: ./test
-      dockerfile: Dockerfile
-    ports:
-      - "7357:7357"
-    networks:
-      - gateway-tier
-    restart: unless-stopped
+#  test:
+#    container_name: docker-test
+#    build:
+#      context: ./test
+#      dockerfile: Dockerfile
+#    ports:
+#      - "7357:7357"
+#    networks:
+#      - gateway-tier
+#    restart: unless-stopped
 
 networks:
   gateway-tier:

@@ -22,11 +22,11 @@ var sendMail = (username, password, to, subject, message) => {
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-        console.log(error);
-    } else {
-        console.log(`Email sent: ${info.response}`);
-    }
+        if (error) {
+            console.log(error);
+        } else {
+            console.log(`Email sent: ${info.response}`);
+        }
     });
 }
 

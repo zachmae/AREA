@@ -1,38 +1,76 @@
 const { PrismaClient } = require('@prisma/client');
-
 const prisma = new PrismaClient();
 
-async function prismaSignUp(username, password) {
-    try {
-        const newUser = await prisma.user.create({
-            data: {
-                email: username,
-                password: password,
-            }
-        });
-        console.log('user ' + newUser);
-        return true;
-    } catch (error) {
-        console.log('error ' + error);
-        return false;
+class PrismaClientSign {
+    constructor () {
     }
-}
 
-//class AreaPrismaClient{
-//    constructor () {
-//        this.prisma = new PrismaClient();
-//    }
-//
-//
-//
-//        console.log('>' + username.toString() + ' ' + password.toString());
-//                await this.prisma.user.create({
-//                    data: {
-//                      email: username.toString(),
-//                      password: password.toString(),
-//                    },
-//                })
-//    }
-//}
+    async isUsername(username) {
+        try {
+            const oldUser = await prisma.user.findMany({
+                where: {
+                    email: username
+                }
+            })
+            console.log('>>> ' + oldUser.length);
+            return (oldUser.length === 0)? true: false;
+        } catch (error) {
+            console.log('error ' + error);
+            return false;
+        }
+    }
 
-module.exports = { prismaSignUp };
+    async isAccount(username, password) {
+        try {
+            const oldUser = await prisma.user.findMany({
+                where: {
+                    email: username,
+                    password: password
+                }
+            })
+            console.log('>>> ' + oldUser.length);
+            return (oldUser.length === 0)? true: false;
+        } catch (error) {
+            console.log('error ' + error);
+            return false;
+        }
+    }
+
+    async addUser(username, password, code) {
+        try {
+            await prisma.user.create({
+                data: {
+                    email: username,
+                    password: password,
+                    code: code
+                }
+            });
+            return true;
+        } catch (error) {
+            console.log('error ' + error);
+            return false;
+        }
+    }
+
+    async signUpVerif(username, code) {
+        try {
+            await prisma.user.update({
+                where: {
+                    UserEmailCode: {
+                        email: username,
+                        code: code
+                    }
+                },
+                data: {
+                    active: true
+                }
+            });
+            return true;
+        } catch (error) {
+            console.log('error ' + error);
+            return false;
+        }
+    }
+};
+
+module.exports = { PrismaClientSign };

@@ -8,6 +8,7 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const colors = require('chalk');
+const { sendMail } = require('./utils');
 
 const GRPC_IP = 'sign';
 const GRPC_PORT = 7001;
@@ -34,7 +35,6 @@ var client = new protoSign.SignService(`${GRPC_IP}:${GRPC_PORT}`,
 //  port: 5432,
 //});
 
-
 const signUp = ((req, res) => {
     const model = {
         username: req.body.username,
@@ -43,7 +43,8 @@ const signUp = ((req, res) => {
 
     console.log(`signUp` + req.body.username + req.body.password);
 
-    console.log(`signUp` + String(model.username) + model.password);
+    console.log(`signUp` + model.username + model.password);
+
     client.signUp(model, function(err, response) {
         if (!err) {
             console.log('Sign:', response.message);
@@ -54,6 +55,27 @@ const signUp = ((req, res) => {
         }
     });
 });
+
+const signUpVerif = ((req, res) => {
+    const model = {
+        username: req.params.username,
+        code: req.params.code,
+    };
+
+    console.log(`signUpVerif` + model);
+    client.signUpVerif(model, function(err, response) {
+        if (!err) {
+            console.log('Sign:', response.message);
+            res.status(response.status).send({message: response.message});
+        } else {
+            console.log(err.message);
+            res.status(503).send({status: false});
+        }
+    });
+
+
+});
+
 
 const signIn = ((req, res) => {
     const model = {
@@ -80,7 +102,7 @@ const signOut = ((req, res) => {
         username: req.body.username,
     };
 
-    console.log(`signOut` + model);
+    console.log(`signOut` + model.username);
     client.signOut(model, function(err, response) {
         if (!err) {
             console.log('Sign:', response.message);
@@ -104,6 +126,7 @@ const signOAuth2 = ((req, res) => {
 
 module.exports = {
     signUp,
+    signUpVerif,
     signIn,
     signOut,
     signOAuth2,

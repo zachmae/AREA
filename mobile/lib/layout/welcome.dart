@@ -4,7 +4,6 @@
 */
 
 import 'package:area/model/flex_size.dart';
-import 'package:area/layout/sign/load.dart';
 import 'package:flutter/material.dart';
 
 
@@ -43,8 +42,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 child: FloatingActionButton(
                     heroTag: ('devBtn'),
                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => const LoadPage())),
+                    onPressed: () => Navigator.pushNamed(context, '/Dashboard'),
                     child: const Text('page in dev',
                         style: TextStyle(
                           color: Colors.white,

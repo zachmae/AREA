@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
       });
       var res = await login(email: emailController.text, password: passwordController.text);
       if (res == 'OK') {
-        Navigator.pushNamed(context, '/Welcome');
+        Navigator.pushNamed(context, '/Dashboard');
       } else {
         setState(() {
           isLoading = false;

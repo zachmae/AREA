@@ -12,3 +12,5 @@ const String signInPath = 'api/v1/sign/in';
 const String signUpPath = '/api/v1/sign/up';
 
 const String tokenPath = '/api/v1/google/registerToken';
+
+const String getServicesPath = '/api/v1/services';

@@ -11,8 +11,9 @@ import 'package:form_field_validator/form_field_validator.dart';
 class PasswordField extends StatelessWidget {
   final TextEditingController controller;
   final formKey;
+  final Key key = UniqueKey();
 
-  const PasswordField({super.key, required this.formKey, required this.controller});
+  PasswordField({super.key, required this.formKey, required this.controller});
 
   String ?validatePassword(String value) {
     if (value.isEmpty) {

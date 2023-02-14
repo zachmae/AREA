@@ -41,6 +41,9 @@ Future<String> login({required String email, required String password}) async
       return data['message'];
     }
   } catch (error) {
+    if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
+      return 'No internet connection';
+    }
     return error.toString();
   }
 }
@@ -73,6 +76,9 @@ Future<String> register({required String email, required String password}) async
       return data['message'];
     }
   } catch (error) {
+    if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
+      return 'No internet connection';
+    }
     return error.toString();
   }
 }

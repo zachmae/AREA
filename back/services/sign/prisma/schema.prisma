@@ -93,8 +93,8 @@ model User {
 //  areas          Area[]
 //  auths         Auth[]
   @@unique(fields: [id, createdAt, updatedAt, email, password, name, token, tokenTime, code, active], name: "UserModel")
-  @@unique(fields: [email, code], name: "UserEmailCode")
-  @@unique(fields: [email, password], name: "UserEmailPassword")
+  @@unique(fields: [email, code, active], name: "UserUp")
+  @@unique(fields: [email, password, active], name: "UserIn")
 }
 
 // @description Authentification to a service

@@ -45,7 +45,7 @@ function signUp(call, callback) {
             PCS.addUser(call.request.username, call.request.password, code).then(response => {
                 if (response) {
                     console.log(`SignUp Succeed) ${call.request.username} ${call.request.password}`);
-                    sendMail('epi.area.code@outlook.com', 'azerty1&', call.request.username, `Come there: http:localhost:8080/api/v1/sign/up-verif/${call.request.username}/${code} `);
+                    sendMail('epi.area.code@outlook.com', 'azerty1&', call.request.username, `Come there: http:localhost:8080/api/v1/sign/upverif/${call.request.username}/${code} `);
                     callback(null, { message: 'We are glad to see you here ' + call.request.username + '. check your mail', status: 400 });
                     return;
                 } else {
@@ -61,7 +61,7 @@ function signUp(call, callback) {
 }
 
 function signUpVerif(call, callback) {
-    PCS.signUpVerif(call.request.username, call.request.code).then(response => {
+    PCS.userVerif(call.request.username, call.request.code).then(response => {
         if (response) {
             console.log(`You can SignIn ${call.request.username} ${call.request.code}`);
             callback(null, { message: 'You can SignIn as ' + call.request.username, status: 200 });
@@ -73,17 +73,10 @@ function signUpVerif(call, callback) {
 }
 
 function signIn(call, callback) {
-    PCS.isAccount(call.request.username, call.request.password).then(response => {
-        if (response) {
-            PCS.getUser(call.request.username, call.request.password).then(response => {
-                if (response) {
-                    console.log(`SignIn Succeed) ${call.request.username} ${call.request.password}`);
-                    callback(null, { message: 'It\'s been a long time ' + call.request.username + ' !', status: 200 });
-                } else {
-                    console.log(`SignIn Failed) ${call.request.username} ${call.request.password}`);
-                    callback(null, { message: 'Something went wrong for ' + call.request.username, status: 400 });
-                }
-            });
+    PCS.getUser(call.request.username, call.request.password).then(response => {
+        if (response != null) {
+            console.log(`SignIn Succeed) ${call.request.username} ${call.request.password} ${response.token}`);
+            callback(null, { message: 'It\'s been a long time ' + call.request.username + ' !', token: response.token, status: 200 });
         } else {
             console.log(`SignIn Failed) ${call.request.username} ${call.request.password}`);
             callback(null, { message: 'Something went wrong for ' + call.request.username, status: 400 });

@@ -30,6 +30,7 @@ const LoginView = () => {
 					console.error(error);
 					setResponse('Error');
 				});
+			navigate('/area-list'); // temporary
 		}
 		console.log(response);
 	};

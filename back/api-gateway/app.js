@@ -37,12 +37,14 @@ const routerAbout  = require('./routes/routers/about.js');
 const routerSign = require('./routes/routers/sign.js');
 const routerGithub = require('./routes/routers/github.js');
 const routerGoogle = require('./routes/routers/google.js');
+const routerArea = require('./routes/routers/area.js');
 
 app.use('/about.json', routerAbout);
 
 routerMain.use('/sign', routerSign);
 routerMain.use('/github', routerGithub);
 routerMain.use('/google', routerGoogle);
+routerMain.use('/area', routerArea)
 
 app.use('/api/v1', routerMain);
 

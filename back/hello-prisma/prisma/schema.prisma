@@ -92,6 +92,19 @@ model User {
 //  auths         Auth[]
 }
 
+model Area {
+  id            Int         @id @unique @default(autoincrement())
+
+  actionCallback      String
+  actionParams      String
+
+  reactionCallback      String
+  reactionParams      String
+
+  authorId      Int
+  active        Boolean     @default(true)
+}
+
 // @description Authentification to a service
 //model Auth {
 //  id          Int         @id @unique @default(autoincrement())

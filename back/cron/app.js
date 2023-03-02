@@ -4,30 +4,6 @@ var apikeys = require('./apikeys.json');
 
 
 const actionMap = {
-    'github': {
-        'new_push': (user, param) => {
-            console.log('github push');
-            return true;
-        },
-        'new_pull_request': (user, param) => {
-            console.log('github pull_request');
-            return true;
-        },
-        'new_issue': (user, param) => {
-            console.log('github issue');
-            return true;
-        }
-    },
-    'googleCalendar': {
-        'new_event': (user, param) => {
-            console.log('googleCalendar new_event');
-            return true;
-        },
-        'delete_event': (user, param) => {
-            console.log('googleCalendar delete_event');
-            return true;
-        }
-    },
     'meteo': {
         'rain?': async (user, param) => {
             const loc = param.location;
@@ -74,6 +50,33 @@ const actionMap = {
                 }
             );
         }
+    },
+    'time': {
+        'time?': async (user, param) => {
+            const timezone = param.timezone;
+            var axios = require('axios');
+            var config = {
+                method: 'get',
+                url: `http://worldtimeapi.org/api/timezone/${timezone}`,
+                headers: { }
+            };
+            const day_of_week = param.day_of_week;
+            const hour = param.hour;
+            const minute = param.minute;
+            return axios(config)
+                .then(function (response) {
+                    if (day_of_week == "any")
+                        response.data.day_of_week = "any";
+                    var apihour = response.data.datetime[11] + response.data.datetime[12];
+                    if (hour == "any")
+                        apihour = "any";
+                    var apiminute = response.data.datetime[14] + response.data.datetime[15];
+                    if (minute == "any")
+                        apiminute = "any";
+                    return apihour == hour && apiminute == minute && response.data.day_of_week == day_of_week;
+                }
+            );
+        }
     }
 }
 
@@ -87,18 +90,6 @@ const reactionMap = {
             const message = param.message;
             sendMail(author, password, to, subject, message);
             console.log('mail send');
-            return true;
-        }
-    },
-    'slack': {
-        'send': (user, param) => {
-            console.log('slack send');
-            return true;
-        }
-    },
-    'google_calendar': {
-        'create_event': (user, param) => {
-            console.log('google_calendar create_event');
             return true;
         }
     },
@@ -127,6 +118,12 @@ const reactionMap = {
             );
             return true;
         }
+    },
+    'console' : {
+        'log': (user, param) => {
+            console.log("[" + user.mail + "] logged: " + param.message);
+            return true;
+        }
     }
 }
 
@@ -140,25 +137,20 @@ cron.schedule('*/5 * * * * *', () => {
     //         if action(user, param) of the area is true:
     //             reaction(user, param)
     const param = {
-        "author": {
-            "mail": "area.bot@outlook.com",
-            "password": "Azerty123!"
-        },
-        "to": "zacharie2002@gmail.com",
-        "subject": "sunny",
-        "message": "there is sun outside",
-        "location": "Paris",
-        "coin": "bitcoin"
-
+        "message": "it return true",
+        "timezone": "Europe/Paris",
+        "day_of_week": 1,
+        "hour": "08",
+        "minute": "any"
     }
     const user = {
         "mail": "zacharie2002@gmail.com",
         "token": "123456789"
     }
     console.log('start reaction');
-    actionMap["meteo"]["sunny?"](user, param).then((result) => {
+    actionMap["time"]["time?"](user, param).then((result) => {
         if (result == true)
-            reactionMap["mail"]["send"](user, param);
+            reactionMap["console"]["log"](user, param);
     });
     console.log('done');
 

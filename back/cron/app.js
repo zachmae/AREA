@@ -1,5 +1,7 @@
 const cron = require("node-cron");
-const {sendMail} = require('./routes/controllers/utils.js');
+const {sendMail} = require('./utils.js');
+var apikeys = require('./apikeys.json');
+
 
 const actionMap = {
     'github': {
@@ -29,7 +31,6 @@ const actionMap = {
     'meteo': {
         'rain?': async (user, param) => {
             const loc = param.location;
-            var apikeys = require('./routes/config/apikeys.json');
             var axios = require('axios');
             var config = {
                 method: 'get',
@@ -45,7 +46,6 @@ const actionMap = {
         },
         'sunny?': async (user, param) => {
             const loc = param.location;
-            var apikeys = require('./routes/config/apikeys.json');
             var axios = require('axios');
             var config = {
                 method: 'get',
@@ -61,7 +61,6 @@ const actionMap = {
         },
         'snow?': async (user, param) => {
             const loc = param.location;
-            var apikeys = require('./routes/config/apikeys.json');
             var axios = require('axios');
             var config = {
                 method: 'get',
@@ -132,7 +131,7 @@ const reactionMap = {
 }
 
 // every minute
-cron.schedule('*/5 * * * *', () => {
+cron.schedule('*/5 * * * * *', () => {
     console.log('running a task every 5 minute');
     // get db area list
     // for area in db list

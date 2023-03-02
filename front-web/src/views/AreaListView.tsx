@@ -14,10 +14,14 @@ const AreaListView = () => {
 		reactionTypeIcon: string;
 		reactionType: string;
 	}) => {
+		let isAreaAvailable = true;
+		const setAreaStatus = () => {
+			isAreaAvailable = !isAreaAvailable;
+			console.log(isAreaAvailable);
+			//request server to set Area status
+		};
 		const deleteArea = () => {
-			// if (props.currentPage != "area-list") {
-			// 	navigate('/area-list');
-			// }
+			console.log('Area Delete');
 		};
 		return (
 			<div>
@@ -51,7 +55,7 @@ const AreaListView = () => {
 							</Text>
 						</div>
 						<div>
-							<Switch marginTop={55} id="activate Area" size="lg" marginLeft={200} />
+							<Switch marginTop={55} id="activate Area" size="lg" marginLeft={200} defaultChecked onChange={setAreaStatus} />
 						</div>
 						<div>
 							<Image src="pictures/trash_icon.png" boxSize="90px" marginTop={15} marginLeft={20} onClick={deleteArea} />

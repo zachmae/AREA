@@ -1,6 +1,8 @@
 import { Box, Image, Button, Center, Text, Stack } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
+import './AreaHeader.css'
+
 
 const AreaHeader = (props: {currentPage: string, blackRectanglePosition: number}) => {
     const navigate = useNavigate();

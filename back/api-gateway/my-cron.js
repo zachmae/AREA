@@ -37,16 +37,11 @@ const actionMap = {
                 params: {key: apikeys.meteo, q: loc},
                 headers: { }
             };
-            await axios(config)
+            return axios(config)
                 .then(function (response) {
-                    console.log(JSON.stringify(response.data));
-                    if (response.data.current.precip_mm > 0)
-                        return true;
-                    else
-                        return false;
+                    return response.data.current.precip_mm > 0;
                 }
             );
-            return false;
         },
         'sunny?': async (user, param) => {
             const loc = param.location;
@@ -58,16 +53,11 @@ const actionMap = {
                 params: {key: apikeys.meteo, q: loc},
                 headers: { }
             };
-            await axios(config)
+            return axios(config)
                 .then(function (response) {
-                    console.log(JSON.stringify(response.data));
-                    if (response.data.current.condition.text == "Sunny")
-                        return true;
-                    else
-                        return false;
+                    return response.data.current.condition.text == "Sunny";
                 }
             );
-            return false;
         },
         'snow?': async (user, param) => {
             const loc = param.location;
@@ -79,16 +69,11 @@ const actionMap = {
                 params: {key: apikeys.meteo, q: loc},
                 headers: { }
             };
-            await axios(config)
+            return axios(config)
                 .then(function (response) {
-                    console.log(JSON.stringify(response.data));
-                    if (response.data.current.condition.text == "Snow")
-                        return true;
-                    else
-                        return false;
+                    return response.data.current.condition.text == "Snow";
                 }
             );
-            return false;
         }
     }
 }
@@ -147,7 +132,7 @@ const reactionMap = {
 }
 
 // every minute
-cron.schedule('*/5 * * * * *', () => {
+cron.schedule('*/5 * * * *', () => {
     console.log('running a task every 5 minute');
     // get db area list
     // for area in db list
@@ -161,8 +146,8 @@ cron.schedule('*/5 * * * * *', () => {
             "password": "Azerty123!"
         },
         "to": "zacharie2002@gmail.com",
-        "subject": "test",
-        "message": "test",
+        "subject": "sunny",
+        "message": "there is sun outside",
         "location": "Paris",
         "coin": "bitcoin"
 
@@ -172,16 +157,10 @@ cron.schedule('*/5 * * * * *', () => {
         "token": "123456789"
     }
     console.log('start reaction');
-    if (actionMap["meteo"]["rain?"](user, param) == true) {
-        param.subject = "rain";
-        param.message = "it's raining";
-        reactionMap["mail"]["send"](user, param);
-    } else {
-        param.subject = "no rain";
-        param.message = "it's not raining";
-        reactionMap["mail"]["send"](user, param);
-    }
-    //reactionMap["coinbase"]["get_price"](user, param);
+    actionMap["meteo"]["sunny?"](user, param).then((result) => {
+        if (result == true)
+            reactionMap["mail"]["send"](user, param);
+    });
     console.log('done');
 
 });

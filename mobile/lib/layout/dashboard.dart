@@ -5,6 +5,7 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
+import 'package:area/layout/dashboard/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:area/layout/dashboard/home.dart';
 import 'package:area/layout/dashboard/add.dart';
@@ -19,7 +20,7 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard> {
   int currentPage = 0;
   PageController pageController = PageController(viewportFraction: 1, initialPage: 0);
-  List<Widget> pages = const <Widget> [ HomePage(),  AddAreaPage(),  Text('Profile'),  Text('Hourglass')];
+  List<Widget> pages = const <Widget> [ HomePage(),  AddAreaPage(),  ProfilePage(),  Text('Hourglass')];
 
   void _onItemTapped(int index) {
     setState(() {

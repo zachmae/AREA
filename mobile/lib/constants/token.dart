@@ -6,3 +6,5 @@
 */
 
 String ?googleToken = '';
+
+String ?github = '';

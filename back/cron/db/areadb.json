@@ -1,0 +1,47 @@
+{
+    "users" : [
+        {
+            "id" : 1,
+            "name" : "Zacharie",
+            "mail" : "zacharie2002@gmail.com",
+            "password" : "123456",
+            "token" : "123456789"
+        },
+        {
+            "id" : 2,
+            "name" : "Teyi",
+            "mail" : "zach.mlaw@gmail.com",
+            "password" : "123456",
+            "token" : "1234567890"
+        }
+    ],
+    "arealist" : [
+        {
+            "id": 1,
+            "actionCallback": "time time?",
+            "actionParams": {"timezone": "Europe/Paris", "day_of_week": 1, "hour": "08", "minute": "any"},
+            "reactionCallback": "console log",
+            "reactionParams": {"message": "it return true"},
+            "active" : true,
+            "user_id": 1
+        },
+        {
+            "id": 2,
+            "actionCallback": "time time?",
+            "actionParams": {"timezone": "Europe/Paris", "day_of_week": 1, "hour": "08", "minute": "any"},
+            "reactionCallback": "console log",
+            "reactionParams": {"message": "it return true"},
+            "active" : false,
+            "user_id": 2
+        },
+        {
+            "id": 3,
+            "actionCallback": "time time?",
+            "actionParams": {"timezone": "Europe/Paris", "day_of_week": 5, "hour": "any", "minute": "any"},
+            "reactionCallback": "console log",
+            "reactionParams": {"message": "it return true"},
+            "active" : true,
+            "user_id": 2
+        }
+    ]
+}

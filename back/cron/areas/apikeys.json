@@ -1,3 +1,5 @@
 {
-    "meteo" : "0df70a61f7e44b0bba4103336230203"
+    "meteo" : "0df70a61f7e44b0bba4103336230203",
+    "X-RapidAPI-Key" : "6e8b76d20fmsh3887f3a08d8181bp14bf1ejsna30ae87c6a92",
+    "X-RapidAPI-Host" : "coin-flip1.p.rapidapi.com"
 }

@@ -75,6 +75,64 @@ const actionMap = {
                 }
             );
         }
+    },
+    'coinflip': {
+        'coinflip?': async (user, param) => {
+            const isHeads = ["Tails","Heads"][param.isHeads];
+            var axios = require('axios');
+            const config = {
+                method: 'GET',
+                url: 'https://coin-flip1.p.rapidapi.com/headstails',
+                headers: {
+                    'X-RapidAPI-Key': apikeys['X-RapidAPI-Key'],
+                    'X-RapidAPI-Host': apikeys['X-RapidAPI-Host']
+                }
+            };
+            return axios(config)
+                .then(function (response) {
+                    return response.data.outcome == isHeads;
+                }
+            );
+        }
+    },
+    'steam': {
+        'isdiscounted?': async (user, param) => {
+            const appid = param.appid;
+            const discount = param.discount;
+            var axios = require('axios');
+            var config = {
+                method: 'get',
+                url: `https://store.steampowered.com/api/appdetails?appids=${appid}`,
+                headers: { }
+            };
+            return axios(config)
+                .then(function (response) {
+                    return response[appid].data.price_overview.discount_percent >= discount;
+                }
+            );
+        },
+        'isfree?': async (user, param) => {
+            const appid = param.appid;
+            var axios = require('axios');
+            var config = {
+                method: 'get',
+                url: `https://store.steampowered.com/api/appdetails?appids=${appid}`,
+                headers: { }
+            };
+            return axios(config)
+                .then(function (response) {
+                    return response.data[appid].data.is_free;
+                }
+            );
+        }
+    },
+    'console' : {
+        'true': async (user, param) => {
+            return true;
+        },
+        'false': async (user, param) => {
+            return false;
+        }
     }
 }
 

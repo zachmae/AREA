@@ -33,7 +33,7 @@ const actionMap = {
                 }
             );
         },
-        'snow?': async (user, param) => {
+        'cold?': async (user, param) => {
             const loc = param.location;
             var axios = require('axios');
             var config = {
@@ -44,7 +44,37 @@ const actionMap = {
             };
             return axios(config)
                 .then(function (response) {
-                    return response.data.current.condition.text == "Snow";
+                    return response.data.current.temp_c < 0;
+                }
+            );
+        },
+        'warm?': async (user, param) => {
+            const loc = param.location;
+            var axios = require('axios');
+            var config = {
+                method: 'get',
+                url: `http://api.weatherapi.com/v1/current.json`,
+                params: {key: apikeys.meteo, q: loc},
+                headers: { }
+            };
+            return axios(config)
+                .then(function (response) {
+                    return response.data.current.temp_c > 30;
+                }
+            );
+        },
+        'night?': async (user, param) => {
+            const loc = param.location;
+            var axios = require('axios');
+            var config = {
+                method: 'get',
+                url: `http://api.weatherapi.com/v1/current.json`,
+                params: {key: apikeys.meteo, q: loc},
+                headers: { }
+            };
+            return axios(config)
+                .then(function (response) {
+                    return response.data.current.is_day == 0;
                 }
             );
         }
@@ -122,6 +152,20 @@ const actionMap = {
             return axios(config)
                 .then(function (response) {
                     return response.data[appid].data.is_free;
+                }
+            );
+        },
+        'isout?': async (user, param) => {
+            const appid = param.appid;
+            var axios = require('axios');
+            var config = {
+                method: 'get',
+                url: `https://store.steampowered.com/api/appdetails?appids=${appid}`,
+                headers: { }
+            };
+            return axios(config)
+                .then(function (response) {
+                    return !response.data[appid].data.release_date.coming_soon;
                 }
             );
         }

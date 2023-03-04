@@ -3,6 +3,11 @@
     "X-RapidAPI-Key" : "6e8b76d20fmsh3887f3a08d8181bp14bf1ejsna30ae87c6a92",
     "X-RapidAPI-Host" : "coin-flip1.p.rapidapi.com",
     "telegraph" : "a5f62cb4c409f7aba05093b980e6524741a049d575f9263ec2544eaf4eac",
+    "aws" : {
+        "access_key" : "AKIA2WPBVR5GKL7FHICX",
+        "secret_key" : "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",
+        "region" : "eu-west-3"
+    },
     "mail" : "area.bot@outlook.com",
     "password" : "Azerty123!"
 }

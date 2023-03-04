@@ -46,6 +46,33 @@ const reactionMap = {
             );
         }
     },
+    "aws": {
+        "send_sns_sms": async (user, param) => {
+            const to = param.phone_number;
+            const message = param.message;
+            const access_key = apikeys.aws.access_key;
+            const secret_key = apikeys.aws.secret_key;
+            const region = apikeys.aws.region;
+            const phone_number = apikeys.aws.phone_number;
+            const AWS = require('aws-sdk');
+            AWS.config.update({
+                accessKeyId: access_key,
+                secretAccessKey: secret_key,
+                region: region
+            });
+            const sns = new AWS.SNS();
+            const params = {
+                Message: message,
+                PhoneNumber: to,
+            };
+            await sns.publish(params).promise()
+                .then(function (data) {
+                    console.log("[" + user.mail + "] sms sent to " + to);
+                }
+            );
+            return true;
+        }
+    },
     'coinbase': {
         'get_price': async (user, param) => {
             console.log('coinbase get_price');

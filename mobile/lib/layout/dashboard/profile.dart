@@ -5,6 +5,7 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
+import 'package:area/requests/sign.dart';
 import 'package:flutter/material.dart';
 import 'package:area/model/flex_size.dart';
 import 'package:area/requests/get_github_token.dart';
@@ -88,14 +89,16 @@ class _ProfilePageState extends State<ProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget> [
             const SizedBox(height: 10),
-            accountLinking('Github', 'assets/github_logo.png'),
+            accountLinking('Github', 'assets/github_logo.png', onPressed: githubPress),
+            const SizedBox(height: 10),
+            accountLinking('Google', 'assets/Google_G_Logo.png', onPressed: googleSignIn),
             const SizedBox(height: 10)
           ],
         )
     );
   }
 
-  Widget accountLinking(String name, String image) {
+  Widget accountLinking(String name, String image, {VoidCallback? onPressed}) {
     return Row(
       children: <Widget> [
         SizedBox(height: 100, child: Image.asset(image)),
@@ -108,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: FloatingActionButton(
                 heroTag: (name),
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-                onPressed: githubPress,
+                onPressed: onPressed,
                 child: const Text('link account',
                     style: TextStyle(
                       color: Colors.white,

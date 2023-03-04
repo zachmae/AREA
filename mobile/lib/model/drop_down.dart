@@ -8,9 +8,10 @@
 import 'package:flutter/material.dart';
 
 class DropDown extends StatefulWidget {
-  final List<String> possibilities;
+  final List<String>? possibilities;
   final String hint;
-  const DropDown({super.key, required this.possibilities, required this.hint});
+  String? name;
+  DropDown({super.key, required this.possibilities, required this.hint, required this.name});
 
   @override
   State<DropDown> createState() => _DropDownState();
@@ -27,9 +28,10 @@ class _DropDownState extends State<DropDown> {
       onChanged: (String? value) {
         setState(() {
           dropdownValue = value!;
+          widget.name = value;
         });
       },
-      items: widget.possibilities.map<DropdownMenuItem<String>>((String value) {
+      items: (widget.possibilities == null) ? null : widget.possibilities?.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),

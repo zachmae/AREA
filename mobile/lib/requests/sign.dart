@@ -99,18 +99,8 @@ Future sendToken({required VoidCallback onPressed, required String token}) async
   }
 }
 
-Future googleSignIn(BuildContext context) async
+Future googleSignIn() async
 {
-  /*final user = await GoogleClass.login();
-  final ggAuth = await user?.authentication;*/
-  /*try {
-    final result = await GoogleClass.login();
-    final ggAuth = await result?.authentication;
-    print(ggAuth?.idToken);
-    print(ggAuth?.accessToken);
-  } catch (error) {
-    print(error);
-  }*/
   await GoogleClass.login().then((result) {
     result?.authentication.then((googleKey) {
       googleToken = googleKey.accessToken;
@@ -122,15 +112,4 @@ Future googleSignIn(BuildContext context) async
     print('login error : $error');
   });
   print('token = $googleToken');
-  /*if (user == null) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Google Sign In Failed'),
-      ),
-    );
-  } else {
-    print('idToken = ${ggAuth?.idToken}');
-    print('accesToken = ${ggAuth?.accessToken}');
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WelcomePage()));
-  }*/
 }

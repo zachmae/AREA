@@ -8,7 +8,7 @@
 import 'package:area/layout/sign/load.dart';
 import 'package:flutter/material.dart';
 import 'package:area/model/flex_size.dart';
-import 'package:area/model/drop_down.dart';
+//import 'package:area/model/drop_down.dart';
 import 'package:area/requests/get_service.dart';
 
 class AddAreaPage extends StatefulWidget {
@@ -20,19 +20,63 @@ class AddAreaPage extends StatefulWidget {
 
 class _AddAreaPageState extends State<AddAreaPage> {
   bool isLoading = true;
-  late String possibilities;
+  late List<dynamic> possibilities;
+  Map<String, List<String>> actions = {};
+  Map<String, List<String>> reactions = {};
+  Map<String, List<String>> actionArgs = {};
+  Map<String, List<String>> reactionArgs = {};
+  List<String> names = [];
+  String? dropdownValue1;
+  String? dropdownValue2;
+  String? dropdownValue3;
+  String? dropdownValue4;
+  String ?actionName;
+  String ?reactionName;
 
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
       gettingService(context).then((value) {
         possibilities = value;
+        if (possibilities.isNotEmpty) {
+          for (int i = 0; i < possibilities.length; i++) {
+            names.add(possibilities[i]['name']);
+            if (actions[possibilities[i]['name']] == null) {
+              actions[possibilities[i]['name']] = [];
+            }
+            if (reactions[possibilities[i]['name']] == null) {
+              reactions[possibilities[i]['name']] = [];
+            }
+            for (int j = 0; j < possibilities[i]['action'].length; j++) {
+              actions[possibilities[i]['name']]!.add(possibilities[i]['action'][j]['name']);
+              if (possibilities[i]['action'][j]['args'] != null && actionArgs[possibilities[i]['action'][j]['name']] == null) {
+                actionArgs[possibilities[i]['action'][j]['name']] = [];
+              }
+              if (possibilities[i]['action'][j]['args'] != null) {
+                for (int k = 0; k < possibilities[i]['action'][j]['args'].length; k++) {
+                  actionArgs[possibilities[i]['action'][j]['name']]!.add(possibilities[i]['action'][j]['args'][k]);
+                }
+              }
+            }
+            for (int j = 0; j < possibilities[i]['reaction'].length; j++) {
+              reactions[possibilities[i]['name']]!.add(possibilities[i]['reaction'][j]['name']);
+              if (possibilities[i]['reaction'][j]['args'] != null && reactionArgs[possibilities[i]['reaction'][j]['name']] == null) {
+                reactionArgs[possibilities[i]['reaction'][j]['name']] = [];
+              }
+              if (possibilities[i]['reaction'][j]['args'] != null) {
+                for (int k = 0; k < possibilities[i]['reaction'][j]['args'].length; k++) {
+                  reactionArgs[possibilities[i]['reaction'][j]['name']]!.add(possibilities[i]['reaction'][j]['args'][k]);
+                }
+              }
+            }
+          }
+        }
         setState(() {
           isLoading = false;
         });
       });
     }
-    if (!isLoading && possibilities == 'KO') {
+    if (!isLoading && possibilities.isEmpty) {
       return Scaffold(
         appBar: AppBar(
           title: const Text('Add an Area', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black)),
@@ -97,17 +141,17 @@ class _AddAreaPageState extends State<AddAreaPage> {
           ),
         ),
         child: Column(
-          children: const <Widget> [
-            SizedBox(height: 10),
-            Text('Action', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
-            SizedBox(height: 10),
-            Text('Action Service', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black)),
-            SizedBox(height: 10),
-            DropDown(possibilities: <String> ['1', 'Two', 'Three', 'Four'], hint: 'Select a Service',),
-            SizedBox(height: 10),
-            Text('Action Type', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black)),
-            SizedBox(height: 10),
-            DropDown(possibilities: <String> ['1', 'Two', 'Three', 'Four'], hint: 'Select an Action',),
+          children: <Widget> [
+            const SizedBox(height: 10),
+            const Text('Action', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
+            const SizedBox(height: 10),
+            const Text('Action Service', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black)),
+            const SizedBox(height: 10),
+            myDropDown(names, 'Select a Service', 'action', '1'),
+            const SizedBox(height: 10),
+            const Text('Action Type', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black)),
+            const SizedBox(height: 10),
+            myDropDown(actions[actionName], 'Select an Action', null, '2'),
           ],
         )
     );
@@ -124,19 +168,66 @@ class _AddAreaPageState extends State<AddAreaPage> {
           ),
         ),
         child: Column(
-          children: const <Widget> [
-            SizedBox(height: 10),
-            Text('Reaction', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
-            SizedBox(height: 10),
-            Text('Reaction Service', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black)),
-            SizedBox(height: 10),
-            DropDown(possibilities: <String> ['1', 'Two', 'Three', 'Four'], hint: 'Select a Service',),
-            SizedBox(height: 10),
-            Text('Reaction Type', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black)),
-            SizedBox(height: 10),
-            DropDown(possibilities: <String> ['1', 'Two', 'Three', 'Four'], hint: 'Select an Action',),
+          children: <Widget> [
+            const SizedBox(height: 10),
+            const Text('Reaction', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
+            const SizedBox(height: 10),
+            const Text('Reaction Service', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black)),
+            const SizedBox(height: 10),
+            myDropDown(names, 'Select a Service', 'reaction', '3'),
+            const SizedBox(height: 10),
+            const Text('Reaction Type', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black)),
+            const SizedBox(height: 10),
+            myDropDown(reactions[reactionName], 'Select an Action', null, '4'),
           ],
         )
+    );
+  }
+  Widget myDropDown(List<String>? possibilities, String hint, String? name, String ?dropdownValue) {
+    String? mydropdownValue;
+    if (dropdownValue == '1') {
+      mydropdownValue = dropdownValue1;
+    } else if (dropdownValue == '2') {
+      mydropdownValue = dropdownValue2;
+    } else if (dropdownValue == '3') {
+      mydropdownValue = dropdownValue3;
+    } else if (dropdownValue == '4') {
+      mydropdownValue = dropdownValue4;
+    }
+    return DropdownButton<String>(
+      hint: Text(hint),
+      value: mydropdownValue,
+      elevation: 16,
+      onChanged: (String? value) {
+        setState(() {
+          if (dropdownValue == '1') {
+            dropdownValue1 = value!;
+          } else if (dropdownValue == '2') {
+            dropdownValue2 = value!;
+          } else if (dropdownValue == '3') {
+            dropdownValue3 = value!;
+          } else if (dropdownValue == '4') {
+            dropdownValue4 = value!;
+          }
+          if (name == "action") {
+            if (actionName != null) {
+                dropdownValue2 = null;
+            }
+            actionName = value;
+          } else if (name == "reaction") {
+            if (reactionName != null) {
+              dropdownValue4 = null;
+            }
+            reactionName = value;
+          }
+        });
+      },
+      items: (possibilities == null) ? null : possibilities.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 }

@@ -45,8 +45,8 @@ function signUp(call, callback) {
             PCS.addUser(call.request.username, call.request.password, code).then(response => {
                 if (response) {
                     console.log(`SignUp Succeed) ${call.request.username} ${call.request.password}`);
-                    sendMail('epi.area.code@outlook.com', 'azerty1&', call.request.username, `Come there: http:localhost:8080/api/v1/sign/upverif/${call.request.username}/${code} `);
-                    callback(null, { message: 'We are glad to see you here ' + call.request.username + '. check your mail', status: 400 });
+                    sendMail('epi.area.code@outlook.com', 'azerty1&', call.request.username, 'Area SignUp Verification', `Come there: http:localhost:8080/api/v1/sign/upverif/${call.request.username}/${code} `);
+                    callback(null, { message: 'We are glad to see you here ' + call.request.username + '. check your mail.', status: 400 });
                     return;
                 } else {
                     console.log(`SignUp Failed) ${call.request.username} ${call.request.password}`);
@@ -75,7 +75,7 @@ function signUpVerif(call, callback) {
 function signIn(call, callback) {
     PCS.getUser(call.request.username, call.request.password).then(response => {
         if (response != null) {
-            console.log(`SignIn Succeed) ${call.request.username} ${call.request.password} ${response.token}`);
+            console.log(`SignIn Succeed) ${call.request.username} ${call.request.password} <${response.token}>`);
             callback(null, { message: 'It\'s been a long time ' + call.request.username + ' !', token: response.token, status: 200 });
         } else {
             console.log(`SignIn Failed) ${call.request.username} ${call.request.password}`);
@@ -88,14 +88,112 @@ function signOut(call, callback) {
     console.log(`SignOut Succeed) ${call.request.username}`);
     callback(null, { message: 'You sign out successfully, See you soon ' + call.request.username + ' !', status: 200 });
 }
+
+function SetGithubToken(call, callback) {
+    console.log(`SignSetGithubToken ${call.request.token} ${call.request.github_token}`);
+    PCS.setGithubToken(call.request.token, call.request.github_token).then(response => {
+        if (response == true) {
+            callback(null, { message: 'github token add to account', status: 200 });
+        } else {
+            callback(null, { message: 'set github token failed', status: 400 });
+        }
+    }).catch(error => {
+        callback(null, { message: 'set github token failed', status: 400 });
+    });
+}
+
+function GetGithubToken(call, callback) {
+    console.log(`SignGetGithubToken ${call.request}`);
+    PCS.getGithubToken(call.request.token).then(response => {
+        if (response != null) {
+            callback(null, { message: 'github token get from account', github_token: response, status: 200 });
+        } else {
+            callback(null, { message: 'get github token failed', status: 400 });
+        }
+    }).catch(error => {
+        callback(null, { message: 'get github token failed', status: 400 });
+    });
+}
+
+
+function CreateArea(call, callback) {
+    console.log(`SignCreateArea ${call.request}`);
+
+    PCS.createArea(call.request).then(response => {
+        if (response) {
+            console.log(`SignCreateArea Succeed) ${call.request}`);
+            callback(null, { message: 'Area created successfully', status: 200});
+        } else {
+            console.log(`SignCreateArea Failed) ${call.request}`);
+            callback(null, { message: 'Area creation failed', status: 400 });
+        }
+    });
+}
+
+function DeleteArea(call, callback) {
+    console.log(`SignDeleteArea ${call.request}`);
+    PCS.deleteArea(call.request).then(response => {
+        if (response) {
+            console.log(`SignDeleteArea Succeed) ${call.request}`);
+            callback(null, { message: 'Area deleted successfully', status: 200});
+        } else {
+            console.log(`SignDeleteArea Failed) ${call.request}`);
+            callback(null, { message: 'Area deletion failed', status: 400 });
+        }
+    }).catch(error => {
+        console.log(`SignDeleteArea Failed) ${call.request}`);
+        callback(null, { message: 'Area deletion failed', status: 400 });
+    });
+}
+
+function ListArea(call, callback) {
+    console.log("ListArea");
+    PCS.listArea().then(response => {
+        if (response) {
+            console.log(`SignListArea Succeed)`);
+            console.log(JSON.stringify(response));
+            callback(null, { message: 'Area listed successfully', areas: JSON.stringify(response), status: 200});
+        } else {
+            console.log(`SignListArea Failed) ${call.request}`);
+            callback(null, { message: 'Area listing failed', areas: 'null', status: 400 });
+        }
+    }).catch(error => {
+        console.log(`SignListArea Failed) ${call.request}`);
+        callback(null, { message: 'Area listing failed', status: 400 });
+    });
+}
+
+function GetArea(call, callback) {
+    console.log("ListArea");
+    PCS.getUserArea(call.request).then(response => {
+        if (response) {
+            console.log(`SignListArea Succeed)`);
+            console.log(JSON.stringify(response));
+            callback(null, { message: 'Area listed successfully', areas: JSON.stringify(response), status: 200});
+        } else {
+            console.log(`SignListArea Failed) ${call.request}`);
+            callback(null, { message: 'Area listing failed', areas: 'null', status: 400 });
+        }
+    }).catch(error => {
+        console.log(`SignListArea Failed) ${call.request}`);
+        callback(null, { message: 'Area listing failed', status: 400 });
+    });
+}
+
 /* Server setup */
 var server = new grpc.Server();
 server.addService(signProto.SignService.service,
     {
-        signUp: signUp,
-        signIn: signIn,
-        signOut: signOut,
-        signUpVerif: signUpVerif
+        SignUp: signUp,
+        SignUpVerif: signUpVerif,
+        SignIn: signIn,
+        SignOut: signOut,
+        SetGithubToken: SetGithubToken,
+        GetGithubToken: GetGithubToken,
+        CreateArea: CreateArea,
+        DeleteArea: DeleteArea,
+        ListArea: ListArea,
+        GetArea: GetArea
     });
 
 server.bindAsync(`${IP}:${PORT}`,

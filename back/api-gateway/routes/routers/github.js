@@ -21,7 +21,7 @@ const {
     githubWebhookInfo,
 
 //StarWebhook
-    githubWebhookStarCreate,
+//    githubWebhookStarCreate,
 /*    githubWebhookStarDelete,*/
 
 
@@ -39,11 +39,14 @@ router.get('/githubapp/token', githubGithubAppToken);
 
 router.get('/githubapp/refresh', githubGithubAppRefresh);
 
+//router.post('/hook/star/create/:type', githubWebhookCreate);
+//router.post('/hook/activate/:id', githubWebhookActivate);
+//router.post('/hook/deactivate:id', githubWebhookDeactivate);
+//router.post('/hook/remove:id', githubWebhookRemove);
 
-router.get('/hook/star/create', githubWebhookStarCreate);
-/*router.get('/hook/star/delete', githubWebhookStarDelete);*/
+//router.get('/hook/star/delete', githubWebhookStarDelete);
 
-router.post('/webhook/payload', githubWebhook);
+//router.post('/webhook/payload', githubWebhook);
 
 router.get('/info', githubWebhookInfo);
 

@@ -8,7 +8,6 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const colors = require('chalk');
-const { sendMail } = require('./utils');
 
 const GRPC_IP = 'sign';
 const GRPC_PORT = 7001;
@@ -88,8 +87,8 @@ const signIn = ((req, res) => {
     console.log(`signIn` + model);
     client.signIn(model, function(err, response) {
         if (!err) {
-            console.log('Sign:', response.message);
-            res.status(response.status).send({message: response.message});
+            console.log('Sign:', response.message, "<" + response.token + ">");
+            res.status(response.status).send({message: response.message, token: response.token});
         } else {
             console.log(err.message);
             res.status(503).send({status: false});
@@ -114,14 +113,21 @@ const signOut = ((req, res) => {
     });
 });
 
-const signOAuth2 = ((req, res) => {
+const signGithub = ((req, res) => {
     const model = {
-        username: req.body.username,
+        token: req.body.token,
+        github_token: req.body.github_token,
     };
 
-    console.log(`signOAuth2` + model);
-    //not implemented
-    res.status(501).send({status: false});
+    client.signGithub(model, function(err, response) {
+        if (!err) {
+            console.log('Sign:', response.message);
+            res.status(response.status).send({message: response.message});
+        } else {
+            console.log(err.message);
+            res.status(503).send({status: false});
+        }
+    });
 });
 
 module.exports = {
@@ -129,5 +135,5 @@ module.exports = {
     signUpVerif,
     signIn,
     signOut,
-    signOAuth2,
+    signGithub
 }

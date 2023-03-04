@@ -17,7 +17,7 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - sign-tier
+      - service-tier
       - gateway-tier
     restart: unless-stopped
 
@@ -34,8 +34,7 @@ services:
     depends_on:
       - postgres
     networks:
-      - sign-tier
-#      - postgres-tier
+      - service-tier
     restart: unless-stopped
 
 # Postgres is my db wich is use with prisma
@@ -53,25 +52,12 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
-      - sign-tier
-#      - postgres-tier
+      - service-tier
     restart: unless-stopped
-
-# Test talk to Gateway
-#  test:
-#    container_name: docker-test
-#    build:
-#      context: ./test
-#      dockerfile: Dockerfile
-#    ports:
-#      - "7357:7357"
-#    networks:
-#      - gateway-tier
-#    restart: unless-stopped
 
 networks:
   gateway-tier:
-  sign-tier:
+  service-tier:
 #  postgres-tier:
 #    driver: bridge
 #    driver: bridge

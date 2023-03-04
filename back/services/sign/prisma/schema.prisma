@@ -12,66 +12,6 @@ datasource db {
 
 ///
 //
-// @title Service Info
-// @author @Perry-Chouteau
-//
-///
-
-// @description Services using api
-//model ServiceInfo {
-//  id            Int         @id @unique @default(autoincrement())
-//  createdAt     DateTime    @default(now())
-//  updatedAt     DateTime    @updatedAt
-//
-//
-//  action        ActionInfo[]
-//  reaction      ReactionInfo[]
-//  name          String      @db.VarChar(255)
-//}
-
-// @description Events using cron or webhook
-//model ActionInfo {
-//  id            Int         @id @unique @default(autoincrement())
-//  createdAt     DateTime    @default(now())
-//  updatedAt     DateTime    @updatedAt
-//  //
-//  name          String      @db.VarChar(255)
-//  description   String?     @db.VarChar(255)
-//  serviceId     Int
-//  service       ServiceInfo     @relation(fields: [serviceId], references: [id])
-//  type          ActionE     @default(WEBHOOK)
-//  urlCallback   String?
-//  active        Boolean     @default(true)
-//}
-
-// @description Events using cron or webhook
-//enum ActionE {
-//  CRON
-//  WEBHOOK
-//}
-
-// @description Reactions using api
-//model ReactionInfo {
-//  id            Int         @id @unique @default(autoincrement())
-//  createdAt     DateTime    @default(now())
-//  updatedAt     DateTime    @updatedAt
-//  //
-//  name          String      @db.VarChar(255)
-//  description   String?      @db.VarChar(255)
-//  serviceId     Int
-//
-//  type          ReactionE    @default(MAIL)
-//  service       ServiceInfo    @relation(fields: [serviceId], references: [id])
-//}
-
-// @description Reactions using api or mail
-//enum ReactionE {
-//  API
-//  MAIL
-//}
-
-///
-//
 // @title User Info
 // @author @Perry-Chouteau
 //
@@ -79,58 +19,43 @@ datasource db {
 
 // @description User
 model User {
-  id            Int         @id @unique @default(autoincrement())
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  id                  Int         @id @unique @default(autoincrement())
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
 
-  email         String      @unique
-  password      String
-  name          String?
-  token         String?
-  tokenTime     DateTime?
-  code          String
-  active        Boolean     @default(false)
-//  areas          Area[]
-//  auths         Auth[]
-  @@unique(fields: [id, createdAt, updatedAt, email, password, name, token, tokenTime, code, active], name: "UserModel")
+  email               String      @unique
+  password            String
+  name                String?
+  token               String?
+  code                String
+  active              Boolean     @default(false)
+  areas               Area[]
+
+  githubToken         String?
+  githubRefreshToken  String?
+
+  @@unique(fields: [id, createdAt, updatedAt, email, password, name, token, code, active, githubToken, githubRefreshToken], name: "UserModel")
   @@unique(fields: [email, code, active], name: "UserUp")
   @@unique(fields: [email, password, active], name: "UserIn")
+  @@unique(fields: [token, active], name: "UserGithubToken")
 }
 
-// @description Authentification to a service
-//model Auth {
-//  id          Int         @id @unique @default(autoincrement())
-//  createdAt   DateTime    @default(now())
-//  updatedAt   DateTime    @updatedAt
-//
-//  userId      Int
-//  user        User        @relation(fields: [userId], references: [id])
-//
-//  serviceId   Int
-//  service     Service     @relation(fields: [serviceId], references: [id])
-//
-//  authentified Boolean     @default(false)
-//  token       String?      @unique @db.VarChar(255)
-//  refreshToken String?     @unique @db.VarChar(255)
-//}
+model Area {
+  id                  Int         @id @unique @default(autoincrement())
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  //
+  serviceAct          String
+  action              String
+  actionArgs          String
+  actionData            String
+  serviceRea          String
+  reaction            String
+  reactionArgs        String
 
-///
-//
-// @title Area Info
-// @author @Perry-Chouteau
-//
-///
+  authorId            Int
+  author              User        @relation(fields: [authorId], references: [id])
+  active              Boolean     @default(true)
 
-//model Area {
-//  id            Int         @id @unique @default(autoincrement())
-//  createdAt     DateTime    @default(now())
-//  updatedAt     DateTime    @updatedAt
-//  //
-//  title         String?
-//  actionId      Int
-//  reactionId    Int
-//
-//  authorId      Int
-//  author        User        @relation(fields: [authorId], references: [id])
-//  active        Boolean     @default(true)
-//}
+  @@unique(fields: [action, actionArgs, reaction, reactionArgs], name: "AreaModel")
+}

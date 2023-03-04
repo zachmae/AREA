@@ -22,7 +22,7 @@
             "actionParams": {"timezone": "Europe/Paris", "day_of_week": 1, "hour": "08", "minute": "any"},
             "reactionCallback": "console log",
             "reactionParams": {"message": "it return true"},
-            "active" : true,
+            "active" : false,
             "user_id": 1
         },
         {
@@ -40,8 +40,17 @@
             "actionParams": {"timezone": "Europe/Paris", "day_of_week": 5, "hour": "any", "minute": "any"},
             "reactionCallback": "console log",
             "reactionParams": {"message": "it return true"},
-            "active" : true,
+            "active" : false,
             "user_id": 2
+        },
+        {
+            "id": 4,
+            "actionCallback": "console true",
+            "actionParams": {},
+            "reactionCallback": "telegraph create_page",
+            "reactionParams": {"author" : { "name" : "4REAprojectBot", "url": "https://github.com/Epi-Area/Area"}, "content" : "[{\"tag\":\"p\",\"children\":[\"Hello,+world!\"]}]", "title" : "Hello world"},
+            "active" : true,
+            "user_id": 1
         }
     ]
 }

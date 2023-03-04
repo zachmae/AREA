@@ -4,14 +4,46 @@ var apikeys = require('./apikeys.json');
 const reactionMap = {
     'mail': {
         'send': (user, param) => {
-            const author = param.author.mail;
-            const password = param.author.password;
+            const author = apikeys.mail;
+            const password = apikeys.password;
             const to = param.to;
             const subject = param.subject;
             const message = param.message;
             sendMail(author, password, to, subject, message);
             console.log('mail send');
             return true;
+        }
+    },
+    "telegraph": {
+        "create_page": async (user, param) => {
+            const author_name = param.author.name;
+            const author_url = param.author.url;
+            const content = param.content;
+            const title = param.title;
+            const access_token = apikeys.telegraph;
+            const to = user.mail;
+            const author_mail = apikeys.mail;
+            const author_password = apikeys.password;
+            var axios = require('axios');
+            var config = {
+                method: 'post',
+                url: 'https://api.telegra.ph/createPage',
+                headers: { },
+                params: {
+                    access_token: access_token,
+                    author_name: author_name,
+                    author_url: author_url,
+                    content: content,
+                    title: title
+                }
+            };
+            await axios(config)
+                .then(function (response) {
+                    const message = `Page créée: ${response.data.result.url}`;
+                    sendMail(author_mail, author_password, to, `telegraph page created: `+ title, message);
+                    console.log("[" + user.mail + "] telegram page created: " + response.data.result.url);
+                }
+            );
         }
     },
     'coinbase': {
@@ -34,7 +66,7 @@ const reactionMap = {
                 .then(function (response) {
                     coin_value = response.data.bpi.USD.rate;
                     const message = `Le cours du ${param.coin} est de ${coin_value}$ le ${today}`;
-                    sendMail(param.author.mail, param.author.password, to, `bitcoin value reminder`, message);
+                    sendMail(apikeys.mail, apikeys.password, to, `bitcoin value reminder`, message);
                 }
             );
             return true;

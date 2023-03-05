@@ -3,10 +3,7 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-import 'package:area/layout/sign/login.dart';
 import 'package:area/model/flex_size.dart';
-import 'package:area/layout/sign/register.dart';
-import 'package:area/layout/google_token.dart';
 import 'package:flutter/material.dart';
 
 
@@ -39,22 +36,6 @@ class _WelcomePageState extends State<WelcomePage> {
             SizedBox(height: perHeight(context, 5)),
             signButton(context, false),
             SizedBox(height: perHeight(context, 5)),
-            SizedBox(
-                width: perWidth(context, 50),
-                height: 65,
-                child: FloatingActionButton(
-                    heroTag: ('devBtn'),
-                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => const GoogleLoginPage())),
-                        builder: (context) => const WelcomePage())),
-                    child: const Text('page in dev',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 19,
-                        ))
-                )
-            )
           ],),
         ),
     );
@@ -65,10 +46,10 @@ class _WelcomePageState extends State<WelcomePage> {
         width: perWidth(context, 85),
         height: 65,
         child: FloatingActionButton(
+            backgroundColor: const Color.fromRGBO(9, 132, 227, 1),
             heroTag: (isRegister ? 'signInBtn': 'signUpBtn'),
             shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-            onPressed: () => Navigator.push(context, MaterialPageRoute(
-                builder: (context) => (isRegister ? const LoginPage() : const RegisterPage()))),
+            onPressed: () => Navigator.pushNamed(context, (isRegister ? '/Login': '/Register')),
             child: Text((isRegister ? 'Sign In': 'Sign Up'),
                 style: const TextStyle(
                   color: Colors.white,

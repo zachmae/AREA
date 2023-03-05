@@ -5,10 +5,27 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-const String apiPath = '10.68.246.139:7000';
+// root
+const String apiPath = '0a12-46-193-4-20.eu.ngrok.io';
 
-const String signInPath = 'api/v1/sign/in';
+///  SIGN
+const String signInPath = '/api/v1/sign/in';
 
 const String signUpPath = '/api/v1/sign/up';
 
-const String tokenPath = '/api/v1/google/registerToken';
+const String oauthUpPath = '/api/v1/sign/oauth';
+
+const String oauthInPath = '/api/v1/sign/oauth';
+
+///  SERVICES / AREA
+const String getServicesPath = '/about.json';
+
+const String sendServicePath = '/api/v1/area/create';
+
+const String getAreaPath = '/api/v1/area/get';
+
+const String activateAreaPath = '/api/v1/area/activate';
+
+const String deactivateAreaPath = '/api/v1/area/deactivate';
+
+const String deleteAreaPath = '/api/v1/area/delete';

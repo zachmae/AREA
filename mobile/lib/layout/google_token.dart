@@ -5,7 +5,6 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 /*
-
 // Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -35,7 +34,7 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
       home: SignInDemo(),
     ),
   );
-}
+}*/
 
 class SignInDemo extends StatefulWidget {
   const SignInDemo({Key? key}) : super(key: key);
@@ -180,16 +179,6 @@ import 'package:area/requests/sign.dart';
 
 class GoogleClass {
   static final _googleClass = GoogleSignIn();
-}
-
-/*
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter/material.dart';
-import 'package:area/model/flex_size.dart';
-
-
-class GoogleClass {
-  static final _googleClass = GoogleClass();
 
   static Future<GoogleSignInAccount?> login() => _googleClass.signIn();
 }
@@ -202,21 +191,6 @@ class GoogleLoginPage extends StatefulWidget {
 }
 
 class _GoogleLoginPageState extends State<GoogleLoginPage> {
-Future googleSignIn() async {
-  await GoogleClass.login();
-}
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -230,9 +204,7 @@ class _LoginPageState extends State<LoginPage> {
               child: FloatingActionButton(
                   heroTag: ('google'),
                   shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-                  onPressed: () => googleSignIn(context),
-                  onPressed: () =>   Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => ())),
+                  onPressed: () => googleSignIn,
                   child: const Text('Go to google',
                       style: TextStyle(
                         color: Colors.white,
@@ -245,4 +217,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-*/

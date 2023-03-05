@@ -39,7 +39,7 @@ const routerSign = require('./routes/routers/sign.js');
 const routerGithub = require('./routes/routers/github.js');
 const routerGoogle = require('./routes/routers/google.js');
 
-app.use('/about.json', routerAbout);
+app.use(routerAbout);
 
 routerMain.use('/sign', routerSign);
 routerMain.use('/area', routerArea);

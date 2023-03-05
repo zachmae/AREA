@@ -4,7 +4,6 @@
     },
     "server": {
         "current_time": 1675445773554,
-        "webhookurl": "http://142a-eza1-142a-eza1-ngrok.io",
         "services": [
             {
                 "name": "github",
@@ -72,7 +71,7 @@
                         ]
                     }
                 ]
-            },
+            }
         ]
     }
 }

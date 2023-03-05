@@ -42,11 +42,11 @@ function signUp(call, callback) {
     //PCS.signUsernameFunction into result
     PCS.isUsername(call.request.username).then(response => {
         if (response) {
-            PCS.addUser(call.request.username, call.request.password, code).then(response => {
+            PCS.addUser(call.request.username, call.request.password, code, false).then(response => {
                 if (response) {
                     console.log(`SignUp Succeed) ${call.request.username} ${call.request.password}`);
                     sendMail('epi.area.code@outlook.com', 'azerty1&', call.request.username, 'Area SignUp Verification', `Come there: http:localhost:8080/api/v1/sign/upverif/${call.request.username}/${code} `);
-                    callback(null, { message: 'We are glad to see you here ' + call.request.username + '. check your mail.', status: 400 });
+                    callback(null, { message: 'We are glad to see you here ' + call.request.username + '. check your mail.', status: 200 });
                     return;
                 } else {
                     console.log(`SignUp Failed) ${call.request.username} ${call.request.password}`);
@@ -87,6 +87,34 @@ function signIn(call, callback) {
 function signOut(call, callback) {
     console.log(`SignOut Succeed) ${call.request.username}`);
     callback(null, { message: 'You sign out successfully, See you soon ' + call.request.username + ' !', status: 200 });
+}
+
+function signOAuth(call, callback) {
+    var code = uuidv4();
+
+    PCS.isUsername(call.request.username).then(response => {
+        if (response) {
+            PCS.addUser(call.request.username, '', code, true).then(response => {
+                if (response) {
+                    console.log(`SignUp Succeed) ${call.request.username}`);
+                    callback(null, { message: 'We are glad to see you here ' + call.request.username, status: 200 });
+                    return;
+                } else {
+                    console.log(`SignUp Failed) ${call.request.username}`);
+                    callback(null, { message: 'Something went wrong for ' + call.request.username, status: 400 });
+                }
+            });
+        }
+        PCS.getUserOAuth(call.request.username).then(response => {
+            if (response != null) {
+                console.log(`SignIn Succeed) ${call.request.username} <${response.token}>`);
+                callback(null, { message: 'It\'s been a long time ' + call.request.username + ' !', token: response.token, status: 200 });
+            } else {
+                console.log(`SignIn Failed) ${call.request.username}`);
+                callback(null, { message: 'Something went wrong for ' + call.request.username, status: 400 });
+            }
+        });
+    });
 }
 
 function SetGithubToken(call, callback) {
@@ -131,9 +159,9 @@ function CreateArea(call, callback) {
 }
 
 function DeleteArea(call, callback) {
-    console.log(`SignDeleteArea ${call.request}`);
+    console.log(`DeleteArea ${call.request.area_id}`);
     PCS.deleteArea(call.request).then(response => {
-        if (response) {
+        if (response === true) {
             console.log(`SignDeleteArea Succeed) ${call.request}`);
             callback(null, { message: 'Area deleted successfully', status: 200});
         } else {
@@ -142,9 +170,42 @@ function DeleteArea(call, callback) {
         }
     }).catch(error => {
         console.log(`SignDeleteArea Failed) ${call.request}`);
-        callback(null, { message: 'Area deletion failed', status: 400 });
+        callback(null, { message: 'Area deletion crashed', status: 400 });
     });
 }
+
+function ActivateArea(call, callback) {
+    console.log(`ActivateArea ${call.request.area_id}`);
+    PCS.activateArea(true, call.request).then(response => {
+        if (response === true) {
+            console.log(`SignActivateArea Succeed) ${call.request}`);
+            callback(null, { message: 'Area activate successfully', status: 200});
+        } else {
+            console.log(`SignActivateArea Failed) ${call.request}`);
+            callback(null, { message: 'Area activate failed', status: 400 });
+        }
+    }).catch(error => {
+        console.log(`SignActivateArea Failed) ${call.request}`);
+        callback(null, { message: 'Area activate crashed', status: 400 });
+    });
+}
+
+function DeactivateArea(call, callback) {
+    console.log(`DeactivateArea ${call.request.area_id}`);
+    PCS.activateArea(false, call.request).then(response => {
+        if (response === true) {
+            console.log(`SignDeactivateArea Succeed) ${call.request}`);
+            callback(null, { message: 'Area deactivate successfully', status: 200});
+        } else {
+            console.log(`SignDeactivateArea Failed) ${call.request}`);
+            callback(null, { message: 'Area deactivate failed', status: 400 });
+        }
+    }).catch(error => {
+        console.log(`SignDeactivateArea Failed) ${call.request}`);
+        callback(null, { message: 'Area deactivate crashed', status: 400 });
+    });
+}
+
 
 function ListArea(call, callback) {
     console.log("ListArea");
@@ -164,7 +225,7 @@ function ListArea(call, callback) {
 }
 
 function GetArea(call, callback) {
-    console.log("ListArea");
+    console.log("GetArea");
     PCS.getUserArea(call.request).then(response => {
         if (response) {
             console.log(`SignListArea Succeed)`);
@@ -188,10 +249,13 @@ server.addService(signProto.SignService.service,
         SignUpVerif: signUpVerif,
         SignIn: signIn,
         SignOut: signOut,
+        signOAuth: signOAuth,
         SetGithubToken: SetGithubToken,
         GetGithubToken: GetGithubToken,
         CreateArea: CreateArea,
         DeleteArea: DeleteArea,
+        ActivateArea: ActivateArea,
+        DeactivateArea: DeactivateArea,
         ListArea: ListArea,
         GetArea: GetArea
     });

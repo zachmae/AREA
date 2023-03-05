@@ -47,7 +47,8 @@ const signUp = ((req, res) => {
     client.signUp(model, function(err, response) {
         if (!err) {
             console.log('Sign:', response.message);
-            res.status(response.status).send({message: response.message});
+            res.status(response.status).send({status: true, message: response.message});
+
         } else {
             console.log(err.message);
             res.status(503).send({status: false});
@@ -65,7 +66,7 @@ const signUpVerif = ((req, res) => {
     client.signUpVerif(model, function(err, response) {
         if (!err) {
             console.log('Sign:', response.message);
-            res.status(response.status).send({message: response.message});
+            res.status(response.status).send({status: true, message: response.message});
         } else {
             console.log(err.message);
             res.status(503).send({status: false});
@@ -88,10 +89,13 @@ const signIn = ((req, res) => {
     client.signIn(model, function(err, response) {
         if (!err) {
             console.log('Sign:', response.message, "<" + response.token + ">");
-            res.status(response.status).send({message: response.message, token: response.token});
+            if (response.token !== null)
+                res.status(response.status).send({status: true, message: response.message, token: response.token});
+            else
+                res.status(response.status).send({status: false});
         } else {
             console.log(err.message);
-            res.status(503).send({status: false});
+            res.status(response.status).send({status: false});
         }
     });
 });
@@ -105,7 +109,7 @@ const signOut = ((req, res) => {
     client.signOut(model, function(err, response) {
         if (!err) {
             console.log('Sign:', response.message);
-            res.status(response.status).send({message: response.message});
+            res.status(response.status).send({status: true, message: response.message});
         } else {
             console.log(err.message);
             res.status(503).send({status: false});
@@ -113,16 +117,18 @@ const signOut = ((req, res) => {
     });
 });
 
-const signGithub = ((req, res) => {
-    const model = {
-        token: req.body.token,
-        github_token: req.body.github_token,
-    };
+const signOAuth = ((req, res) => {
+    console.log("signOAuth")
 
-    client.signGithub(model, function(err, response) {
+    const model = {
+        username: req.body.username,
+        service: req.body.service,
+        oauth: req.body.oauth,
+    };
+    client.signOAuth(model, function(err, response) {
         if (!err) {
-            console.log('Sign:', response.message);
-            res.status(response.status).send({message: response.message});
+            console.log('Sign:Oauth', response.message);
+            res.status(response.status).send({status: true, message: response.message, token: response.token});
         } else {
             console.log(err.message);
             res.status(503).send({status: false});
@@ -135,5 +141,5 @@ module.exports = {
     signUpVerif,
     signIn,
     signOut,
-    signGithub
+    signOAuth
 }

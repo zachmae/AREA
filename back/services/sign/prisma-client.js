@@ -20,14 +20,15 @@ class PrismaClientSign {
         }
     }
 
-    async addUser(username, password, code) {
+    async addUser(username, password, code, active) {
         try {
             await prisma.user.create({
                 data: {
                     email: username,
                     password: password,
                     code: code,
-                    token: code
+                    token: code,
+                    active: active
                 }
             });
             return true;
@@ -72,6 +73,20 @@ class PrismaClientSign {
             return user;
         } catch (error) {
             console.log('error ' + error);
+            return null;
+        }
+    }
+
+    async getUserOAuth(username) {
+        try {
+            const user = await prisma.user.findUnique({
+                where: {
+                    email: username,
+                }
+            })
+            return user;
+        } catch (error) {
+            console.log('error =>' + error);
             return null;
         }
     }
@@ -144,6 +159,61 @@ class PrismaClientSign {
             return true;
         } catch (error) {
             console.log('error ' + error);
+            return false;
+        }
+    }
+
+    async deleteArea(request) {
+        try {
+            await prisma.user.update({
+                where: {
+                    UserGithubToken: {
+                        token: request.token,
+                        active: true
+                    }
+                },
+                data: {
+                    areas: {
+                        delete: [
+                            { id: request.area_id },
+                        ]
+                    }
+                },
+            })
+            console.log('>>>>>>>>>>>>>>>>>>>>')
+            return true;
+        } catch (err) {
+            console.log('<<<<<<<<<<<<<<<<<<<<')
+//            console.log(err);
+            return false;
+        }
+    }
+
+    async activateArea(activeSwitch, request) {
+        try {
+            await prisma.user.update({
+                where: {
+                    UserGithubToken: {
+                        token: request.token,
+                        active: true
+                    }
+                },
+                data: {
+                    areas: {
+                        update: [
+                            {
+                                where: { id: request.area_id },
+                                data: { active: activeSwitch },
+                            },
+                        ]
+                    }
+                },
+            })
+            console.log('>>>>>>>>>>>>>>>>>>>>')
+            return true;
+        } catch (err) {
+            console.log('<<<<<<<<<<<<<<<<<<<<')
+//            console.log(err);
             return false;
         }
     }

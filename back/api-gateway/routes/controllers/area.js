@@ -104,11 +104,21 @@ const { repoPubliciseCreate,
 
 //console.log(servicesList);
 
-const storeArea = ((model, res) => {
-});
+//const storeArea = ((model, res) => {
+//    client.CreateArea(model, function (err, response) {
+//        if (!err) {
+//            console.log('CreateArea', response.message);
+//            res.status(response.status).send({ status: true, message: response.message });
+//        } else {
+//            console.log(err.message);
+//            res.status(503).send({ status: false });
+//        }
+//    });
+//});
 
 const createArea = ((req, res) => {
     //create action
+    //create area
     try {
         var model = {
             token: req.body.token,
@@ -150,28 +160,86 @@ const createArea = ((req, res) => {
         } else {*/
         client.CreateArea(model, function (err, response) {
             if (!err) {
-                console.log('Sign:CreateArea', response.message);
-                res.status(response.status).send({ message: response.message });
+                console.log('CreateArea', response.message);
+                res.status(response.status).send({ status: true, message: response.message });
             } else {
                 console.log(err.message);
                 res.status(503).send({ status: false });
             }
         });
-        storeArea(model, res);
-        //}
+        /*storeArea(model, res);
+        }*/
     } catch (err) {
         res.status(503).send({ status: false, message: 'createArea broke up' });
     }
 })
 
 const deleteArea = ((req, res) => {
-    //    var model = {
-    //        token: req.body.token,
-    //        token_area: req.body.token_area,
-    //    }
-    //
-    res.status(503).send({ status: false });
+    try {
+        var model = {
+            token: req.body.token,
+            area_id: req.body.area_id,
+
+        };
+        client.DeleteArea(model, function (err, response) {
+            if (!err) {
+                console.log('DeleteAreaArea', response.message);
+                res.status(response.status).send({ status: true, message: response.message });
+            } else {
+                console.log(err.message);
+                res.status(503).send({ status: false , message: err.message});
+            }
+        });
+        //}
+    } catch (err) {
+        res.status(503).send({ status: false, message: 'Delete broke up' });
+    }
 })
+
+const activateArea = ((req, res) => {
+    try {
+        var model = {
+            token: req.body.token,
+            area_id: req.body.area_id,
+
+        };
+        client.ActivateArea(model, function (err, response) {
+            if (!err) {
+                console.log('ActivateArea', response.message);
+                res.status(response.status).send({ status: true, message: response.message });
+            } else {
+                console.log(err.message);
+                res.status(503).send({ status: false , message: err.message});
+            }
+        });
+        //}
+    } catch (err) {
+        res.status(503).send({ status: false, message: 'Delete broke up' });
+    }
+})
+
+const deactivateArea = ((req, res) => {
+    try {
+        var model = {
+            token: req.body.token,
+            area_id: req.body.area_id,
+
+        };
+        client.DeactivateArea(model, function (err, response) {
+            if (!err) {
+                console.log('DeactivateArea', response.message);
+                res.status(response.status).send({ status: true, message: response.message });
+            } else {
+                console.log(err.message);
+                res.status(503).send({ status: false , message: err.message});
+            }
+        });
+        //}
+    } catch (err) {
+        res.status(503).send({ status: false, message: 'Delete broke up' });
+    }
+})
+
 
 const listArea = ((req, res) => {
     console.log('ListArea');
@@ -186,6 +254,7 @@ const listArea = ((req, res) => {
 });
 
 const getArea = ((req, res) => {
+    console.log('GetArea');
     const model = {
         token: req.body.token
     }
@@ -198,37 +267,6 @@ const getArea = ((req, res) => {
         }
     });
 });
-
-
-const activateArea = ((req, res) => {
-    //    client.activateArea(model, function(err, response) {
-    //        if (!err) {
-    //            console.log('Sign:ActivateArea', response.message);
-    //            res.status(response.status).send({status: true});
-    //        } else {
-    //            console.log(err.message);
-    //            res.status(503).send({status: false});
-    //            console.log('-------------------');
-    //            return;
-    //        }
-    //    });
-    res.status(503).send({ status: false });
-})
-
-const deactivateArea = ((req, res) => {
-    //    client.activateArea(model, function(err, response) {
-    //        if (!err) {
-    //            console.log('Sign:ActivateArea', response.message);
-    //            res.status(response.status).send({status: true});
-    //        } else {
-    //            console.log(err.message);
-    //            res.status(503).send({status: false});
-    //            console.log('-------------------');
-    //            return;
-    //        }
-    //    });
-    res.status(503).send({ status: false });
-})
 
 module.exports = {
     setGithubToken,

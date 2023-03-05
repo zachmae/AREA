@@ -8,10 +8,13 @@ service SignService {
     rpc SignUpVerif(SignUpVerifRequest) returns (SignUpVerifResponse) {}
     rpc SignIn(SignInRequest) returns (SignInResponse) {}
     rpc SignOut(SignOutRequest) returns (SignOutResponse) {}
+    rpc signOAuth(SignOAuthRequest) returns (SignOAuthResponse) {}
     rpc SetGithubToken(SetGithubTokenRequest) returns (SetGithubTokenResponse) {}
     rpc GetGithubToken(GetGithubTokenRequest) returns (GetGithubTokenResponse) {}
     rpc CreateArea(CreateAreaRequest) returns (CreateAreaResponse) {}
-    rpc DeleteArea (DeleteAreaRequest) returns (DeleteAreaResponse) {}
+    rpc DeleteArea (EditAreaRequest) returns (EditAreaResponse) {}
+    rpc ActivateArea (EditAreaRequest) returns (EditAreaResponse) {}
+    rpc DeactivateArea (EditAreaRequest) returns (EditAreaResponse) {}
     rpc GetArea(GetAreaRequest) returns (ListAreaResponse) {}
     rpc ListArea (ListAreaRequest) returns (ListAreaResponse) {}
 }
@@ -54,6 +57,18 @@ message SignOutRequest {
 message SignOutResponse {
     string message = 1;
     int32 status = 2;
+}
+
+message SignOAuthRequest {
+    string username = 1;
+    string service = 2;
+    string oauth = 3;
+}
+
+message SignOAuthResponse {
+    string message = 1;
+    int32 status = 2;
+    string token = 3;
 }
 
 //set github token
@@ -108,12 +123,12 @@ message CreateAreaResponse {
     string token = 3;
 }
 
-message DeleteAreaRequest {
+message EditAreaRequest {
     string token = 1;
-    string area_id = 2;
+    int32 area_id = 2;
 }
 
-message DeleteAreaResponse {
+message EditAreaResponse {
     string message = 1;
     int32 status = 2;
 }

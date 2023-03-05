@@ -2,3 +2,13 @@
 .bin/
 .hookdeck/
 .save_area-link
+.prisma_docker
+.bin/
+.hookdeck/
+.api-hooker/
+.databases/
+
+db/
+postgres/
+
+test/

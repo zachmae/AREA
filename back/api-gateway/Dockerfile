@@ -1,10 +1,13 @@
-# Create app directory
-FROM node:8.9.4-alpine
-WORKDIR /usr/src/app
-# Install app dependencies
+FROM node:19-alpine3.16
+
+WORKDIR /app
+
 COPY package.json ./
+
 RUN npm install
-# Bundle app source
+
 COPY . .
+
 EXPOSE 8080
+
 CMD [ "node", "app.js" ]

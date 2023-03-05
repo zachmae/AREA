@@ -1,12 +1,12 @@
 version: "3.9"
-services:
 
-#  server:
-#    build: back
-#    ports:
-#      - "8080:8080"
-#    volumes:
-#      - back:/app
+volumes:
+  shared:
+
+networks:
+  sign-tier:
+
+services:
 
   client_mobile:
     build: ./mobile
@@ -29,5 +29,47 @@ services:
       - client_mobile
 #      - server
 
-volumes:
-  shared:
+  gateway:
+    container_name: docker-gateway
+    build:
+      context: ./back/api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - sign-tier
+    restart: unless-stopped
+
+  sign:
+    container_name: docker-sign
+    build:
+      context: ./back/services/sign
+      dockerfile: Dockerfile
+    ports:
+      - "7001:7001"
+    networks:
+      - sign-tier
+#      - database-tier
+    restart: unless-stopped
+#
+# https://hub.docker.com/_/postgres
+#  db:
+#    container_name: docker-postgres
+#    image: postgres
+#    ports:
+#      - "8000:5432"
+#    environment:
+#      POSTGRES_USER: user
+#      POSTGRES_PASSWORD: password
+#      POSTGRES_DB: db
+#      PGDATA: /var/lib/postgresql/data/pgdata
+#    volumes:
+#      - ./db/data:/var/lib/postgresql/data
+#    restart: unless-stopped
+
+#  server:
+#    build: back
+#    ports:
+#      - "8080:8080"
+#    volumes:
+#      - back:/app

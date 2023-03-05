@@ -1,1 +1,188 @@
-{"client":{"host":"192.168.1.25"},"server":{"current_time":1675135196717,"services":[{"nam":"sign","actions":[{"name":"sign_in","description":"Sign in to the service"},{"name":"sign_up","description":"Sign up to the service"},{"name":"sign_out","description":"Sign out of the service"}]},{"name":"facebook ","actions":[{"name":"new_message_in_group ","description":"A new message is posted in the group "},{"name":"new_message_inbox ","description":"A new private message is received by the user "},{"name":"new_like ","description":"The user gains a like from one of their messages "}],"reactions":[{"name":"like_message ","description":"The user likes a message "}]}]}}
+{
+    "client": {
+        "host": "192.168.1.25"
+    },
+    "server": {
+        "current_time": 1675445773554,
+        "webhookurl": "http://142a-eza1-142a-eza1-ngrok.io",
+        "services": [
+            {
+                "name" : "console",
+                "action" : [
+                    {
+                        "name" : "true",
+                        "description" : "This action always returns true.",
+                        "args" : []
+                    },
+                    {
+                        "name" : "false",
+                        "description" : "This action always returns false.",
+                        "args" : []
+                    }
+                ],
+                "reaction" : [
+                    {
+                        "name" : "log",
+                        "description" : "This action prints the specified string.",
+                        "args" : [
+                            "message"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name" : "meteo",
+                "action" : [
+                    {
+                        "name" : "rain?",
+                        "description" : "This action returns true if water is falling from the sky in the specified city.",
+                        "args" : [
+                            "location"
+                        ]
+                    },
+                    {
+                        "name" : "sunny?",
+                        "description" : "This action return true if its sunny in the specified city.",
+                        "args" : [
+                            "location"
+                        ]
+                    },
+                    {
+                        "name" : "cold?",
+                        "description" : "This action returns true if its under a specified temperature, in the specified city.",
+                        "args" : [
+                            "temp",
+                            "location"
+                        ]
+                    },
+                    {
+                        "name" : "warm?",
+                        "description" : "This action returns true if its upper a specified temperature, in the specified city.",
+                        "args" : [
+                            "temp",
+                            "location"
+                        ]
+                    },
+                    {
+                        "name" : "night?",
+                        "description" : "This action returns true if its night in the specified city.",
+                        "args" : [
+                            "location"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name" : "time",
+                "action" : [
+                    {
+                        "name" : "time",
+                        "description" : "Check if the current time correspond to the given format",
+                        "args" : [
+                            "timezone",
+                            "day_of_week",
+                            "hour",
+                            "minute"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name" : "mail",
+                "reaction" : [
+                    {
+                        "name" : "send",
+                        "description" : "Send an email to the specified address",
+                        "args" : [
+                            "to",
+                            "subject",
+                            "message"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "coinflip",
+                "action" : [
+                    {
+                        "name": "coinflip?",
+                        "description": "This action returns true if the result is has predicted",
+                        "args": [
+                            "isHeads"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name" : "steam",
+                "action" : [
+                    {
+                        "name" : "discounted?",
+                        "description" : "Check if the specified game is discounted",
+                        "args" : [
+                            "appid",
+                            "discount"
+                        ]
+                    },
+                    {
+                        "name" : "free?",
+                        "description" : "Check if the specified game is free",
+                        "args" : [
+                            "appid"
+                        ]
+                    },
+                    {
+                        "name" : "out?",
+                        "description" : "Check if the specified game is out",
+                        "args" : [
+                            "appid"
+                        ]
+                    },
+                    {
+                        "name" : "useronline?",
+                        "description" : "Check if the user is online",
+                        "args" : [
+                            "steamid"
+                        ]
+                    },
+                    {
+                        "name" : "useroffline?",
+                        "description" : "Check if the user is offline",
+                        "args" : [
+                            "steamid"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name" : "telegraph",
+                "reaction" : [
+                    {
+                        "name" : "create_page",
+                        "description" : "Create a new page on telegraph",
+                        "args" : [
+                            "author_name",
+                            "author_url",
+                            "content",
+                            "title",
+                            "to"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name" : "aws",
+                "reaction": [
+                    {
+                        "name" : "send_sns_sms",
+                        "description" : "Send a SMS using AWS SNS",
+                        "args" : [
+                            "phone_number",
+                            "message"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+///
+//
+// @title User Info
+// @author @Perry-Chouteau
+//
+///
+
+// @description User
+model User {
+  id                  Int         @id @unique @default(autoincrement())
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+
+  email               String      @unique
+  password            String
+  name                String?
+  token               String?
+  code                String
+  active              Boolean     @default(false)
+  areas               Area[]
+
+  githubToken         String?
+  githubRefreshToken  String?
+
+  @@unique(fields: [id, createdAt, updatedAt, email, password, name, token, code, active, githubToken, githubRefreshToken], name: "UserModel")
+  @@unique(fields: [email, code, active], name: "UserUp")
+  @@unique(fields: [email, password, active], name: "UserIn")
+  @@unique(fields: [token, active], name: "UserGithubToken")
+}
+
+model Area {
+  id                  Int         @id @unique @default(autoincrement())
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  //
+  serviceAct          String
+  action              String
+  actionArgs          String
+  actionData          String
+  serviceRea          String
+  reaction            String
+  reactionArgs        String
+
+  authorId            Int
+  author              User        @relation(fields: [authorId], references: [id])
+  active              Boolean     @default(true)
+
+//  @@unique(fields: [action, actionArgs, reaction, reactionArgs], name: "AreaModel")
+}

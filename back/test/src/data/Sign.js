@@ -11,7 +11,7 @@ const dataSign = [
       url: 'http://localhost:8080/api/v1/sign/up',
       method: "POST",
       headers: {'Content-Type': 'application/json'},
-      body: {'username': 'username', 'password': 'password'}
+      body: {'username': 'area.bot@outlook.com', 'password': 'password'}
     },
     {
       name: 'Sign out',

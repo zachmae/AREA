@@ -1,0 +1,67 @@
+#
+# @brief Sign controller
+# @description sign controller
+# @author @Perry-chouteau perry.chouteau@epitech.eu
+# @old commit https://github.com/Epi-Area/Area/commit/00f48e7ec5fea2945050ea2d883115cc443e140d
+#
+
+version: '3'
+
+services:
+# Gateway
+  gateway:
+    container_name: docker-gateway
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - service-tier
+      - gateway-tier
+    restart: unless-stopped
+
+
+# Services
+# Sign service
+  sign:
+    container_name: docker-sign
+    build:
+      context: ./services/sign
+      dockerfile: Dockerfile
+    ports:
+      - "7001:7001"
+    depends_on:
+      - postgres
+    networks:
+      - service-tier
+    restart: unless-stopped
+
+# Postgres is my db wich is use with prisma
+# https://hub.docker.com/_/postgres
+  postgres:
+    hostname: postgres
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - service-tier
+    restart: unless-stopped
+
+networks:
+  gateway-tier:
+  service-tier:
+#  postgres-tier:
+#    driver: bridge
+#    driver: bridge
+
+
+volumes:
+  pgdata:

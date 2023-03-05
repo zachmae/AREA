@@ -5,8 +5,18 @@ package sign;
 
 service SignService {
     rpc SignUp(SignUpRequest) returns (SignUpResponse) {}
+    rpc SignUpVerif(SignUpVerifRequest) returns (SignUpVerifResponse) {}
     rpc SignIn(SignInRequest) returns (SignInResponse) {}
     rpc SignOut(SignOutRequest) returns (SignOutResponse) {}
+    rpc signOAuth(SignOAuthRequest) returns (SignOAuthResponse) {}
+    rpc SetGithubToken(SetGithubTokenRequest) returns (SetGithubTokenResponse) {}
+    rpc GetGithubToken(GetGithubTokenRequest) returns (GetGithubTokenResponse) {}
+    rpc CreateArea(CreateAreaRequest) returns (CreateAreaResponse) {}
+    rpc DeleteArea (EditAreaRequest) returns (EditAreaResponse) {}
+    rpc ActivateArea (EditAreaRequest) returns (EditAreaResponse) {}
+    rpc DeactivateArea (EditAreaRequest) returns (EditAreaResponse) {}
+    rpc GetArea(GetAreaRequest) returns (ListAreaResponse) {}
+    rpc ListArea (ListAreaRequest) returns (ListAreaResponse) {}
 }
 
 //sign up
@@ -19,6 +29,16 @@ message SignUpResponse {
     int32 status  = 2;
 }
 
+//sign up verif
+message SignUpVerifRequest {
+    string username = 1;
+    string code = 2;
+}
+message SignUpVerifResponse {
+    string message = 1;
+    int32 status  = 2;
+}
+
 //sign in
 message SignInRequest {
     string username = 1;
@@ -26,7 +46,8 @@ message SignInRequest {
 }
 message SignInResponse {
     string message = 1;
-    int32 status = 2;
+    string token = 2;
+    int32 status = 3;
 }
 
 //sign out
@@ -34,6 +55,80 @@ message SignOutRequest {
     string username = 1;
 }
 message SignOutResponse {
+    string message = 1;
+    int32 status = 2;
+}
+
+message SignOAuthRequest {
+    string username = 1;
+    string service = 2;
+    string oauth = 3;
+}
+
+message SignOAuthResponse {
+    string message = 1;
+    int32 status = 2;
+    string token = 3;
+}
+
+//set github token
+message SetGithubTokenRequest {
+    string token = 1;
+    string github_token = 2;
+}
+
+message SetGithubTokenResponse {
+    string message = 1;
+    int32 status = 2;
+}
+
+//get github token
+message GetGithubTokenRequest {
+    string token = 1;
+}
+
+message GetGithubTokenResponse {
+    string message = 1;
+    int32 status = 2;
+    string github_token = 3;
+}
+
+message GetAreaRequest {
+    string token = 1;
+}
+
+message ListAreaRequest {
+}
+
+message ListAreaResponse {
+    string message = 1;
+    int32 status = 2;
+    string areas = 3;
+}
+
+message CreateAreaRequest {
+    string token = 1;
+    string service_act = 2;
+    string action = 3;
+    string action_args = 4;
+    string action_data = 5;
+    string service_rea = 6;
+    string reaction = 7;
+    string reaction_args = 8;
+}
+
+message CreateAreaResponse {
+    string message = 1;
+    int32 status = 2;
+    string token = 3;
+}
+
+message EditAreaRequest {
+    string token = 1;
+    int32 area_id = 2;
+}
+
+message EditAreaResponse {
     string message = 1;
     int32 status = 2;
 }

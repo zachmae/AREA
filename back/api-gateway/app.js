@@ -10,9 +10,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const colors = require('chalk');
+//const http = require('http');
 
 const app = express();
-const IP = '127.0.0.1' //require('./utils/ip').getIp('config/ip.conf');
+//const server = http.createServer(app);
+const IP = '0.0.0.0' //require('./utils/ip').getIp('config/ip.conf');
 const PORT = 8080;
 
 //middleware
@@ -31,23 +33,25 @@ app.all("/", (req, res) => {
   res.status(200).send({ message: `ok` });
 });
 
-const routerSign = require('./routes/routers/sign.js');
+const routerMain = express.Router();
 const routerAbout  = require('./routes/routers/about.js');
+const routerArea = require('./routes/routers/area.js');
+const routerSign = require('./routes/routers/sign.js');
 const routerGithub = require('./routes/routers/github.js');
 const routerGoogle = require('./routes/routers/google.js');
 
-app.use('/api/v1/sign', routerSign);
-app.use('/about.json', routerAbout);
-app.use('/api/v1/github', routerGithub);
-app.use('/api/v1/google', routerGoogle);
+app.use(routerAbout);
+
+routerMain.use('/sign', routerSign);
+routerMain.use('/area', routerArea);
+routerMain.use('/github', routerGithub);
+
+app.use('/api/v1', routerMain);
 
 //default
 app.all('*', (req, res) => {
     res.status(500).send({status: false});
 });
 
-app.listen(PORT, IP, () =>
-  console.log(
-    `API Gateway listening on port ${colors.underline.red(`${IP}:${PORT}`)} !`
-  )
-);
+//server.listen(PORT, IP, () => console.log(`API Gateway listening on port ${colors.underline.red(`${IP}:${PORT}`)} !`));
+app.listen( PORT, IP, () => console.log(`API Gateway listening on port ${colors.underline.red(`${IP}:${PORT}`)} !`));

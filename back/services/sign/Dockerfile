@@ -1,10 +1,16 @@
-# Create app directory
-FROM node:8.9.4-alpine
-WORKDIR /usr/src/app
-# Install app dependencies
-COPY package.json ./
-RUN npm install
-# Bundle app source
+FROM node:19-alpine3.16
+
+WORKDIR /app
+
+COPY package*.json ./
+COPY prisma ./
+COPY .env  ./
+
 COPY . .
-EXPOSE 8080
-CMD [ "node", "server.js" ]
+
+RUN npm install
+RUN npx prisma generate
+
+EXPOSE 7001
+
+CMD npm start

@@ -88,13 +88,15 @@ const actionMap = {
                 url: `http://worldtimeapi.org/api/timezone/${timezone}`,
                 headers: { }
             };
-            const day_of_week = param.day_of_week;
+            var day_of_week = param.day_of_week;
             const hour = param.hour;
             const minute = param.minute;
             return axios(config)
                 .then(function (response) {
                     if (day_of_week == "any")
                         response.data.day_of_week = "any";
+                    else
+                        response.data.day_of_week = "01234567"[response.data.day_of_week];
                     var apihour = response.data.datetime[11] + response.data.datetime[12];
                     if (hour == "any")
                         apihour = "any";
@@ -108,7 +110,7 @@ const actionMap = {
     },
     'coinflip': {
         'coinflip?': async (user, param) => {
-            const isHeads = ["Tails","Heads"][param.isHeads];
+            const isHeads = param.isHeads;
             var axios = require('axios');
             const config = {
                 method: 'GET',
@@ -128,7 +130,7 @@ const actionMap = {
     'steam': {
         'discounted?': async (user, param) => {
             const appid = param.appid;
-            const discount = param.discount;
+            const discount = parseInt(param.discount);
             var axios = require('axios');
             var config = {
                 method: 'get',

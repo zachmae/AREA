@@ -16,8 +16,8 @@ const reactionMap = {
     },
     "telegraph": {
         "create_page": async (user, param) => {
-            const author_name = param.author.name;
-            const author_url = param.author.url;
+            const author_name = param.author_name;
+            const author_url = param.author_url;
             const content = param.content;
             const title = param.title;
             const access_token = apikeys.telegraph;

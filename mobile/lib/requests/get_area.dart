@@ -14,7 +14,6 @@ import 'package:area/constants/token.dart';
 Future<List<dynamic>> getArea(BuildContext context) async
 {
   var url = Uri.https(apiPath, getAreaPath);
-  print(myToken);
   var body = jsonEncode({
     "token" : myToken,
   });
@@ -24,7 +23,6 @@ Future<List<dynamic>> getArea(BuildContext context) async
       'Content-Type': 'application/json'
     });
     var data = jsonDecode(response.body);
-    print(data);
     if (data['status']) {
       return data['areas'];
     } else {
@@ -43,7 +41,6 @@ Future<List<dynamic>> getArea(BuildContext context) async
 
 Future<String> switchArea(BuildContext context, int id, bool whatSwitch) async
 {
-  print(whatSwitch);
   var url = Uri.https(apiPath, (whatSwitch ? deactivateAreaPath : activateAreaPath));
   var body = jsonEncode({
     "token" : myToken,

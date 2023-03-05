@@ -44,6 +44,10 @@ class _AddAreaPageState extends State<AddAreaPage> {
     Map<String, String>? reactionParams = reactionArgs[dropdownValue4]?.map((key, value) {
       return MapEntry(key, value.text);
     });
+    if (dropdownValue1 == null || dropdownValue2 == null || dropdownValue3 == null || dropdownValue4 == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please fill all the fields')));
+      return null;
+    }
     setState(() {
       isLoading = true;
     });

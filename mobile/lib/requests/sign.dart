@@ -23,7 +23,7 @@ Future<String> login({required String email, required String password}) async
 
   String cryptPassword = base64.encode(digest.bytes);
 
-  var url = Uri.http(apiPath, signInPath);
+  var url = Uri.https(apiPath, signInPath);
   var body = jsonEncode({
     "username": email,
     "password": cryptPassword
@@ -35,10 +35,11 @@ Future<String> login({required String email, required String password}) async
     });
     var data = jsonDecode(response.body);
 
-    if (data['message'] == 'It\'s been a long time  !') {
-      return 'OK';
+    if (data['status'] == true) {
+      myToken = data['token'];
+      return data['token'];
     } else {
-      return data['message'];
+      return 'KO';
     }
   } catch (error) {
     if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
@@ -58,7 +59,7 @@ Future<String> register({required String email, required String password}) async
 
   String cryptPassword = base64.encode(digest.bytes);
 
-  var url = Uri.http(apiPath, signUpPath);
+  var url = Uri.https(apiPath, signUpPath);
   var body = jsonEncode({
     "username": email,
     "password": cryptPassword
@@ -70,10 +71,10 @@ Future<String> register({required String email, required String password}) async
     });
     var data = jsonDecode(response.body);
 
-    if (data['message'] == 'We are glad you\'re here ') {
-      return 'OK';
-    } else {
+    if (data['status'] == true) {
       return data['message'];
+    } else {
+      return 'KO';
     }
   } catch (error) {
     if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {

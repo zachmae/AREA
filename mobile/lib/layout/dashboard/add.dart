@@ -37,17 +37,25 @@ class _AddAreaPageState extends State<AddAreaPage> {
   String ?actionName;
   String ?reactionName;
 
-  Future<VoidCallback?> sendArea() async {
-    setState(() {
-      isLoading = false;
-    });
+  Future<String?> sendArea() async {
     Map<String, String>? actionParams = actionArgs[dropdownValue2]?.map((key, value) {
       return MapEntry(key, value.text);
     });
     Map<String, String>? reactionParams = reactionArgs[dropdownValue4]?.map((key, value) {
       return MapEntry(key, value.text);
     });
-    await sendNewArea(actionService: dropdownValue1, actionAction: dropdownValue2,reactionService: dropdownValue3, reactionAction: dropdownValue4, actionArgs: actionParams, reactionArgs: reactionParams);
+    setState(() {
+      isLoading = true;
+    });
+    String res = await sendNewArea(actionService: dropdownValue1, actionAction: dropdownValue2,reactionService: dropdownValue3, reactionAction: dropdownValue4, actionArgs: actionParams, reactionArgs: reactionParams);
+    setState(() {
+      isLoading = false;
+    });
+    if (res == 'OK') {
+      Navigator.pushNamed(context, '/Dashboard');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
+    }
     return null;
   }
 

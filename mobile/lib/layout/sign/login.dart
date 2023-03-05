@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
         isLoading = true;
       });
       var res = await login(email: emailController.text, password: passwordController.text);
-      if (res == 'OK') {
+      if (res != '0K') {
         Navigator.pushNamed(context, '/Dashboard');
       } else {
         setState(() {

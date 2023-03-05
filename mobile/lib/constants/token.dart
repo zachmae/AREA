@@ -8,3 +8,5 @@
 String ?googleToken = '';
 
 String ?github = '';
+
+String myToken = 'null';

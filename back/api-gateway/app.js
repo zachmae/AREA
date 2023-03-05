@@ -4,7 +4,7 @@
  * @author: perry.chouteau@epitech.eu
  */
 
-"use strict";
+'use strict'
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -22,15 +22,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use((req, res, next) => {
-  const clientip =
-    req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-  console.log("clientip " + clientip);
-  next();
+    const clientip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    console.log("clientip " + clientip);
+    next();
 });
 
 //default
-app.all("/", (req, res) => {
-  res.status(200).send({ message: `ok` });
+app.all('/', (req, res) => {
+    res.status(200).send({message:`ok`});
 });
 
 const routerMain = express.Router();

@@ -5,7 +5,6 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-String ?googleToken = '';
 
 String ?github = '';
 

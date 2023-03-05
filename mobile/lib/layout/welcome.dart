@@ -40,6 +40,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 width: perWidth(context, 50),
                 height: 65,
                 child: FloatingActionButton(
+                    backgroundColor: const Color.fromRGBO(9, 132, 227, 1),
                     heroTag: ('devBtn'),
                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
                     onPressed: () => Navigator.pushNamed(context, '/Dashboard'),
@@ -60,6 +61,7 @@ class _WelcomePageState extends State<WelcomePage> {
         width: perWidth(context, 85),
         height: 65,
         child: FloatingActionButton(
+            backgroundColor: const Color.fromRGBO(9, 132, 227, 1),
             heroTag: (isRegister ? 'signInBtn': 'signUpBtn'),
             shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
             onPressed: () => Navigator.pushNamed(context, (isRegister ? '/Login': '/Register')),

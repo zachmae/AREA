@@ -21,7 +21,7 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard> {
   int currentPage = 0;
   PageController pageController = PageController(viewportFraction: 1, initialPage: 0);
-  List<Widget> pages = const <Widget> [ HomePage(),  AddAreaPage(),  ProfilePage(),  LogsPage()];
+  List<Widget> pages = const <Widget> [ HomePage(),  AddAreaPage(),  LogsPage(), ProfilePage()];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -36,12 +36,12 @@ class _DashBoardState extends State<DashBoard> {
           items: const <BottomNavigationBarItem> [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.add_box), label: 'Settings'),
-            BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Profile'),
             BottomNavigationBarItem(icon: Icon(Icons.hourglass_bottom_outlined), label: 'Hourglass'),
+            BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Profile'),
           ],
           unselectedItemColor: Colors.black,
           currentIndex: currentPage,
-          selectedItemColor: Colors.blue,
+          selectedItemColor: const Color.fromRGBO(9, 132, 227, 1),
           onTap: _onItemTapped,
           backgroundColor: Colors.white,
         ),

@@ -57,7 +57,8 @@ class _LoginPageState extends State<LoginPage> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  const SizedBox(height: 60),
                   SizedBox(width: perWidth(context, 90), child: const Text('Email address', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -69,6 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                       width: perWidth(context, 90),
                       height: 65,
                       child: FloatingActionButton(
+                          backgroundColor: const Color.fromRGBO(9, 132, 227, 1),
                           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
                           onPressed: loginPressed,
                           child: const Text('Login',
@@ -85,7 +87,51 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 100, child: Text('Oauth', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)))
+                  const SizedBox(height: 40),
+                  googleButton(context),
+                  //const SizedBox(height: 100, child: Text('Oauth', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)))
                 ])));
+  }
+
+  Future<VoidCallback?> googleLogin() async {
+    var res = await googleSignIn(context, true);
+    if (res == 'OK') {
+      Navigator.pushNamed(context, '/Dashboard');
+    } else if (res != 'KO'){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
+    }
+    return null;
+  }
+
+  Widget googleButton(BuildContext context) {
+    return SizedBox(
+      width: perWidth(context, 70),
+      height: 65,
+      child: ElevatedButton(
+        onPressed: googleLogin,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              'assets/Google_G_Logo.png',
+              height: 36),
+            const SizedBox(width: 16),
+            const Text('Sign in with Google',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

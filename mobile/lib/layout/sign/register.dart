@@ -35,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         isLoading = true;
       });
-      var res = await register(email: emailController.text, password: passwordController.text);
+      var res = await register(context, email: emailController.text, password: passwordController.text);
       if (res == 'OK') {
         Navigator.pushNamed(context, '/Welcome');
       } else {
@@ -44,6 +44,16 @@ class _RegisterPageState extends State<RegisterPage> {
         });
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
       }
+    }
+    return null;
+  }
+
+  Future<VoidCallback?> googleLogin() async {
+    var res = await googleSignIn(context, false);
+    if (res == 'OK') {
+      Navigator.pushNamed(context, '/Dashboard');
+    } else if (res != 'KO'){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
     }
     return null;
   }
@@ -62,8 +72,9 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  const SizedBox(height: 50),
                   SizedBox(width: perWidth(context, 90), child: const Text('Email address', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -78,10 +89,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.all(20.0),
                       child: SecondPasswordField(formKey: _password2Key, controller: password2Controller, fstPassword: passwordController.text)
                   ),
+                  const SizedBox(height: 30),
                   SizedBox(
                       width: perWidth(context, 90),
                       height: 65,
                       child: FloatingActionButton(
+                          backgroundColor: const Color.fromRGBO(9, 132, 227, 1),
                           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
                           onPressed: registerPressed,
                           child: const Text('Register',
@@ -98,13 +111,43 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                      height: 100,
-                      child: Text('Oauth',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
-                  )]
+                  const SizedBox(height: 50),
+                  googleButton(context),
+                ]
             )
         )
     );
   }
+  Widget googleButton(BuildContext context) {
+    return SizedBox(
+      width: perWidth(context, 70),
+      height: 65,
+      child: ElevatedButton(
+        onPressed: googleLogin,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+                'assets/Google_G_Logo.png',
+                height: 36),
+            const SizedBox(width: 16),
+            const Text('Sign in with Google',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
 }

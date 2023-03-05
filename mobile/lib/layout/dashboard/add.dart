@@ -143,6 +143,7 @@ class _AddAreaPageState extends State<AddAreaPage> {
           width: perWidth(context, 85),
           height: 65,
           child: FloatingActionButton(
+              backgroundColor: const Color.fromRGBO(9, 132, 227, 1),
               heroTag: ('CreateAreaBtn'),
               shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
               onPressed: sendArea,

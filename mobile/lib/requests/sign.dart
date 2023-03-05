@@ -49,7 +49,7 @@ Future<String> login({required String email, required String password}) async
   }
 }
 
-Future<String> register({required String email, required String password}) async
+Future<String> register(BuildContext context, {required String email, required String password}) async
 {
   final List<int> key = utf8.encode('keys');
   final List<int> bytes = utf8.encode(password);
@@ -72,7 +72,8 @@ Future<String> register({required String email, required String password}) async
     var data = jsonDecode(response.body);
 
     if (data['status'] == true) {
-      return data['message'];
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(data['message'])));
+      return 'OK';
     } else {
       return 'KO';
     }
@@ -84,33 +85,53 @@ Future<String> register({required String email, required String password}) async
   }
 }
 
-Future sendToken({required VoidCallback onPressed, required String token}) async
-{
-  var url = Uri.http(apiPath, tokenPath);
+Future<String> temp(String email, String? googleToken) async {
+  var url = Uri.https(apiPath, oauthInPath);
   var body = jsonEncode({
-    "token" : token,
+    "username" : email,
+    "service" : "google",
+    "oauth" : googleToken
   });
-  var response = await http.post(url, body: body, headers: {
-    "Content-Type": "application/json"
-  });
-  var data = jsonDecode(response.body);
+  try {
+    var response = await http.post(url, body: body, headers: {
+      "Content-Type": "application/json"
+    });
+    var data = jsonDecode(response.body);
 
-  if (data['message'] == 'good token') {
-    onPressed();
+    if (data['status'] == true) {
+      myToken = data['token'];
+      return 'OK';
+    }
+  } catch (error) {
+    if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
+      return 'No internet connection';
+    }
+    return error.toString();
   }
+  return 'KO';
 }
 
-Future googleSignIn() async
+Future<String> googleSignIn(BuildContext context, bool isRegister) async
 {
+  String email = '';
+  String? googleToken;
+  bool isOk = true;
+
   await GoogleClass.login().then((result) {
     result?.authentication.then((googleKey) {
       googleToken = googleKey.accessToken;
-    print('accesToken = ${googleKey.accessToken}');
+      email = result.email;
+      return temp(email, googleToken);
   }).catchError((error) {
-    print('token error :  $error');
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.toString())));
+    isOk = false;
     });
   }).catchError((error) {
-    print('login error : $error');
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.toString())));
+    isOk = false;
   });
-  print('token = $googleToken');
+  if (isOk == false) {
+    return 'KO';
+  }
+  return 'OK';
 }

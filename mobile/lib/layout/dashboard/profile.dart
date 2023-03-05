@@ -5,7 +5,6 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-import 'package:area/requests/sign.dart';
 import 'package:flutter/material.dart';
 import 'package:area/model/flex_size.dart';
 
@@ -90,8 +89,6 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: 10),
             accountLinking('Github', 'assets/github_logo.png', onPressed: githubPress),
             const SizedBox(height: 10),
-            accountLinking('Google', 'assets/Google_G_Logo.png', onPressed: googleSignIn),
-            const SizedBox(height: 10)
           ],
         )
     );

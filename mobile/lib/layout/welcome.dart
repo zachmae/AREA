@@ -36,21 +36,6 @@ class _WelcomePageState extends State<WelcomePage> {
             SizedBox(height: perHeight(context, 5)),
             signButton(context, false),
             SizedBox(height: perHeight(context, 5)),
-            SizedBox(
-                width: perWidth(context, 50),
-                height: 65,
-                child: FloatingActionButton(
-                    backgroundColor: const Color.fromRGBO(9, 132, 227, 1),
-                    heroTag: ('devBtn'),
-                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-                    onPressed: () => Navigator.pushNamed(context, '/Dashboard'),
-                    child: const Text('page in dev',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 19,
-                        ))
-                )
-            )
           ],),
         ),
     );

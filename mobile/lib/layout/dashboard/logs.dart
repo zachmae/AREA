@@ -24,6 +24,7 @@ class _LogsPageState extends State<LogsPage> {
   bool link = false;
   bool isLoading = true;
   bool first = true;
+  bool noArea = true;
   Map<int, Map<String, String>> area = {};
 
   @override
@@ -31,6 +32,14 @@ class _LogsPageState extends State<LogsPage> {
     if (first && isLoading) {
       getArea(context).then((value) {
         area[0] = {};
+        if (value.isEmpty) {
+          setState(() {
+            first = false;
+            isLoading = false;
+            noArea = true;
+          });
+          return;
+        }
         for (var i = 0; i < value.length; i++) {
           DateTime date = DateTime.parse(value[i]['createdAt']);
           area[i + 1] = {
@@ -46,6 +55,7 @@ class _LogsPageState extends State<LogsPage> {
         setState(() {
           first = false;
           isLoading = false;
+          noArea = false;
         });
       });
     }
@@ -67,6 +77,26 @@ class _LogsPageState extends State<LogsPage> {
         ),
       );
     }
+
+    if (!isLoading && noArea) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Area Logs', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black)),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+        ),
+        body: Center(
+            child: Column(
+                children: <Widget> [
+                  SizedBox(height: perHeight(context, 35)),
+                  const Text('You don\'t have any area :(', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black)),
+                ])
+        ),
+      );
+    }
+
     return isLoading ? const LoadPage() : Scaffold(
       appBar: AppBar(
         title: const Text('Area Logs', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black)),

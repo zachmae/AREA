@@ -11,54 +11,6 @@ import 'package:area/constants/api_path.dart';
 import 'package:flutter/material.dart';
 import 'package:area/constants/token.dart';
 
-var response = jsonEncode({
-    "status": true,
-    "areas": [
-      {
-        "id": 1,
-        "createdAt": "2023-03-04T23:46:38.775Z",
-        "updatedAt": "2023-03-04T23:46:38.775Z",
-        "serviceAct": "github",
-        "action": "github-star-created",
-        "actionArgs": "{\"owner\":\"perry-chouteau\",\"repo\":\"perry-chouteau\"}",
-        "actionData": "",
-        "serviceRea": "github",
-        "reaction": "github-send-mail",
-        "reactionArgs": "{\"email\":\"perry.chouteau@epitech.eu\"}",
-        "authorId": 1,
-        "active": true
-      },
-      {
-        "id": 2,
-        "createdAt": "2023-03-05T02:55:30.019Z",
-        "updatedAt": "2023-03-05T02:55:30.019Z",
-        "serviceAct": "github",
-        "action": "github-repository-publicise",
-        "actionArgs": "{\"owner\":\"owner\",\"repo\":\"repo\"}",
-        "actionData": "",
-        "serviceRea": "github",
-        "reaction": "github-send-email",
-        "reactionArgs": "{\"email\":\"email\"}",
-        "authorId": 2,
-        "active": true
-      },
-      {
-        "id": 3,
-        "createdAt": "2023-03-05T02:57:06.267Z",
-        "updatedAt": "2023-03-05T02:57:06.267Z",
-        "serviceAct": "github",
-        "action": "github-repository-publicise",
-        "actionArgs": "{\"owner\":\"owner\",\"repo\":\"repo\"}",
-        "actionData": "",
-        "serviceRea": "github",
-        "reaction": "github-send-email",
-        "reactionArgs": "{\"email\":\"mailsssss\"}",
-        "authorId": 2,
-        "active": true
-      },
-    ]
-    });
-
 Future<List<dynamic>> getArea(BuildContext context) async
 {
   var url = Uri.https(apiPath, getAreaPath);
@@ -67,11 +19,10 @@ Future<List<dynamic>> getArea(BuildContext context) async
   });
 
   try {
-    /*var response = await http.post(url, body: body, headers: {
+    var response = await http.post(url, body: body, headers: {
       'Content-Type': 'application/json'
     });
-    var data = jsonDecode(response.body);*/
-    var data = jsonDecode(response);
+    var data = jsonDecode(response.body);
     if (data['status']) {
       return data['areas'];
     } else {
@@ -83,26 +34,25 @@ Future<List<dynamic>> getArea(BuildContext context) async
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No internet connection')));
       return List.empty();
     }
-    print(error);
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.toString())));
     return List.empty();
   }
 }
 
-Future<String> switchArea(BuildContext context, int id) async
+Future<String> switchArea(BuildContext context, int id, bool whatSwitch) async
 {
-  var url = Uri.https(apiPath, switchAreaPath);
+  print(whatSwitch);
+  var url = Uri.https(apiPath, (whatSwitch ? deactivateAreaPath : activateAreaPath));
   var body = jsonEncode({
     "token" : myToken,
     "area_id" : id,
   });
 
   try {
-    /*var response = await http.post(url, body: body, headers: {
+    var response = await http.post(url, body: body, headers: {
       'Content-Type': 'application/json'
     });
-    var data = jsonDecode(response.body);*/
-    var data = jsonDecode(response);
+    var data = jsonDecode(response.body);
     if (data['status']) {
       return 'OK';
     } else {
@@ -128,11 +78,10 @@ Future<String> deleteArea(BuildContext context, int id) async
   });
 
   try {
-    /*var response = await http.post(url, body: body, headers: {
+    var response = await http.post(url, body: body, headers: {
       'Content-Type': 'application/json'
     });
-    var data = jsonDecode(response.body);*/
-    var data = jsonDecode(response);
+    var data = jsonDecode(response.body);
     if (data['status']) {
       return 'OK';
     } else {
@@ -144,7 +93,6 @@ Future<String> deleteArea(BuildContext context, int id) async
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No internet connection')));
       return "No internet connection";
     }
-    print(error);
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.toString())));
     return "error";
   }

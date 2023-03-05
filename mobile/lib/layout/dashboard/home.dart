@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   bool link = false;
   bool isLoading = true;
   bool first = true;
+  bool noArea = true;
   Map<int, Map<String, String>> area = {};
   List<bool> switchList = [];
 
@@ -30,8 +31,18 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     if (first && isLoading) {
       getArea(context).then((value) {
+        area.clear();
+        switchList.clear();
         area[0] = {};
         switchList.add(false);
+        if (value.isEmpty) {
+          setState(() {
+            first = false;
+            isLoading = false;
+            noArea = true;
+          });
+          return;
+        }
         for (var i = 0; i < value.length; i++) {
           switchList.add(value[i]['active']);
           area[i + 1] = {
@@ -41,10 +52,11 @@ class _HomePageState extends State<HomePage> {
             'reactionService': value[i]['serviceRea'],
             'reactionAction': value[i]['reaction'],
             'reactionArgs': value[i]['reactionArgs'],
+            'id': value[i]['id'].toString(),
           };
         }
-        print(area[1]!['actionArgs']!);
         setState(() {
+          noArea = false;
           first = false;
           isLoading = false;
         });
@@ -64,6 +76,24 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget> [
                   SizedBox(height: perHeight(context, 35)),
                   const Text('No service available', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.red)),
+                ])
+        ),
+      );
+    }
+    if (!isLoading && noArea) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Area', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black)),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+        ),
+        body: Center(
+            child: Column(
+                children: <Widget> [
+                  SizedBox(height: perHeight(context, 35)),
+                  const Text('You don\'t have any Area :(', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black)),
                 ])
         ),
       );
@@ -90,6 +120,7 @@ class _HomePageState extends State<HomePage> {
   Widget basicArea(BuildContext context, int index) {
     Map<String, dynamic> actionArgs = jsonDecode(area[index]!['actionArgs']!);
     Map<String, dynamic> reactionArgs = jsonDecode(area[index]!['reactionArgs']!);
+    int id = int.parse(area[index]!['id']!);
 
     return Container(
         width: perWidth(context, 80),
@@ -156,13 +187,12 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Switch(
-                  // This bool value toggles the switch.
                   value: switchList[index],
                   activeColor: Colors.blue,
                   onChanged: (bool value) {
                     setState(() {
                       isLoading = true;
-                      deleteArea(context, index).then((value) {
+                      switchArea(context, id, (value ? false : true)).then((value) {
                         setState(() {
                           first = true;
                         });
@@ -178,7 +208,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     setState(() {
                       isLoading = true;
-                      deleteArea(context, index).then((value) {
+                      deleteArea(context, id).then((value) {
                         setState(() {
                           first = true;
                         });

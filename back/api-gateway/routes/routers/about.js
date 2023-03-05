@@ -5,6 +5,7 @@ const {
     servicesAbout,
 } = require('../controllers/about.js');
 
-router.get('/', servicesAbout);
+router.get('/about.json', servicesAbout);
+router.post('/about.json', servicesAbout);
 
 module.exports = router;

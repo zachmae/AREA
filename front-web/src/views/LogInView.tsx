@@ -3,29 +3,59 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import React from 'react';
 import JSON from 'json5';
+import HmacSHA256 from 'crypto-js/hmac-sha256';
+import Base64 from 'crypto-js/enc-base64';
+
 import { SignInRequestService } from '../services/SignServices';
 import { GoogleLogin } from '@react-oauth/google';
 import { refreshTokenSetup } from '../components/refreshGoogleToken';
 
+import { getAreaList } from '../services/AreaListRequest';
+
+import { myObject } from './VariablesView';
+
 import './Login-upView.css';
 
-const LoginView = () => {
+const LoginView = ({setAreas} : any) => {
 	const [textinputuser, setTextInputuser] = useState('PLACEHOLDER');
 	const [textinputpassword, setTextInputpassword] = useState('PLACEHOLDER');
 	const [response, setResponse] = useState('');
-	const handleSignIn = () => {
-		console.log('test');
-		setResponse('Logging in...');
-		SignInRequestService({ username: textinputuser, password: textinputpassword })
+	const handleRequestAreaList = () => {
+		console.log(myObject.token);
+		getAreaList()
 			.then((response) => {
-				setResponse(JSON.parse(response).message);
-				navigate('/area-list');
+				console.log(response);
+				console.log('ok');
+				setAreas(response.areas);
 			})
 			.catch((error) => {
-				console.error(error);
-				setResponse('Error');
+				console.error('error');
 			});
-		console.log(response);
+	};
+	const handleSignIn = () => {
+		if (textinputuser.includes('@')) {
+			const hash = HmacSHA256(textinputpassword, "area-secret");
+			const hashInBase64 = Base64.stringify(hash).toString();
+			setResponse('Logging in...');
+			SignInRequestService({ username: textinputuser, password: hashInBase64 })
+				.then((response) => {
+					console.log(response);
+					setResponse(response.message);
+					if(response.token == "") {
+						return;
+					}
+					myObject.token = response.token;
+					myObject.email = textinputuser;
+					handleRequestAreaList();
+					navigate('/area-list');
+				})
+				.catch((error) => {
+					console.error(error);
+					setResponse('Error');
+				});
+			// navigate('/area-list'); // temporary
+		}
+		// console.log(response);
 	};
 	const navigate = useNavigate();
 
@@ -36,11 +66,11 @@ const LoginView = () => {
 		<Box bgImage="pictures/banner.png" backgroundSize="contain" backgroundRepeat="no-repeat" h="calc(100vh)">
 			<div className="login-up">
 				<h1 id="login-up-title">LOG IN</h1>
-				<form className="form-login-up">
+				<div className="form-login-up">
 					<div className="login-up-labels">
 						<div className="login-up-label">
 							<label>
-								<Input placeholder="Email" onChange={(e) => setTextInputuser(e.target.value)} />
+								<Input type="email" placeholder="Email" onChange={(e) => setTextInputuser(e.target.value)} />
 							</label>
 						</div>
 						<div className="login-up-label">
@@ -66,7 +96,7 @@ const LoginView = () => {
 							Login
 						</Button>
 					</div>
-				</form>
+				</div>
 				<Center>
 					<Text>{response}</Text>
 				</Center>

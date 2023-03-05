@@ -6,7 +6,7 @@ const dataGithub = [
   },
   {
     name: 'OauthApp Token (same as githubapp)',
-    url: 'http://localhost:8080/api/v1/github/oauthapp/auth2?code=521f0e7c572f27a59742&redirect_uri=http://localhost:8080/api/v1/github/oauthapp/token',
+    url: 'http://localhost:8080/api/v1/github/oauthapp/auth2?code=036a8c97f7b4cb0c7e3f&redirect_uri=http://localhost:8080/api/v1/github/oauthapp/token',
     method: 'GET',
   },
   {
@@ -16,7 +16,7 @@ const dataGithub = [
   },
   {
     name: 'GithubApp Token (same as oauthapp)',
-    url: 'http://localhost:8080/api/v1/github/githubapp/auth2?code=854b709c934db7af8490&redirect_uri=http://localhost:8080/api/v1/github/githubapp/token',
+    url: 'http://localhost:8080/api/v1/github/githubapp/auth2?code=69ccb416638eac51bfdf&redirect_uri=http://localhost:8080/api/v1/github/githubapp/token',
     method: 'GET',
   },
   {

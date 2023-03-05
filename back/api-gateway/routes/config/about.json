@@ -7,73 +7,6 @@
         "webhookurl": "http://142a-eza1-142a-eza1-ngrok.io",
         "services": [
             {
-                "name": "github",
-                "action": [
-                    {
-                        "name": "github-repository-publicise",
-                        "type": "hook",
-                        "description": "This event occurs when repository visibility changes from private to public.",
-                        "args": [
-                            "owner",
-                            "repo"
-                        ]
-                    },
-                    {
-                        "name": "github-repository-created",
-                        "type": "hook",
-                        "description": "This event occurs when a new repository is created.",
-                        "args": [
-                            "owner",
-                            "repo"
-                        ]
-                    },
-                    {
-                        "name": "github-repository-deleted",
-                        "type": "hook",
-                        "description": "This event occurs when a new repository is deleted.",
-                        "args": [
-                            "owner",
-                            "repo"
-                        ]
-                    },
-                    {
-                        "name": "github-star-created",
-                        "type": "hook",
-                        "description": "This event occurs when someone starred a repository.",
-                        "args": [
-                            "owner",
-                            "repo"
-                        ]
-                    },
-                    {
-                        "name": "github-star-deleted",
-                        "type": "hook",
-                        "description": "This event occurs when someone unstarred a repository.",
-                        "args": [
-                            "owner",
-                            "repo"
-                        ]
-                    },
-                    {
-                        "name": "github-watch",
-                        "type": "hook",
-                        "description": "This event occurs when there is activity relating to watching, or subscribing to, a repository",
-                        "args": [
-                            "owner",
-                            "repo"
-                        ]
-                    }
-                ], "reaction": [
-                    {
-                        "name": "github-send-email",
-                        "description": "This action sends an email to the specified email address.",
-                        "args": [
-                            "email"
-                        ]
-                    }
-                ]
-            },
-            {
                 "name" : "console",
                 "action" : [
                     {
@@ -104,35 +37,37 @@
                         "name" : "rain?",
                         "description" : "This action returns true if water is falling from the sky in the specified city.",
                         "args" : [
-                            "city"
+                            "location"
                         ]
                     },
                     {
                         "name" : "sunny?",
                         "description" : "This action return true if its sunny in the specified city.",
                         "args" : [
-                            "city"
+                            "location"
                         ]
                     },
                     {
                         "name" : "cold?",
-                        "description" : "This action returns true if its cold (< 0°C) in the specified city.",
+                        "description" : "This action returns true if its under a specified temperature, in the specified city.",
                         "args" : [
-                            "city"
+                            "temp",
+                            "location"
                         ]
                     },
                     {
                         "name" : "warm?",
-                        "description" : "This action returns true if its hot (> 30°C) in the specified city.",
+                        "description" : "This action returns true if its upper a specified temperature, in the specified city.",
                         "args" : [
-                            "city"
+                            "temp",
+                            "location"
                         ]
                     },
                     {
                         "name" : "night?",
                         "description" : "This action returns true if its night in the specified city.",
                         "args" : [
-                            "city"
+                            "location"
                         ]
                     }
                 ]
@@ -167,13 +102,16 @@
                 ]
             },
             {
-                "coinflip": {
-                    "name": "coinflip?",
-                    "description": "This action returns true if the result is has predicted",
-                    "args": [
-                        "isHeads"
-                    ]
-                }
+                "name": "coinflip",
+                "action" : [
+                    {
+                        "name": "coinflip?",
+                        "description": "This action returns true if the result is has predicted",
+                        "args": [
+                            "isHeads"
+                        ]
+                    }
+                ]
             },
             {
                 "name" : "steam",

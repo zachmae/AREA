@@ -24,9 +24,9 @@ const fs = require('fs');
  **/
 const githubOAuthAppAuth = ((req, res) => {
 
-    const CLIENT_ID = '5e98481b009a1a6958ea';
+    const CLIENT_ID = '493c20ede7f2209da63f';
     const redirect_uri = req.query.redirect_uri;
-    const scope = 'read:user,user:email';
+    const scope = 'read:user,user:email,admin:repo_hook,admin:org_hook';
 
     const state = 'do-not-hack-me'; // '&state=${state}'
 
@@ -57,8 +57,8 @@ const githubOAuthAppAuth2 = ((req, res) => {
     const code = req.query.code;
     const redirect_uri = req.query.redirect_uri;
 
-    const CLIENT_ID = '5e98481b009a1a6958ea';
-    const CLIENT_SECRET = '185fcd1d6702de833823377c25d448502061cb68';
+    const CLIENT_ID = '493c20ede7f2209da63f';
+    const CLIENT_SECRET = '1b8b83c4822c5fdf0a075bc4a6e59c6c0e201025';
     const url = `https://github.com/login/oauth/access_token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&code=${code}&redirect_uri=${redirect_uri}`;
 
     //?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&code=${code}&redirect_uri=${redirect_uri}
@@ -202,7 +202,7 @@ const githubGithubAppRefresh = ((req, res) => {
  * @doc https://docs.github.com/fr/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#create
  *
  **/
-
+///*
 const githubWebhook = ((req, res) => {
 
     if (req.headers['x-github-event'] === 'star') {
@@ -210,7 +210,7 @@ const githubWebhook = ((req, res) => {
         const full_name = payload.repository.full_name;
         const action = (payload.action === 'created') ? 'stared' : (payload.action === 'deleted') ? 'unstared' : 'unknown';
 
-        githubMailStar('area.bot@outlook.com', 'Azerty123!', 'perry.chouteau@epitech.eu', `(if) Your repository ${full_name} has been stared`, `(if)Hello, your repository ${full_name} has been ${action} by someone.`);
+        githubMailStar('area.bot@outlook.com', 'Azerty123!', 'perry.chouteau@epitech.eu', `(if) Your repository ${full_name} has been stared`, `Hello, your repository ${full_name} has been ${action} by someone.`);
 
         res.status(200).send({status: true, body: body, headers: headers});
     }
@@ -224,36 +224,51 @@ const githubWebhookInfo = ((req, res) => {
     const body = req.body;
     const query = req.query;
 
-    res.status(200).send({status: true, body: body, query: query});
+    console.log('>',body, query, '<');
+
+    res.status(200).send({status: true, body: 'thanks'});
 });
 
-const githubWebhookStarCreate = ((req, res) => {
-    console.log("STAR CREATE > TOKEN" + req.query.token);
-    const client    = new Octokit({
-        auth: req.query.token,
-        userAgent: 'AreaApiGateway/1.0.0',
-        timeZone: 'Europe/Paris',
-    });
-//    res.status(200).send({status: true});
-    return;
-    client.repos.createWebhook({
-        owner: 'Perry-chouteau',
-        repo: 'my_small_webhook',
-        name: 'star_create',
-        events: ['star'],
-        config: {
-            url: 'https://b431-163-5-23-68.eu.ngrok.io/github/webhook/payload',
-            content_type: 'json',
-        }
-    }).then((response) => {
-        response.json()
-//        res.status(200).send({status: true, response: response});
-    }).then((response) => {
-        res.status(200).send({status: true, response: response});
-    }).catch((err) => {
-        res.status(500).send({status: false, err: err});
-    });
-    res.status(200).send({status: true});
+const user = '?';
+const repos = '?';
+const event = ['star', 'public', ''];
+
+const githubWebhookCreate = ((req, res) => {
+    const token = req.query.token;
+
+    const event = req.params.event;
+
+
+});
+const githubWebhookActivate = ((req, res) => {
+    const token = req.query.token;
+
+    const id = req.params.id;
+
+
+});
+const githubWebhookDeactivate = ((req, res) => {
+    const token = req.query.token;
+
+    const id = req.params.id;
+
+
+});
+
+const githubWebhookRemove = ((req, res) => {
+    const token = req.query.token;
+
+    const id = req.params.id;
+
+
+});
+
+const githubWebhookList = ((req, res) => {
+    const token = req.query.token;
+
+    const id = req.params.id;
+
+
 });
 
 /*const githubWebhookStarDelete = ((req, res) => {
@@ -289,6 +304,8 @@ module.exports = {
 
     githubWebhookInfo,
 
-    githubWebhookStarCreate,
-/*    githubWebhookStarDelete,*/
+    githubWebhookCreate,
+    githubWebhookActivate,
+    githubWebhookDeactivate,
+    githubWebhookRemove,
 }

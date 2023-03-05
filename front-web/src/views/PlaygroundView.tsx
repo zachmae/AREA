@@ -42,7 +42,7 @@ const PlaygroundView = () => {
 		setResponse('Logging in...');
 		SignInRequestService({ username: textinputuser, password: textinputpassword })
 			.then((response) => {
-				setResponse(JSON.parse(response).message);
+				// setResponse(JSON.parse(response).message);
 			})
 			.catch((error) => {
 				console.error(error);

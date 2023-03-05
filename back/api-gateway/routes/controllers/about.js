@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const servicesAbout = ((req, res) => {
-
+    console.log('serviceAbout.json');
     var data = fs.readFileSync(__dirname + '/../config/about.json', 'utf8');
 
     data = JSON.parse(data);

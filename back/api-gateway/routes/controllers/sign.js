@@ -8,7 +8,6 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const colors = require('chalk');
-const { sendMail } = require('./utils');
 
 const GRPC_IP = 'sign';
 const GRPC_PORT = 7001;
@@ -48,7 +47,8 @@ const signUp = ((req, res) => {
     client.signUp(model, function(err, response) {
         if (!err) {
             console.log('Sign:', response.message);
-            res.status(response.status).send({message: response.message});
+            res.status(response.status).send({status: true, message: response.message});
+
         } else {
             console.log(err.message);
             res.status(503).send({status: false});
@@ -66,7 +66,7 @@ const signUpVerif = ((req, res) => {
     client.signUpVerif(model, function(err, response) {
         if (!err) {
             console.log('Sign:', response.message);
-            res.status(response.status).send({message: response.message});
+            res.status(response.status).send({status: true, message: response.message});
         } else {
             console.log(err.message);
             res.status(503).send({status: false});
@@ -88,11 +88,14 @@ const signIn = ((req, res) => {
     console.log(`signIn` + model);
     client.signIn(model, function(err, response) {
         if (!err) {
-            console.log('Sign:', response.message);
-            res.status(response.status).send({message: response.message});
+            console.log('Sign:', response.message, "<" + response.token + ">");
+            if (response.token !== null)
+                res.status(response.status).send({status: true, message: response.message, token: response.token});
+            else
+                res.status(response.status).send({status: false});
         } else {
             console.log(err.message);
-            res.status(503).send({status: false});
+            res.status(response.status).send({status: false});
         }
     });
 });
@@ -106,7 +109,7 @@ const signOut = ((req, res) => {
     client.signOut(model, function(err, response) {
         if (!err) {
             console.log('Sign:', response.message);
-            res.status(response.status).send({message: response.message});
+            res.status(response.status).send({status: true, message: response.message});
         } else {
             console.log(err.message);
             res.status(503).send({status: false});
@@ -114,14 +117,23 @@ const signOut = ((req, res) => {
     });
 });
 
-const signOAuth2 = ((req, res) => {
+const signOAuth = ((req, res) => {
+    console.log("signOAuth")
+
     const model = {
         username: req.body.username,
+        service: req.body.service,
+        oauth: req.body.oauth,
     };
-
-    console.log(`signOAuth2` + model);
-    //not implemented
-    res.status(501).send({status: false});
+    client.signOAuth(model, function(err, response) {
+        if (!err) {
+            console.log('Sign:Oauth', response.message);
+            res.status(response.status).send({status: true, message: response.message, token: response.token});
+        } else {
+            console.log(err.message);
+            res.status(503).send({status: false});
+        }
+    });
 });
 
 module.exports = {
@@ -129,5 +141,5 @@ module.exports = {
     signUpVerif,
     signIn,
     signOut,
-    signOAuth2,
+    signOAuth
 }

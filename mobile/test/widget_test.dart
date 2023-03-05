@@ -46,7 +46,7 @@ void testLogin() {
 
 void testRegister() {
   testWidgets('Good register page', (WidgetTester tester) async {
-
+    tester.binding.window.physicalSizeTestValue = const Size(1800, 2640);
     await tester.pumpWidget(
       const MaterialApp(
         home: RegisterPage(),

@@ -89,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.all(20.0),
                       child: SecondPasswordField(formKey: _password2Key, controller: password2Controller, fstPassword: passwordController.text)
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
                   SizedBox(
                       width: perWidth(context, 90),
                       height: 65,
@@ -102,7 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 color: Colors.white,
                                 fontSize: 19,
                               )))),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
                   Container(
                     width: perWidth(context, 90),
                     decoration: const BoxDecoration(
@@ -111,7 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
                   googleButton(context),
                 ]
             )

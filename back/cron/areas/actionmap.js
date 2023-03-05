@@ -168,6 +168,34 @@ const actionMap = {
                     return !response.data[appid].data.release_date.coming_soon;
                 }
             );
+        },
+        "useronline?": async (user, param) => {
+            const steamid = param.steamid;
+            var axios = require('axios');
+            var config = {
+                method: 'get',
+                url: `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${apikeys.steam}&steamids=${steamid}`,
+                headers: { }
+            };
+            return axios(config)
+                .then(function (response) {
+                    return response.data.response.players[0].personastate == 1;
+                }
+            );
+        },
+        "useroffline?": async (user, param) => {
+            const steamid = param.steamid;
+            var axios = require('axios');
+            var config = {
+                method: 'get',
+                url: `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${apikeys.steam}&steamids=${steamid}`,
+                headers: { }
+            };
+            return axios(config)
+                .then(function (response) {
+                    return response.data.response.players[0].personastate != 1;
+                }
+            );
         }
     },
     'console' : {

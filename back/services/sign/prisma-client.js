@@ -114,25 +114,33 @@ class PrismaClientSign {
     }
 
     async createArea(request) {
+        console.log(`request ${JSON.stringify(request)}`);
         try {
             await prisma.user.update({
                 where: {
-                    token: request.token
+                    UserGithubToken: {
+                        token: request.token,
+                        active: true
+                    }
                 },
                 data: {
-                    area: [
-                        {
-                            serviceAct: request.serviceAct,
+                    areas: {
+                        create: {
+                            serviceAct: request.service_act,
                             action: request.action,
-                            actionArgs: request.actionArgs,
-                            actionData: request.actionData,
-                            serviceRea: request.serviceRea,
+                            actionArgs: request.action_args,
+                            actionData: request.action_data,
+                            serviceRea: request.service_rea,
                             reaction: request.reaction,
-                            reactionArgs: request.reactionArgs,
+                            reactionArgs: request.reaction_args,
                         }
-                    ]
+                    },
+                },
+                include: {
+                    areas: true
                 }
             });
+            console.log('2');
             return true;
         } catch (error) {
             console.log('error ' + error);

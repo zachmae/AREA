@@ -10,12 +10,12 @@ const servicesList = {
     "github": {
         "auth": true,
         "actionsType": {
-            "github-repository-publicise": 'hook',
-            "github-repository-created": 'hook',
-            "github-repository-deleted": 'hook',
-            "github-star-created": 'hook',
-            "github-star-deleted": 'hook',
-            "github-watch": 'hook',
+            "github-repository-publicise": "hook",
+            "github-repository-created": "hook",
+            "github-repository-deleted": "hook",
+            "github-star-created": "hook",
+            "github-star-deleted": "hook",
+            "github-watch": "hook",
         },
         "actionsList": {
             "github-repository-publicise": repoPubliciseCreate,

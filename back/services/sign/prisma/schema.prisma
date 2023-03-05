@@ -48,7 +48,7 @@ model Area {
   serviceAct          String
   action              String
   actionArgs          String
-  actionData            String
+  actionData          String
   serviceRea          String
   reaction            String
   reactionArgs        String
@@ -57,5 +57,5 @@ model Area {
   author              User        @relation(fields: [authorId], references: [id])
   active              Boolean     @default(true)
 
-  @@unique(fields: [action, actionArgs, reaction, reactionArgs], name: "AreaModel")
+//  @@unique(fields: [action, actionArgs, reaction, reactionArgs], name: "AreaModel")
 }

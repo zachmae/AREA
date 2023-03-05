@@ -20,7 +20,6 @@ var protoSign = grpc.loadPackageDefinition(packageDefinition).sign;
 var client = new protoSign.SignService(`${GRPC_IP}:${GRPC_PORT}`,
     grpc.credentials.createInsecure());
 /* ----------------------------------------------------- */
-const servicesList = require('./services/config')
 
 const setGithubToken = ((req, res) => {
     const model = {
@@ -56,16 +55,56 @@ const getGithubToken = ((req, res) => {
     })
 })
 
+//function createAction(err, response) {
+//    ;
+//}
+
+//const servicesList = require('./services/config')
+const { repoPubliciseCreate,
+    repoCreatedCreate,
+    repoDeletedCreate,
+    starCreatedCreate,
+    starDeletedCreate,
+    watchCreate,
+    sendMail} = require('./services/github');
+
+//const servicesList = {
+//    "github": {
+//        "auth": true,
+//        "actionsType": {
+//            "github-repository-publicise": "hook",
+//            "github-repository-created": "hook",
+//            "github-repository-deleted": "hook",
+//            "github-star-created": "hook",
+//            "github-star-deleted": "hook",
+//            "github-watch": "hook",
+//        },
+//        "actionsList": {
+//            "github-repository-publicise": repoPubliciseCreate,
+//            "github-repository-created": repoCreatedCreate,
+//            "github-repository-deleted": repoDeletedCreate,
+//            "github-star-created": starCreatedCreate,
+//            "github-star-deleted": starDeletedCreate,
+//            "github-watch": watchCreate,
+//        },
+//        "reactionsList": {
+//            "github-send-email": sendMail,
+//        }
+//    },
+//    "weather": {
+//        "auth": "?",
+//        "actionsType": {
+//        },
+//        "actionsList": {
+//        },
+//        "reactionsList": {
+//        }
+//    }
+//}
+
+//console.log(servicesList);
+
 const storeArea = ((model, res) => {
-    client.CreateArea(model, function (err, response) {
-        if (!err) {
-            console.log('Sign:CreateArea', response.message);
-            res.status(response.status).send({ message: response.message });
-        } else {
-            console.log(err.message);
-            res.status(503).send({ status: false });
-        }
-    });
 });
 
 const createArea = ((req, res) => {
@@ -81,31 +120,47 @@ const createArea = ((req, res) => {
             reaction: req.body.reaction,
             reaction_args: req.body.reaction_args,
         };
-
-        if (servicesList[model.service_act].actionsType[model.action] === "hook") {
-            if (servicesList[model.service_act].auth)
-                service_token
-
-            servicesList[model.service_act].actionsList[model.action]({ auth_token: service_token, args: model.action_args })
-                .then(response => {
-                    model.action_data = response;
-                    if (model.action_data !== null) {
-                        console.log(model.action_data);
-                        storeArea(model, res);
+        /*if (servicesList[model.service_act].actionsType[model.action] === "hook") {
+            if (servicesList[model.service_act].auth && model.service_act === "github") {
+                client.GetGithubToken(model, function (err, res) {
+                    if (!err) {
+                        console.log(res.github_token);
+                        servicesList[model.service_act].actionsList[model.action]({ auth_token: res.github_token, args: model.action_args })
+                        .then(response => {
+                            console.log('1');
+                            model.action_data = response;
+                            if (model.action_data !== null) {
+                                console.log(model.action_data);
+                                storeArea(model, res);
+                            } else {
+                                console.log("data is null");
+                                res.status(503).send({ status: false, message: 'data is null' });
+                            }
+                        }).catch(error => {
+                            console.error("Error: catch listing webhooks:", error);
+                            res.status(503).send({ status: false, message: 'catch callback' });
+                        });
                     } else {
-                        console.log("data is null");
-                        res.status(503).send({ status: false });
+                        res.status(503).send({ status: false, message: 'getTokenFailed' });
                     }
-                }).catch(error => {
-                    console.error("Error: catch listing webhooks:", error);
-                    res.status(503).send({ status: false });
                 });
-        } else {
-            storeArea(model, res);
-        }
+            } else {
+                res.status(503).send({ status: false, message: 'not github' });
+            }
+        } else {*/
+        client.CreateArea(model, function (err, response) {
+            if (!err) {
+                console.log('Sign:CreateArea', response.message);
+                res.status(response.status).send({ message: response.message });
+            } else {
+                console.log(err.message);
+                res.status(503).send({ status: false });
+            }
+        });
+        storeArea(model, res);
+        //}
     } catch (err) {
-        res.status(503).send({ status: false });
-        console.log('-------------------');
+        res.status(503).send({ status: false, message: 'createArea broke up' });
     }
 })
 

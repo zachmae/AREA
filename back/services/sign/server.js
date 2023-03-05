@@ -117,9 +117,9 @@ function GetGithubToken(call, callback) {
 
 
 function CreateArea(call, callback) {
-    console.log(`SignCreateArea ${call.request}`);
-
+    console.log(`SignCreateArea call.request ${JSON.stringify(call.request)}`);
     PCS.createArea(call.request).then(response => {
+        console.log(response);
         if (response) {
             console.log(`SignCreateArea Succeed) ${call.request}`);
             callback(null, { message: 'Area created successfully', status: 200});

@@ -35,6 +35,7 @@ const actionMap = {
         },
         'cold?': async (user, param) => {
             const loc = param.location;
+            const temp = pasrseInt(param.temp);
             var axios = require('axios');
             var config = {
                 method: 'get',
@@ -44,12 +45,13 @@ const actionMap = {
             };
             return axios(config)
                 .then(function (response) {
-                    return response.data.current.temp_c < 0;
+                    return response.data.current.temp_c < temp;
                 }
             );
         },
         'warm?': async (user, param) => {
             const loc = param.location;
+            const temp = pasrseInt(param.temp);
             var axios = require('axios');
             var config = {
                 method: 'get',
@@ -59,7 +61,7 @@ const actionMap = {
             };
             return axios(config)
                 .then(function (response) {
-                    return response.data.current.temp_c > 30;
+                    return response.data.current.temp_c > temp;
                 }
             );
         },

@@ -134,12 +134,11 @@ class _HomePageState extends State<HomePage> {
           child: Column(children: [
             const SizedBox(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(area[index]!['actionService']!, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
                 const SizedBox(height: 10),
                 Text(area[index]!['actionAction']!, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
-                const SizedBox(height: 10),
               ],
             ),
             const SizedBox(height: 5),
@@ -156,7 +155,7 @@ class _HomePageState extends State<HomePage> {
             const Icon(Icons.arrow_downward, size: 30),
             const SizedBox(height: 15),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(area[index]!['reactionService']!, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
                 const SizedBox(height: 10),

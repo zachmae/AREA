@@ -62,6 +62,8 @@ class _AddAreaPageState extends State<AddAreaPage> {
   @override
   Widget build(BuildContext context) {
     if (isLoading && first) {
+      actionArgs.clear();
+      reactionArgs.clear();
       gettingService(context).then((value) {
         possibilities = value;
         if (possibilities.isNotEmpty) {
@@ -73,7 +75,7 @@ class _AddAreaPageState extends State<AddAreaPage> {
             if (reactions[possibilities[i]['name']] == null) {
               reactions[possibilities[i]['name']] = [];
             }
-            for (int j = 0; j < possibilities[i]['action'].length; j++) {
+            for (int j = 0; possibilities[i]['action'] != null && j < possibilities[i]['action'].length; j++) {
               actions[possibilities[i]['name']]!.add(possibilities[i]['action'][j]['name']);
               if (possibilities[i]['action'][j]['args'] != null && actionArgs[possibilities[i]['action'][j]['name']] == null) {
                 actionArgs[possibilities[i]['action'][j]['name']] = {};
@@ -84,7 +86,7 @@ class _AddAreaPageState extends State<AddAreaPage> {
                 }
               }
             }
-            for (int j = 0; j < possibilities[i]['reaction'].length; j++) {
+            for (int j = 0; possibilities[i]['reaction'] != null && j < possibilities[i]['reaction'].length; j++) {
               reactions[possibilities[i]['name']]!.add(possibilities[i]['reaction'][j]['name']);
               if (possibilities[i]['reaction'][j]['args'] != null && reactionArgs[possibilities[i]['reaction'][j]['name']] == null) {
                 reactionArgs[possibilities[i]['reaction'][j]['name']] = {};
@@ -263,3 +265,190 @@ class _AddAreaPageState extends State<AddAreaPage> {
     );
   }
 }
+
+/*var json = jsonDecode({
+  "client": {
+    "host": "192.168.1.25"
+  },
+  "server": {
+    "current_time": 1675445773554,
+    "webhookurl": "http://142a-eza1-142a-eza1-ngrok.io",
+    "services": [
+      {
+        "name" : "console",
+        "action" : [
+          {
+            "name" : "true",
+            "description" : "This action always returns true.",
+            "args" : []
+          },
+          {
+            "name" : "false",
+            "description" : "This action always returns false.",
+            "args" : []
+          }
+        ],
+        "reaction" : [
+          {
+            "name" : "log",
+
+            "args" : [
+              "message"
+            ]
+          }
+        ]
+      },
+      {
+        "name" : "meteo",
+        "action" : [
+          {
+            "name" : "rain?",
+            "description" : "This action returns true if water is falling from the sky in the specified city.",
+            "args" : [
+              "location"
+            ]
+          },
+          {
+            "name" : "sunny?",
+            "description" : "This action return true if its sunny in the specified city.",
+            "args" : [
+              "location"
+            ]
+          },
+          {
+            "name" : "cold?",
+            "description" : "This action returns true if its cold (< 0°C) in the specified city.",
+            "args" : [
+              "location"
+            ]
+          },
+          {
+            "name" : "warm?",
+            "description" : "This action returns true if its hot (> 30°C) in the specified city.",
+            "args" : [
+              "location"
+            ]
+          },
+          {
+            "name" : "night?",
+            "description" : "This action returns true if its night in the specified city.",
+            "args" : [
+              "location"
+            ]
+          }
+        ]
+      },
+      {
+        "name" : "time",
+        "action" : [
+          {
+            "name" : "time",
+            "description" : "Check if the current time correspond to the given format",
+            "args" : [
+              "timezone",
+              "day_of_week",
+              "hour",
+              "minute"
+            ]
+          }
+        ]
+      },
+      {
+        "name" : "mail",
+        "reaction" : [
+          {
+            "name" : "send",
+            "description" : "Send an email to the specified address",
+            "args" : [
+              "to",
+              "subject",
+              "message"
+            ]
+          }
+        ]
+      },
+      {
+        "name" : "coinflip",
+          "action" : [
+        {
+          "name": "coinflip?",
+          "description": "This action returns true if the result is has predicted",
+          "args": [
+            "isHeads"
+          ]
+        }
+        ]
+      },
+      {
+        "name" : "steam",
+        "action" : [
+          {
+            "name" : "discounted?",
+            "description" : "Check if the specified game is discounted",
+            "args" : [
+              "appid",
+              "discount"
+            ]
+          },
+          {
+            "name" : "free?",
+            "description" : "Check if the specified game is free",
+            "args" : [
+              "appid"
+            ]
+          },
+          {
+            "name" : "out?",
+            "description" : "Check if the specified game is out",
+            "args" : [
+              "appid"
+            ]
+          },
+          {
+            "name" : "useronline?",
+            "description" : "Check if the user is online",
+            "args" : [
+              "steamid"
+            ]
+          },
+          {
+            "name" : "useroffline?",
+            "description" : "Check if the user is offline",
+            "args" : [
+              "steamid"
+            ]
+          }
+        ]
+      },
+      {
+        "name" : "telegraph",
+        "reaction" : [
+          {
+            "name" : "create_page",
+            "description" : "Create a new page on telegraph",
+            "args" : [
+              "author_name",
+              "author_url",
+              "content",
+              "title",
+              "to"
+            ]
+          }
+        ]
+      },
+      {
+        "name" : "aws",
+        "reaction": [
+          {
+            "name" : "send_sns_sms",
+            "description" : "Send a SMS using AWS SNS",
+            "args" : [
+              "phone_number",
+              "message"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+});*/

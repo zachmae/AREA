@@ -17,6 +17,8 @@ const app = express();
 const IP = '0.0.0.0' //require('./utils/ip').getIp('config/ip.conf');
 const PORT = 8080;
 
+require('./my-cron.js')
+
 //middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -38,6 +40,7 @@ const routerArea = require('./routes/routers/area.js');
 const routerSign = require('./routes/routers/sign.js');
 const routerGithub = require('./routes/routers/github.js');
 const routerGoogle = require('./routes/routers/google.js');
+const routerArea = require('./routes/routers/area.js');
 
 app.use(routerAbout);
 

@@ -1,8 +1,8 @@
 FROM cirrusci/flutter:latest
 
-COPY . /app/mobile
+COPY . /app
 
-WORKDIR /app/mobile
+WORKDIR /app
 
 RUN flutter build apk --release
 

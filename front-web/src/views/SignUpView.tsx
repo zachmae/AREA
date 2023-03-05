@@ -36,8 +36,8 @@ const LoginView = () => {
 				setResponse('Logging in...');
 				SignUpRequestService({ username: textinputuser, password: hashInBase64 })
 					.then((response) => {
-						setResponse(JSON.parse(response).message);
-						navigate('/area-list');
+						setResponse(response.message);
+						navigate('/login');
 					})
 					.catch((error) => {
 						console.error(error);
@@ -56,7 +56,7 @@ const LoginView = () => {
 		<Box bgImage="pictures/banner.png" backgroundSize="contain" backgroundRepeat="no-repeat" h="calc(100vh)">
 			<div className="login-up">
 				<h1 id="login-up-title">Sign up</h1>
-				<form className="form-login-up">
+				<div className="form-login-up">
 					<div className="login-up-labels">
 						<div className="login-up-label">
 							<label>
@@ -103,7 +103,7 @@ const LoginView = () => {
 							Sign up
 						</Button>
 					</div>
-				</form>
+				</div>
 				<Center>
 					<Text>{response}</Text>
 				</Center>

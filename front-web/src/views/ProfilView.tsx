@@ -27,14 +27,14 @@ const ProfilView = () => {
 						<Text fontSize="xl" marginTop={100} marginLeft={100} whiteSpace="pre-wrap">
 							E-mail adress: {props.email}
 						</Text>
-						<Text fontSize="lg" whiteSpace="pre-wrap" onClick={handlePassword} marginLeft={100} color="#B794F4">
+						{/* <Text fontSize="lg" whiteSpace="pre-wrap" onClick={handlePassword} marginLeft={100} color="#B794F4">
 							Change password
-						</Text>
+						</Text> */}
 						<Button marginLeft={400} marginTop={300} colorScheme="red" leftIcon={<MdLogout />} onClick={handleSignOut}>
 							Sign out
 						</Button>
 					</div>
-					<Stack spacing="50px">
+					{/* <Stack spacing="50px">
 						<Text fontSize="xl" marginTop={100} marginLeft={90} whiteSpace="pre-wrap">
 							Linked services:
 						</Text>
@@ -49,7 +49,7 @@ const ProfilView = () => {
 								Link acount
 							</Button>
 						</Stack>
-					</Stack>
+					</Stack> */}
 				</Stack>
 			</Box>
 		);

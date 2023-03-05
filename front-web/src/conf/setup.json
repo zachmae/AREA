@@ -1,7 +1,7 @@
 {
     "back_end" : {
-        "ip": "10.68.246.139",
-        "port": 7000
+        "ip": "0a12-46-193-4-20.eu.ngrok.io",
+        "port": ""
     },
     "API": {
         "GoogleKey": "913688526189-8leji0tqf8vvqdg1ud8v815i6scufcal.apps.googleusercontent.com",

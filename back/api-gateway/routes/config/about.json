@@ -199,6 +199,20 @@
                         "args" : [
                             "appid"
                         ]
+                    },
+                    {
+                        "name" : "useronline?",
+                        "description" : "Check if the user is online",
+                        "args" : [
+                            "steamid"
+                        ]
+                    },
+                    {
+                        "name" : "useroffline?",
+                        "description" : "Check if the user is offline",
+                        "args" : [
+                            "steamid"
+                        ]
                     }
                 ]
             },
@@ -209,7 +223,8 @@
                         "name" : "create_page",
                         "description" : "Create a new page on telegraph",
                         "args" : [
-                            "author",
+                            "author_name",
+                            "author_url",
                             "content",
                             "title",
                             "to"

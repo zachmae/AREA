@@ -11,6 +11,8 @@ import 'package:area/layout/load.dart';
 import 'package:area/layout/sign/login.dart';
 import 'package:area/layout/dashboard/home.dart';
 import 'package:area/layout/dashboard/profile.dart';
+import 'package:area/layout/dashboard/logs.dart';
+import 'package:area/layout/dashboard/add.dart';
 
 Map<int, Color> colorMap = {
   50: const Color.fromRGBO(9, 132, 227, .1),
@@ -51,6 +53,8 @@ class MyApp extends StatelessWidget {
         '/Loading': (BuildContext context) => const LoadPage(),
         '/': (BuildContext context) => const WelcomePage(), // splashscreen
         '/Profile': (BuildContext context) => const ProfilePage(),
+        '/Add': (BuildContext context) => const AddAreaPage(),
+        '/Logs': (BuildContext context) => const LogsPage(),
       }
     );
   }

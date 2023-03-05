@@ -31,6 +31,9 @@ class _HomePageState extends State<HomePage> {
         area[0] = {};
         switchList.add(false);
         for (var i = 0; i < value.length; i++) {
+          String dateString = value[i]['createdAt'];
+          DateTime date = DateTime.parse(dateString);
+          print(date);
           switchList.add(value[i]['active']);
           area[i + 1] = {
             'actionService': value[i]['serviceAct'],

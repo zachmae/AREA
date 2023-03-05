@@ -9,6 +9,7 @@ import 'package:area/layout/dashboard/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:area/layout/dashboard/home.dart';
 import 'package:area/layout/dashboard/add.dart';
+import 'package:area/layout/dashboard/logs.dart';
 
 class DashBoard extends StatefulWidget {
   const DashBoard({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard> {
   int currentPage = 0;
   PageController pageController = PageController(viewportFraction: 1, initialPage: 0);
-  List<Widget> pages = const <Widget> [ HomePage(),  AddAreaPage(),  ProfilePage(),  Text('Hourglass')];
+  List<Widget> pages = const <Widget> [ HomePage(),  AddAreaPage(),  ProfilePage(),  LogsPage()];
 
   void _onItemTapped(int index) {
     setState(() {

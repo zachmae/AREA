@@ -34,7 +34,7 @@ const Router = () => {
 				<Route path="/signup" element={<SignUpView />} />
 				<Route path="/area-list" element={<AreaListView areas={areas} setAreas={setAreas}/>} />
 				<Route path="/edit" element={<EditView />} />
-				<Route path="/logs" element={<LogsView />} />
+				<Route path="/logs" element={<LogsView areas={areas} setAreas={setAreas} />} />
 				<Route path="/profil" element={<ProfilView />} />
 				<Route path="/playground" element={<PlaygroundView />} />
 				<Route path="*" element={<Navigate to="/" replace />} />

@@ -126,11 +126,13 @@ const EditView = () => {
 							onChange={(e) => handleActionService(e.target.value)}
 						>
 							{listServices.map((item, index) => {
-								return (
-									<option key={index} value={index}>
-										{item.name}
-									</option>
-								);
+								if (item.action) {
+									return (
+										<option key={index} value={index}>
+											{item.name}
+										</option>
+									);
+								}
 							})}
 						</Select>
 					</div>
@@ -179,11 +181,13 @@ const EditView = () => {
 							onChange={(e) => handleReactionService(e.target.value)}
 						>
 							{listServices.map((item, index) => {
-								return (
-									<option key={index} value={index}>
-										{item.name}
-									</option>
-								);
+								if (item.reaction) {
+									return (
+										<option key={index} value={index}>
+											{item.name}
+										</option>
+									);
+								}
 							})}
 						</Select>
 					</div>
@@ -220,7 +224,6 @@ const EditView = () => {
 	const testarray = [];
 
 	const handleRequestAbout = () => {
-		console.log(myObject.token);
 		getAbout()
 			.then((response) => {
 				console.log(response);
@@ -231,6 +234,7 @@ const EditView = () => {
 			.catch((error) => {
 				console.error('error');
 			});
+		console.log(sampleJSON);
 	};
 
 	const createArea = () => {

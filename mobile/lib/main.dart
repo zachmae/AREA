@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:area/layout/welcome.dart';
 import 'package:area/layout/dashboard.dart';
 import 'package:area/layout/sign/register.dart';
-import 'package:area/layout/sign/load.dart';
+import 'package:area/layout/load.dart';
 import 'package:area/layout/sign/login.dart';
 import 'package:area/layout/dashboard/home.dart';
 import 'package:area/layout/dashboard/profile.dart';

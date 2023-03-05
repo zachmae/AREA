@@ -5,7 +5,7 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-import 'package:area/layout/sign/load.dart';
+import 'package:area/layout/load.dart';
 import 'package:area/model/flex_size.dart';
 import 'package:flutter/material.dart';
 import 'package:area/model/field.dart';

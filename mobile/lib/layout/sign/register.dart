@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:area/model/field.dart';
 import 'package:area/model/sign_appBar.dart';
 import 'package:area/requests/sign.dart';
-import 'package:area/layout/sign/load.dart';
+import 'package:area/layout/load.dart';
 
 
 class RegisterPage extends StatefulWidget {

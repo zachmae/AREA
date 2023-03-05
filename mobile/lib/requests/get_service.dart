@@ -18,7 +18,7 @@ Future<List<dynamic>> gettingService(BuildContext context) async
     var response = await http.get(url, headers: {
       'Content-Type': 'application/json'
     });
-    var data = jsonDecode(response.body); /// RETURN Map<String, dynamic>
+    var data = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return data['server']['services'];
     } else {

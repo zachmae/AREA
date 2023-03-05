@@ -16,3 +16,9 @@ const String tokenPath = '/api/v1/google/registerToken';
 const String getServicesPath = '/about.json';
 
 const String sendServicePath = '/api/v1/area/create';
+
+const String getAreaPath = '/api/v1/area/get';
+
+const String switchAreaPath = '/api/v1/area/activate';
+
+const String deleteAreaPath = '/api/v1/area/delete';

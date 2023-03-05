@@ -3,6 +3,7 @@
 This readme explain how to get the apk by using flutter and how to run it on a android SDK
 
 If you just want to get the apk you can go on http://localhost:8081/client.apk
+or you have in mobile/APK the app-release.apk
 
 # Prerequisites
 

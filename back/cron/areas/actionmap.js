@@ -126,7 +126,7 @@ const actionMap = {
         }
     },
     'steam': {
-        'isdiscounted?': async (user, param) => {
+        'discounted?': async (user, param) => {
             const appid = param.appid;
             const discount = param.discount;
             var axios = require('axios');
@@ -141,7 +141,7 @@ const actionMap = {
                 }
             );
         },
-        'isfree?': async (user, param) => {
+        'free?': async (user, param) => {
             const appid = param.appid;
             var axios = require('axios');
             var config = {
@@ -155,7 +155,7 @@ const actionMap = {
                 }
             );
         },
-        'isout?': async (user, param) => {
+        'out?': async (user, param) => {
             const appid = param.appid;
             var axios = require('axios');
             var config = {

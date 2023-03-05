@@ -51,7 +51,8 @@ var receive = jsonEncode({
           "name": "github-send-email",
           "description": "This action sends an email to the specified email address.",
           "args": [
-            "email"
+            "email",
+            "pass"
           ]
         }
       ]

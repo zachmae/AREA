@@ -144,49 +144,42 @@ class MailField extends StatelessWidget {
   }
 }
 
-class Field extends StatelessWidget {
-  final TextEditingController controller;
+class MyField extends StatelessWidget {
+  final TextEditingController? controller;
+  final formKey = GlobalKey();
+  final Key key = UniqueKey();
+  final String ?name;
 
-  const Field({super.key, required this.controller});
-
-  String? validatePassword(String value) {
-    if (value.isEmpty) {
-      return "* Required";
-    } else if (value.length < 6) {
-      return "Password should be atleast 6 characters";
-    } else if (value.length > 15) {
-      return "Password should not be greater than 15 characters";
-    } else {
-      return null;
-    }
-  }
+  MyField({super.key, required this.controller, required this.name});
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      TextFormField(
-      autovalidateMode: AutovalidateMode.always,
-        decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            labelText: 'Password',
-            hintText: 'Enter secure password',
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: Colors.black)
-            ),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: Colors.blue)
-            )
-        ),
-        validator: MultiValidator([
-          RequiredValidator(errorText: "* Required"),
-          MinLengthValidator(8, errorText: "Password should be at least 8 characters"),
-          MaxLengthValidator(15, errorText: "Password should not be greater than 15 characters")
-        ])
-      ),
-    ]);
+    return Form(
+        key: formKey,
+        child : Column(children: [
+          TextFormField(
+              controller: controller,
+              obscureText: false,
+              decoration: InputDecoration(
+                  hintText: name,
+                  labelText: name,
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.black)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.blue)
+                  )
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'an info is required';
+                }
+                return null;
+              }
+          ),
+        ],
+        ));
   }
 }
-
-//validator: EmailValidator(errorText: "Enter valid email id"),

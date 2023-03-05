@@ -5,6 +5,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:area/layout/welcome.dart';
+import 'package:area/layout/dashboard.dart';
+import 'package:area/layout/sign/register.dart';
+import 'package:area/layout/load.dart';
+import 'package:area/layout/sign/login.dart';
+import 'package:area/layout/dashboard/home.dart';
+import 'package:area/layout/dashboard/profile.dart';
+import 'package:area/layout/dashboard/logs.dart';
+import 'package:area/layout/dashboard/add.dart';
 
 Map<int, Color> colorMap = {
   50: const Color.fromRGBO(9, 132, 227, .1),
@@ -35,7 +43,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: MaterialColor(0xff7900F9, colorMap),
       ),
-      home: const WelcomePage(),
+      initialRoute: '/Welcome',
+      routes: <String, WidgetBuilder>{
+        '/Welcome': (BuildContext context) => const WelcomePage(),
+        '/Dashboard': (BuildContext context) => const DashBoard(),
+        '/Home': (BuildContext context) => const HomePage(),
+        '/Register': (BuildContext context) => const RegisterPage(),
+        '/Login': (BuildContext context) => const LoginPage(),
+        '/Loading': (BuildContext context) => const LoadPage(),
+        '/': (BuildContext context) => const WelcomePage(), // splashscreen
+        '/Profile': (BuildContext context) => const ProfilePage(),
+        '/Add': (BuildContext context) => const AddAreaPage(),
+        '/Logs': (BuildContext context) => const LogsPage(),
+      }
     );
   }
 }

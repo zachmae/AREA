@@ -230,9 +230,7 @@ class _LoginPageState extends State<LoginPage> {
               child: FloatingActionButton(
                   heroTag: ('google'),
                   shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-                  onPressed: () => googleSignIn(context),
-                  onPressed: () =>   Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => ())),
+                  onPressed: () => googleSignIn,
                   child: const Text('Go to google',
                       style: TextStyle(
                         color: Colors.white,

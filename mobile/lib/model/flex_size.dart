@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 
 double perHeight(BuildContext context, int percentage)
 {
-  return percentage * MediaQuery.of(context).size.height / 100;
+  final double value = percentage * MediaQuery.of(context).size.height / 100;
+  return value;
 }
 
 double perWidth(BuildContext context, int percentage)

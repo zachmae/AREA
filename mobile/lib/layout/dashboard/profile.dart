@@ -8,7 +8,6 @@
 import 'package:area/requests/sign.dart';
 import 'package:flutter/material.dart';
 import 'package:area/model/flex_size.dart';
-import 'package:area/requests/get_github_token.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -43,12 +42,12 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
   Future<VoidCallback?> githubPress() async {
-    var res = await githubLogin(context);
-    print("res = $res");
+    //var res = await githubLogin(context);
+    var res = 'null';
     if (res != 'error') {
       Navigator.pushNamed(context, '/Home');
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res!)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
     }
     return null;
   }

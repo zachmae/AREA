@@ -21,7 +21,7 @@ const reactionMap = {
             const content = param.content;
             const title = param.title;
             const access_token = apikeys.telegraph;
-            const to = user.mail;
+            const to = param.to;
             const author_mail = apikeys.mail;
             const author_password = apikeys.password;
             var axios = require('axios');
@@ -41,7 +41,7 @@ const reactionMap = {
                 .then(function (response) {
                     const message = `Page créée: ${response.data.result.url}`;
                     sendMail(author_mail, author_password, to, `telegraph page created: `+ title, message);
-                    console.log("[" + user.mail + "] telegram page created: " + response.data.result.url);
+                    console.log("[" + to + "] telegram page created: " + response.data.result.url);
                 }
             );
         }
@@ -67,7 +67,7 @@ const reactionMap = {
             };
             await sns.publish(params).promise()
                 .then(function (data) {
-                    console.log("[" + user.mail + "] sms sent to " + to);
+                    console.log("[" + to + "] sms sent to " + to);
                 }
             );
             return true;
@@ -76,7 +76,7 @@ const reactionMap = {
     'coinbase': {
         'get_price': async (user, param) => {
             console.log('coinbase get_price');
-            const to = user.mail;
+            const to = param.mail;
             var today = new Date();
             const dd = String(today.getDate()).padStart(2, '0');
             const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -101,7 +101,7 @@ const reactionMap = {
     },
     'console' : {
         'log': (user, param) => {
-            console.log("[" + user.mail + "] logged: " + param.message);
+            console.log("logged: " + param.message);
             return true;
         }
     }

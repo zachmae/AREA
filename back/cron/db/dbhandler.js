@@ -1,13 +1,24 @@
 
 const getDatabase = () => {
-    return require('./areadb.json');
+    const axios = require('axios');
+    const conf = require('./dbconfig.json');
+    var config = {
+        method: 'get',
+        url: conf.url_get_areas,
+        headers: { }
+    };
+    return axios(config)
+        .then(function (response) {
+            return response.data;
+        }
+    );
 }
 
 const parseActionReaction = (area) => {
-    var action = area.actionCallback.split(" ");
-    var reaction = area.reactionCallback.split(" ");
-    var actionParam = area.actionParams;
-    var reactionParam = area.reactionParams;
+    var action = [area.serviceAct, area.action];
+    var reaction = [area.serviceRea, area.reaction];
+    var actionParam = JSON.parse(area.actionArgs);
+    var reactionParam = JSON.parse(area.reactionArgs);
     return {
         action: action,
         reaction: reaction,

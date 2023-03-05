@@ -1,1 +1,235 @@
-{"client":{"host":"192.168.1.25"},"server":{"current_time":1675445773554,"services":[{"nam":"sign","actions":[{"name":"sign_in","description":"Sign in to the service"},{"name":"sign_up","description":"Sign up to the service"},{"name":"sign_out","description":"Sign out of the service"}]},{"name":"facebook ","actions":[{"name":"new_message_in_group ","description":"A new message is posted in the group "},{"name":"new_message_inbox ","description":"A new private message is received by the user "},{"name":"new_like ","description":"The user gains a like from one of their messages "}],"reactions":[{"name":"like_message ","description":"The user likes a message "}]}]}}
+{
+    "client": {
+        "host": "192.168.1.25"
+    },
+    "server": {
+        "current_time": 1675445773554,
+        "webhookurl": "http://142a-eza1-142a-eza1-ngrok.io",
+        "services": [
+            {
+                "name": "github",
+                "action": [
+                    {
+                        "name": "github-repository-publicise",
+                        "type": "hook",
+                        "description": "This event occurs when repository visibility changes from private to public.",
+                        "args": [
+                            "owner",
+                            "repo"
+                        ]
+                    },
+                    {
+                        "name": "github-repository-created",
+                        "type": "hook",
+                        "description": "This event occurs when a new repository is created.",
+                        "args": [
+                            "owner",
+                            "repo"
+                        ]
+                    },
+                    {
+                        "name": "github-repository-deleted",
+                        "type": "hook",
+                        "description": "This event occurs when a new repository is deleted.",
+                        "args": [
+                            "owner",
+                            "repo"
+                        ]
+                    },
+                    {
+                        "name": "github-star-created",
+                        "type": "hook",
+                        "description": "This event occurs when someone starred a repository.",
+                        "args": [
+                            "owner",
+                            "repo"
+                        ]
+                    },
+                    {
+                        "name": "github-star-deleted",
+                        "type": "hook",
+                        "description": "This event occurs when someone unstarred a repository.",
+                        "args": [
+                            "owner",
+                            "repo"
+                        ]
+                    },
+                    {
+                        "name": "github-watch",
+                        "type": "hook",
+                        "description": "This event occurs when there is activity relating to watching, or subscribing to, a repository",
+                        "args": [
+                            "owner",
+                            "repo"
+                        ]
+                    }
+                ], "reaction": [
+                    {
+                        "name": "github-send-email",
+                        "description": "This action sends an email to the specified email address.",
+                        "args": [
+                            "email"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name" : "console",
+                "action" : [
+                    {
+                        "name" : "true",
+                        "description" : "This action always returns true.",
+                        "args" : []
+                    },
+                    {
+                        "name" : "false",
+                        "description" : "This action always returns false.",
+                        "args" : []
+                    }
+                ],
+                "reaction" : [
+                    {
+                        "name" : "log",
+                        "description" : "This action prints the specified string.",
+                        "args" : [
+                            "message"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name" : "meteo",
+                "action" : [
+                    {
+                        "name" : "rain?",
+                        "description" : "This action returns true if water is falling from the sky in the specified city.",
+                        "args" : [
+                            "city"
+                        ]
+                    },
+                    {
+                        "name" : "sunny?",
+                        "description" : "This action return true if its sunny in the specified city.",
+                        "args" : [
+                            "city"
+                        ]
+                    },
+                    {
+                        "name" : "cold?",
+                        "description" : "This action returns true if its cold (< 0°C) in the specified city.",
+                        "args" : [
+                            "city"
+                        ]
+                    },
+                    {
+                        "name" : "warm?",
+                        "description" : "This action returns true if its hot (> 30°C) in the specified city.",
+                        "args" : [
+                            "city"
+                        ]
+                    },
+                    {
+                        "name" : "night?",
+                        "description" : "This action returns true if its night in the specified city.",
+                        "args" : [
+                            "city"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name" : "time",
+                "action" : [
+                    {
+                        "name" : "time",
+                        "description" : "Check if the current time correspond to the given format",
+                        "args" : [
+                            "timezone",
+                            "day_of_week",
+                            "hour",
+                            "minute"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name" : "mail",
+                "reaction" : [
+                    {
+                        "name" : "send",
+                        "description" : "Send an email to the specified address",
+                        "args" : [
+                            "to",
+                            "subject",
+                            "message"
+                        ]
+                    }
+                ]
+            },
+            {
+                "coinflip": {
+                    "name": "coinflip?",
+                    "description": "This action returns true if the result is has predicted",
+                    "args": [
+                        "isHeads"
+                    ]
+                }
+            },
+            {
+                "name" : "steam",
+                "action" : [
+                    {
+                        "name" : "discounted?",
+                        "description" : "Check if the specified game is discounted",
+                        "args" : [
+                            "appid",
+                            "discount"
+                        ]
+                    },
+                    {
+                        "name" : "free?",
+                        "description" : "Check if the specified game is free",
+                        "args" : [
+                            "appid"
+                        ]
+                    },
+                    {
+                        "name" : "out?",
+                        "description" : "Check if the specified game is out",
+                        "args" : [
+                            "appid"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name" : "telegraph",
+                "reaction" : [
+                    {
+                        "name" : "create_page",
+                        "description" : "Create a new page on telegraph",
+                        "args" : [
+                            "author",
+                            "content",
+                            "title",
+                            "to"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name" : "aws",
+                "reaction": [
+                    {
+                        "name" : "send_sns_sms",
+                        "description" : "Send a SMS using AWS SNS",
+                        "args" : [
+                            "phone_number",
+                            "message"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

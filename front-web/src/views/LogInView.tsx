@@ -5,8 +5,11 @@ import React from 'react';
 import JSON from 'json5';
 import HmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
+import jwt_decode from 'jwt-decode';
 
-import { SignInRequestService } from '../services/SignServices';
+import { getAbout } from '../services/getAbout';
+
+import { SignInRequestService, GoogleSignInRequestService } from '../services/SignServices';
 import { GoogleLogin } from '@react-oauth/google';
 import { refreshTokenSetup } from '../components/refreshGoogleToken';
 
@@ -16,7 +19,23 @@ import { myObject } from './VariablesView';
 
 import './Login-upView.css';
 
-const LoginView = ({setAreas} : any) => {
+type JWTDeCode = {
+	aud: string;
+	azp: string;
+	email: string;
+	email_verified: boolean;
+	exp: number;
+	given_name: string;
+	iat: number;
+	iss: string;
+	jti: string;
+	name: string;
+	nbf: number;
+	picture: string;
+	sub: string;
+};
+
+const LoginView = ({ setAreas }: any) => {
 	const [textinputuser, setTextInputuser] = useState('PLACEHOLDER');
 	const [textinputpassword, setTextInputpassword] = useState('PLACEHOLDER');
 	const [response, setResponse] = useState('');
@@ -32,16 +51,80 @@ const LoginView = ({setAreas} : any) => {
 				console.error('error');
 			});
 	};
+	const [sampleJSON, setSampleJSON] = useState({
+		client: {
+			host: '',
+		},
+		server: {
+			current_time: 0,
+			services: [
+				{
+					name: '',
+					action: [
+						{
+							name: '',
+							description: '',
+							args: [''],
+						},
+					],
+					reaction: [
+						{
+							name: '',
+							description: '',
+							args: [''],
+						},
+					],
+				},
+			],
+		},
+	});
+	const handleRequestAbout = () => {
+		getAbout()
+			.then((response) => {
+				console.log(response);
+				console.log('ok');
+				setSampleJSON(response);
+				console.log(sampleJSON);
+			})
+			.catch((error) => {
+				console.error('error');
+			});
+		console.log(sampleJSON);
+	};
 	const handleSignIn = () => {
 		if (textinputuser.includes('@')) {
-			const hash = HmacSHA256(textinputpassword, "area-secret");
+			const hash = HmacSHA256(textinputpassword, 'area-secret');
 			const hashInBase64 = Base64.stringify(hash).toString();
 			setResponse('Logging in...');
 			SignInRequestService({ username: textinputuser, password: hashInBase64 })
 				.then((response) => {
 					console.log(response);
 					setResponse(response.message);
-					if(response.token == "") {
+					if (response.token == '') {
+						return;
+					}
+					myObject.token = response.token;
+					myObject.email = textinputuser;
+					handleRequestAreaList();
+					handleRequestAbout();
+					navigate('/area-list');
+				})
+				.catch((error) => {
+					console.error(error);
+					setResponse('Error');
+				});
+			// navigate('/area-list'); // temporary
+		}
+		// console.log(response);
+	};
+
+	const handleGoogleConnect = () => {
+		if (myObject.email != '') {
+			GoogleSignInRequestService({ username: myObject.email })
+				.then((response) => {
+					console.log(response);
+					setResponse(response.message);
+					if (response.token == '') {
 						return;
 					}
 					myObject.token = response.token;
@@ -53,10 +136,9 @@ const LoginView = ({setAreas} : any) => {
 					console.error(error);
 					setResponse('Error');
 				});
-			// navigate('/area-list'); // temporary
 		}
-		// console.log(response);
 	};
+
 	const navigate = useNavigate();
 
 	const [show, setShow] = React.useState(false);
@@ -100,17 +182,26 @@ const LoginView = ({setAreas} : any) => {
 				<Center>
 					<Text>{response}</Text>
 				</Center>
-				<Center>
+				<Center marginTop={30}>
 					<GoogleLogin
 						onSuccess={(credentialResponse) => {
 							console.log(credentialResponse);
 							refreshTokenSetup(credentialResponse);
+							const token = credentialResponse.credential;
+							const decoded: JWTDeCode = jwt_decode(String(token));
+							myObject.email = decoded.email;
+							console.log(myObject.email);
 						}}
 						onError={() => {
 							console.log('Login Failed');
 						}}
 						useOneTap
 					/>
+				</Center>
+				<Center marginTop={5}>
+					<Button type="submit" colorScheme="blue" onClick={handleGoogleConnect}>
+						Connect with google
+					</Button>
 				</Center>
 			</div>
 		</Box>

@@ -63,4 +63,30 @@ const SignUpRequestService = async ({
 	return result;
 };
 
-export { SignInRequestService, SignUpRequestService };
+const GoogleSignInRequestService = async ({
+	username,
+}: {
+	username: string;
+}): Promise<{
+	status: boolean;
+    message: string;
+	token: string;
+}> => {
+	const response = await fetch('https://' + Json_conf.back_end.ip + Json_conf.back_end.port + '/api/v1/sign/oauth', {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			username: username,
+			service: "google",
+			oauth: "google_token"
+		}),
+	});
+	const result = await response.json();
+	console.log(result);
+	return result;
+};
+
+export { SignInRequestService, SignUpRequestService, GoogleSignInRequestService };
